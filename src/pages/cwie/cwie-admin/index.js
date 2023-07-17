@@ -106,7 +106,7 @@ const MUITables = () => {
             { field: 'stu_name', headerName: 'ชื่อ', width: 150 },
             { field: 'stu_lname', headerName: 'นามสกุล', width: 150 },
             { field: 'stu_id', headerName: 'รหัสนักศึกษา', width: 150 },
-            { field: 'stu_rmail', headerName: 'Rmutl email', width: 200 },
+            { field: 'stu_rmail', headerName: 'Rmutl email', width: 220 },
             { field: 'curriculum_name', headerName: 'หลักสูตร', width: 150 },
             { field: 'studygroup_name', headerName: 'กลุ่มเรียน', width: 220 },
             {
