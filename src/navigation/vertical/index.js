@@ -32,6 +32,11 @@ const navigation = () => {
       icon: AccessibilityNewIcon,
       path: '/cwie/cwie-student',
     },
+    {
+      title: 'Uplond',
+      icon: BlindIcon,
+      path: '/cwie/uplond',
+    },
     // {
     //   title: 'Login',
     //   icon: Login,
