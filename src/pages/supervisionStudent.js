@@ -16,7 +16,6 @@ export default function supervisionStudent() {
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
-  1
 
   return (
     <Box>
@@ -31,169 +30,98 @@ export default function supervisionStudent() {
                   <Typography variant='subtitle1'>Supervision of students is divided into 2 sessions.</Typography>
                 </Box>
               </Box>
+              <TabContext value={value}>
+                <TabList onChange={handleChange} aria-label='card navigation example'>
+                  <Tab value='1' label='Supervision Student' />
+                </TabList>
+                <CardContent>
+                  <TabPanel value='1' sx={{ p: 0 }}>
+                    <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', mb: 14 }}>
+                      <Typography variant='h4'>Supervision Student</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+                      <Box sx={{ p: 3 }}>
+                        <Typography variant='h6'>Name : </Typography>
+                      </Box>
+                      <Box sx={{ width: '35%' }}>
+                        <Grid item xs={6}>
+                          <TextField fullWidth label='Name' placeholder='Name[TH]' />
+                        </Grid>
+                      </Box>
+                      <Box sx={{ p: 3, ml: 20 }}>
+                        <Typography variant='h6'>Last Name : </Typography>
+                      </Box>
+                      <Box sx={{ width: '35%' }}>
+                        <Grid item xs={6}>
+                          <TextField fullWidth label='Last Name' placeholder='Last Name[TH]' />
+                        </Grid>
+                      </Box>
+                    </Box>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', mt: 5 }}>
+                      <Box sx={{ p: 3 }}>
+                        <Typography variant='h6'>Time in : </Typography>
+                      </Box>
+                      <Box sx={{ width: '20%' }}>
+                        <Grid item xs={8}>
+                          <TextField fullWidth label='Time in' placeholder='8.00' />
+                        </Grid>
+                      </Box>
+                      <Box sx={{ p: 3, ml: 65 }}>
+                        <Typography variant='h6'>Time Out : </Typography>
+                      </Box>
+                      <Box sx={{ width: '20%', ml: 4 }}>
+                        <Grid item xs={6}>
+                          <TextField fullWidth label='Time Out' placeholder='17.00' />
+                        </Grid>
+                      </Box>
+                    </Box>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', mt: 5 }}>
+                      <Box sx={{ p: 3 }}>
+                        <Typography variant='h6'>weekly holiday : </Typography>
+                      </Box>
+                      <Box sx={{ width: '20%' }}>
+                        <Grid item xs={6}>
+                          <TextField fullWidth label='weekly holiday' placeholder='Saturday,Sunday' />
+                        </Grid>
+                      </Box>
+                    </Box>
+                    <Box>
+                      <Box>
+                        <Typography variant='h6' sx={{ mt: 5, p: 3 }}>
+                          Nature of work
+                        </Typography>
+                      </Box>
+                      <Box>
+                        <TextField
+                          fullWidth
+                          label='Nature of work'
+                          placeholder='Nature of work'
+                          multiline
+                          minRows={6}
+                        />
+                      </Box>
+                    </Box>
+                    <Box>
+                      <Box>
+                        <Typography variant='h6' sx={{ mt: 5, p: 3 }}>
+                          Suggestion
+                        </Typography>
+                      </Box>
+                      <Box>
+                        <TextField fullWidth label='Suggestion' placeholder='Suggestion' multiline minRows={6} />
+                      </Box>
+                    </Box>
+                    <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', mb: 6 }}>
+                      <Button>submit</Button>
+                      <Button>Cancel</Button>
+                    </Box>
+                  </TabPanel>
+                </CardContent>
+              </TabContext>
             </CardContent>
           </Card>
         </Grid>
       </Grid>
-      <TabContext value={value}>
-        <TabList onChange={handleChange} aria-label='card navigation example'>
-          <Tab value='1' label='Supervision Student 1st time' />
-          <Tab value='2' label='Supervision Student 2nd time' />
-        </TabList>
-        <CardContent>
-          <TabPanel value='1' sx={{ p: 0 }}>
-            <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', mb: 14 }}>
-              <Typography variant='h4'>Supervision Student 1st time</Typography>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
-              <Box sx={{ p: 3 }}>
-                <Typography variant='h6'>Name : </Typography>
-              </Box>
-              <Box sx={{ width: '35%' }}>
-                <Grid item xs={6}>
-                  <TextField fullWidth label='Name' placeholder='Name[TH]' />
-                </Grid>
-              </Box>
-              <Box sx={{ p: 3, ml: 20 }}>
-                <Typography variant='h6'>Last Name : </Typography>
-              </Box>
-              <Box sx={{ width: '35%' }}>
-                <Grid item xs={6}>
-                  <TextField fullWidth label='Last Name' placeholder='Last Name[TH]' />
-                </Grid>
-              </Box>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', mt: 5 }}>
-              <Box sx={{ p: 3 }}>
-                <Typography variant='h6'>Time in : </Typography>
-              </Box>
-              <Box sx={{ width: '20%' }}>
-                <Grid item xs={6}>
-                  <TextField fullWidth label='Time in' placeholder='8.00' />
-                </Grid>
-              </Box>
-              <Box sx={{ p: 3, ml: 20 }}>
-                <Typography variant='h6'>Time Out : </Typography>
-              </Box>
-              <Box sx={{ width: '20%' }}>
-                <Grid item xs={6}>
-                  <TextField fullWidth label='Time Out' placeholder='17.00' />
-                </Grid>
-              </Box>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', mt: 5 }}>
-              <Box sx={{ p: 3 }}>
-                <Typography variant='h6'>weekly holiday : </Typography>
-              </Box>
-              <Box sx={{ width: '20%' }}>
-                <Grid item xs={6}>
-                  <TextField fullWidth label='weekly holiday' placeholder='Saturday,Sunday' />
-                </Grid>
-              </Box>
-            </Box>
-            <Box>
-              <Box>
-                <Typography variant='h6' sx={{ mt: 5, p: 3 }}>
-                  Nature of work
-                </Typography>
-              </Box>
-              <Box>
-                <TextField fullWidth label='Nature of work' placeholder='Nature of work' multiline minRows={6} />
-              </Box>
-            </Box>
-            <Box>
-              <Box>
-                <Typography variant='h6' sx={{ mt: 5, p: 3 }}>
-                  Suggestion
-                </Typography>
-              </Box>
-              <Box>
-                <TextField fullWidth label='Suggestion' placeholder='Suggestion' multiline minRows={6} />
-              </Box>
-            </Box>
-            <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', mb: 6 }}>
-              <Button>submit</Button>
-              <Button>Cancel</Button>
-            </Box>
-          </TabPanel>
-          <TabPanel value='2' sx={{ p: 0 }}>
-            <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', mb: 14 }}>
-              <Typography variant='h4'>Supervision Student 2nd time</Typography>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
-              <Box sx={{ p: 3 }}>
-                <Typography variant='h6'>Name : </Typography>
-              </Box>
-              <Box sx={{ width: '35%' }}>
-                <Grid item xs={6}>
-                  <TextField fullWidth label='Name' placeholder='Name[TH]' />
-                </Grid>
-              </Box>
-              <Box sx={{ p: 3, ml: 20 }}>
-                <Typography variant='h6'>Last Name : </Typography>
-              </Box>
-              <Box sx={{ width: '35%' }}>
-                <Grid item xs={6}>
-                  <TextField fullWidth label='Last Name' placeholder='Last Name[TH]' />
-                </Grid>
-              </Box>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', mt: 5 }}>
-              <Box sx={{ p: 3 }}>
-                <Typography variant='h6'>Time in : </Typography>
-              </Box>
-              <Box sx={{ width: '20%' }}>
-                <Grid item xs={6}>
-                  <TextField fullWidth label='Time in' placeholder='8.00' />
-                </Grid>
-              </Box>
-              <Box sx={{ p: 3, ml: 20 }}>
-                <Typography variant='h6'>Time Out : </Typography>
-              </Box>
-              <Box sx={{ width: '20%' }}>
-                <Grid item xs={6}>
-                  <TextField fullWidth label='Time Out' placeholder='17.00' />
-                </Grid>
-              </Box>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', mt: 5 }}>
-              <Box sx={{ p: 3 }}>
-                <Typography variant='h6'>weekly holiday : </Typography>
-              </Box>
-              <Box sx={{ width: '20%' }}>
-                <Grid item xs={6}>
-                  <TextField fullWidth label='weekly holiday' placeholder='Saturday,Sunday' />
-                </Grid>
-              </Box>
-            </Box>
-            <Box>
-              <Box>
-                <Typography variant='h6' sx={{ mt: 5, p: 3 }}>
-                  Nature of work
-                </Typography>
-              </Box>
-              <Box>
-                <TextField fullWidth label='Nature of work' placeholder='Nature of work' multiline minRows={6} />
-              </Box>
-            </Box>
-            {/* <Box>{Map dataGrid}</Box> */}
-            <Box>
-              <Box>
-                <Typography variant='h6' sx={{ mt: 5, p: 3 }}>
-                  Suggestion
-                </Typography>
-              </Box>
-              <Box>
-                <TextField fullWidth label='Suggestion' placeholder='Suggestion' multiline minRows={6} />
-              </Box>
-            </Box>
-            <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', mb: 6 }}>
-              <Button>submit</Button>
-              <Button>Cancel</Button>
-            </Box>
-          </TabPanel>
-        </CardContent>
-      </TabContext>
     </Box>
   )
 }

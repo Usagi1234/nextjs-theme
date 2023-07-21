@@ -8,6 +8,17 @@ import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 export default function cooperative() {
   return (
     <Box>
+      <Grid container spacing={6} sx={{ mb: 6 }}>
+        <Grid item xs={12} sm={12} md={12}>
+          <Card>
+            <CardContent>
+              <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                <Typography variant='h5'>Co-Operative</Typography>
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
       <Grid container spacing={6}>
         <Grid item xs={12} sm={6} md={4}>
           <Card>

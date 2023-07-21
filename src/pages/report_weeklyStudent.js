@@ -70,9 +70,6 @@ export default function report_weeklyStudent() {
                       <TextField fullWidth label='week' placeholder='1' sx={{ width: 100, p: 2 }} />
                     </Box>
                   </Box>
-                  {/* <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', my: 6 }}>
-                    <Button>Upload Photo</Button>
-                  </Box> */}
                   <Box sx={{ p: 6 }}>
                     <Box sx={{ mb: 6 }}>
                       <Typography variant='h6'>Report detail</Typography>
@@ -84,6 +81,18 @@ export default function report_weeklyStudent() {
                         </Grid>
                       </Grid>
                     </form>
+                  </Box>
+                  <Box sx={{ width: '100%', display: 'flex' }}>
+                    <Box sx={{ width: '32%', p: 4 }}>
+                      <Typography variant='h6'>Name Establishment:</Typography>
+                    </Box>
+                    <Box sx={{ width: '65%' }}>
+                      <Grid container spacing={5}>
+                        <Grid item xs={12}>
+                          <TextField fullWidth label='Name Establishment' placeholder='Establishment' />
+                        </Grid>
+                      </Grid>
+                    </Box>
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                     <Button>submit</Button>

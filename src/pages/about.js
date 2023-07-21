@@ -1,13 +1,14 @@
 import { Box, Card, CardMedia, Typography } from '@mui/material'
+import Image from 'next/image'
 
 export default function about() {
   return (
     <Box>
-      <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', mb: 6 }}>
+      <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', mb: 10 }}>
         <Typography variant='h4'>About</Typography>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
-        <Box sx={{ width: '50%', mt: 50, fontFamily: '' }}>
+        <Box sx={{ width: '50%', mt: 30, fontFamily: '' }}>
           <Typography variant='subtitle1' sx={{ fontFamily: '' }}>
             &nbsp;&nbsp;&nbsp;&nbsp;ด้วยคณะวิศวกรรมศาสตร์
             มหาวิทยาลัยเทคโนโลยีราชมงคลล้านนาได้กำหนดวิสัยทัศน์ที่มุ่งหมายในการผลิตบัณฑิตนักปฏิบัติที่มีความเชี่ยวชาญทางด้านวิทยาศาสตร์และเทคโนโลยี
@@ -15,9 +16,9 @@ export default function about() {
             โดยมุ่งเน้นกระบวนการจัดการศึกษาเฉพาะทาง
           </Typography>
         </Box>
-        <Box sx={{ width: '50%' }}>
+        <Box sx={{ ml: 10 }}>
           <Card>
-            <CardMedia sx={{ height: '30rem' }} image='/images/dean.png' />
+            <Image src={'/images/dean.png'} width={400} height={300} />
           </Card>
         </Box>
       </Box>
@@ -27,8 +28,8 @@ export default function about() {
           (สหกิจศึกษาและการฝึกงานทางวิศวกรรม) Cooperative Education & Engineering Practice
         </Typography>
       </Box>
-      <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', mt: 10 }}>
-        <Typography sx={{ width: '80%' }}>
+      <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', mt: 10, mb: 6 }}>
+        <Typography sx={{ width: '80%', fontFamily: 'IBM Plex Sans Thai' }}>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;สหกิจศึกษา (Cooperative Education)
           เป็นแผนการศึกษาโดยมีจุดมุ่งหมายให้บัณฑิตวิศวกรรมศาสตร์ได้มีประสบการณ์ปฏิบัติงานจริงในสถานประกอบการอย่างมีประสิทธิภาพ
           โดยกำหนดให้นักศึกษาออกปฏิบัติงานในสถานประกอบการ ในฐานะพนักงานเต็มเวลา เป็นระยะเวลา ๑ ภาคการศึกษา
@@ -44,7 +45,7 @@ export default function about() {
       </Box>
       <Box>
         <Box>
-          <CardMedia sx={{ height: '150rem', width: '100%' }} image='/images/flowchart_coop_64.gif' />
+          <CardMedia sx={{ height: '150rem', width: '100%', borderRadius: 1 }} image='/images/flowchart_coop_64.gif' />
         </Box>
       </Box>
     </Box>

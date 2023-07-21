@@ -9,6 +9,7 @@ import CreditCardOutline from 'mdi-material-ui/CreditCardOutline'
 import AccountPlusOutline from 'mdi-material-ui/AccountPlusOutline'
 import AlertCircleOutline from 'mdi-material-ui/AlertCircleOutline'
 import GoogleCirclesExtended from 'mdi-material-ui/GoogleCirclesExtended'
+import ChevronDoubleRight from 'mdi-material-ui/ChevronDoubleRight'
 
 const navigation = () => {
   return [
@@ -27,25 +28,25 @@ const navigation = () => {
     },
     {
       title: 'Document Student',
-      icon: Login,
+      icon: ChevronDoubleRight,
       path: '/doc_updownStudent',
       openInNewTab: false
     },
     {
       title: 'Document Teacher',
-      icon: Login,
+      icon: ChevronDoubleRight,
       path: '/doc_updownTeacher',
       openInNewTab: false
     },
     {
       title: 'Document Establishment',
-      icon: Login,
+      icon: ChevronDoubleRight,
       path: '/doc_updownEstablishment',
       openInNewTab: false
     },
     {
       title: 'Document Officer',
-      icon: Login,
+      icon: ChevronDoubleRight,
       path: '/doc_officer',
       openInNewTab: false
     },
@@ -72,18 +73,18 @@ const navigation = () => {
     },
     {
       title: 'Report Student',
-      icon: FormatLetterCase,
+      icon: ChevronDoubleRight,
       path: '/report_weeklyStudent'
     },
     {
       title: 'Report for Teacher',
-      icon: FormatLetterCase,
+      icon: ChevronDoubleRight,
       path: '/report_weeklyTeacher'
     },
     {
       title: 'Report for Establishment',
-      icon: FormatLetterCase,
-      path: '/report_weeklyTeacher'
+      icon: ChevronDoubleRight,
+      path: '/report_weeklyEstablishment'
     },
     {
       title: 'Typography',
@@ -115,22 +116,42 @@ const navigation = () => {
     },
     {
       title: 'Supervision Student',
-      icon: Table,
+      icon: ChevronDoubleRight,
       path: '/supervisionStudent'
     },
     {
       title: 'Supervision List',
-      icon: Table,
+      icon: ChevronDoubleRight,
       path: '/supervisionStudent_list'
     },
     {
       title: 'Supervision Teacher',
-      icon: Table,
+      icon: ChevronDoubleRight,
       path: '/supervisionTeacher'
+    },
+    {
+      title: 'Supervision Establishment',
+      icon: ChevronDoubleRight,
+      path: '/supervisionEstablishment'
     },
 
     {
       sectionTitle: 'Back Office'
+    },
+    {
+      title: 'Student Management',
+      icon: ChevronDoubleRight,
+      path: '/bo_Student_manage'
+    },
+    {
+      title: 'Teacher Management',
+      icon: ChevronDoubleRight,
+      path: '/bo_Teacher_manage'
+    },
+    {
+      title: 'Establishment Management',
+      icon: ChevronDoubleRight,
+      path: '/bo_Establishment_manage'
     }
   ]
 }

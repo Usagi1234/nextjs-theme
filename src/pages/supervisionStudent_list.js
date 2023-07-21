@@ -23,6 +23,7 @@ export default function supervisionStudent_list() {
           </Card>
         </Grid>
       </Grid>
+      <Box>{/* DataGrid Map */}</Box>
     </Box>
   )
 }
