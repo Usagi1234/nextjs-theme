@@ -37,6 +37,11 @@ const navigation = () => {
       icon: BlindIcon,
       path: '/cwie/uplond',
     },
+    {
+      title: 'แบบประเมิน',
+      icon: AccessibilityNewIcon,
+      path: '/cwie/assessment',
+    },
     // {
     //   title: 'Login',
     //   icon: Login,
