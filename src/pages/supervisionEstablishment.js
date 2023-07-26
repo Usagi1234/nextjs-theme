@@ -37,12 +37,20 @@ export default function supervisionEstabishment() {
                       <Typography variant='h4'>Supervision Establishment </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', mb: 6 }}>
-                      <Box sx={{ p: 3 }}>
+                      <Box sx={{ p: 3, width: '20%' }}>
                         <Typography variant='h6'>Need more interns : </Typography>
                       </Box>
                       <Box sx={{ width: '35%' }}>
                         <Grid item xs={6}>
                           <TextField fullWidth label='Interns' placeholder='1' />
+                        </Grid>
+                      </Box>
+                      <Box sx={{ p: 3, width: '20%' }}>
+                        <Typography variant='h6'>Time supervision : </Typography>
+                      </Box>
+                      <Box sx={{ width: '35%' }}>
+                        <Grid item xs={6}>
+                          <TextField fullWidth label='Time' placeholder='1' />
                         </Grid>
                       </Box>
                     </Box>
@@ -63,16 +71,16 @@ export default function supervisionEstabishment() {
                       </Grid>
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
-                      <Box sx={{ p: 3, width: '23%' }}>
-                        <Typography variant='h6'>Contact coordinator : </Typography>
+                      <Box sx={{ p: 3, width: '20%' }}>
+                        <Typography variant='h6'>Contact coordinator :</Typography>
                       </Box>
                       <Box sx={{ width: '35%' }}>
                         <Grid item xs={6}>
                           <TextField fullWidth label='Contact coordinator' placeholder='Contact coordinator' />
                         </Grid>
                       </Box>
-                      <Box sx={{ p: 3, width: '30%' }}>
-                        <Typography variant='h6'>The duration of the internship : </Typography>
+                      <Box sx={{ p: 3, width: '15%' }}>
+                        <Typography variant='h6'>Validity period : </Typography>
                       </Box>
                       <Box sx={{ width: '32%' }}>
                         <Grid item xs={6}>
@@ -101,7 +109,6 @@ export default function supervisionEstabishment() {
           </Card>
         </Grid>
       </Grid>
-      <Box>{/* DataGrid Map */}</Box>
     </Box>
   )
 }

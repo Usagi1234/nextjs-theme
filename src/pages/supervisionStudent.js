@@ -84,6 +84,14 @@ export default function supervisionStudent() {
                           <TextField fullWidth label='weekly holiday' placeholder='Saturday,Sunday' />
                         </Grid>
                       </Box>
+                      <Box sx={{ p: 3, ml: 31 }}>
+                        <Typography variant='h6'>Time supervision :</Typography>
+                      </Box>
+                      <Box sx={{ width: '20%' }}>
+                        <Grid item xs={6}>
+                          <TextField fullWidth label='Time supervision' placeholder='Saturday,Sunday' />
+                        </Grid>
+                      </Box>
                     </Box>
                     <Box>
                       <Box>

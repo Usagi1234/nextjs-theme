@@ -43,9 +43,22 @@ export default function about() {
           ที่อยู่ภายนอก
         </Typography>
       </Box>
+      <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <Typography variant='h4'>การเข้าร่วมโครงการสหกิจศึกษา</Typography>
+        </Box>
+        <Typography variant='subtitle1'>
+          1. กรอกแบบฟอร์มโครงการสหกิจศึกษา 1 ฉบับ (พิมพ์เท่านั้น ห้ามเขียนเด็ดขาด)
+        </Typography>
+        <Typography variant='subtitle1'>
+          2. กรอกแบบฟอร์มใบสมัครข้อมูลนักศึกษา 1 ฉบับ (พิมพ์เท่านั้น ห้ามเขียนเด็ดขาด)
+        </Typography>
+        <Typography variant='subtitle1'>3. สำเนาบัตรประชาชน หรือ สำเนาบัตรนักศึกษา 1 ฉบับ</Typography>
+        <Typography variant='subtitle1'>4. ใบทรานสคริป (ภาษาอังกฤษ) 1 ฉบับ</Typography>
+      </Box>
       <Box>
         <Box>
-          <CardMedia sx={{ height: '150rem', width: '100%', borderRadius: 1 }} image='/images/flowchart_coop_64.gif' />
+          <Typography variant='h4'>การนิเทศน์นักศึกษา</Typography>
         </Box>
       </Box>
     </Box>

@@ -31,13 +31,12 @@ export default function SupervisionTeacher() {
               </Box>
               <TabContext value={value}>
                 <TabList onChange={handleChange} aria-label='card navigation example'>
-                  <Tab value='1' label='Supervision Teacher 1st time' />
-                  <Tab value='2' label='Supervision Teacher 2nd time' />
+                  <Tab value='1' label='Supervision Teacher' />
                 </TabList>
                 <CardContent>
                   <TabPanel value='1' sx={{ p: 0 }}>
                     <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', mb: 14 }}>
-                      <Typography variant='h4'>Supervision Teacher 1st time</Typography>
+                      <Typography variant='h4'>Supervision Teacher</Typography>
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
                       <Box sx={{ p: 4 }}>
@@ -74,7 +73,7 @@ export default function SupervisionTeacher() {
                           <TextField fullWidth label='Time' placeholder='08.00' />
                         </Grid>
                       </Box>
-                      <Box sx={{ p: 4 }}>
+                      <Box sx={{ p: 4, ml: 20 }}>
                         <Typography>Department:</Typography>
                       </Box>
                       <Box sx={{ width: '30%' }}>
@@ -102,7 +101,7 @@ export default function SupervisionTeacher() {
                       </Box>
                     </Box>
                     <Box sx={{ mt: 6, display: 'flex', flexDirection: 'row' }}>
-                      <Box sx={{ p: 4 }}>
+                      <Box sx={{ p: 4, width: '30%' }}>
                         <Typography>Number of students:</Typography>
                       </Box>
                       <Box sx={{ width: '30%' }}>
@@ -110,101 +109,22 @@ export default function SupervisionTeacher() {
                           <TextField fullWidth label='Number of students' placeholder='1' />
                         </Grid>
                       </Box>
-                    </Box>
-                    <Box sx={{ mt: 6, display: 'flex', flexDirection: 'column' }}>
-                      <Box sx={{ p: 4 }}>
-                        <Typography>Teacher's comments:</Typography>
+                      <Box sx={{ p: 4, width: '22%', ml: 40 }}>
+                        <Typography>Student Name:</Typography>
                       </Box>
                       <Box sx={{ width: '100%' }}>
-                        <Grid item xs={12}>
-                          <TextField
-                            fullWidth
-                            label='Teacher comments'
-                            placeholder='Teacher comments'
-                            multiline
-                            minRows={6}
-                          />
-                        </Grid>
-                      </Box>
-                    </Box>
-                    <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', mt: 6 }}>
-                      <Button>submit</Button>
-                      <Button>Cancel</Button>
-                    </Box>
-                  </TabPanel>
-                  <TabPanel value='2' sx={{ p: 0 }}>
-                    <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', mb: 14 }}>
-                      <Typography variant='h4'>Supervision Teacher 2nd time</Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
-                      <Box sx={{ p: 4 }}>
-                        <Typography>Day:</Typography>
-                      </Box>
-                      <Box sx={{ width: '30%' }}>
                         <Grid item xs={6}>
-                          <TextField fullWidth label='Day' placeholder='1' />
-                        </Grid>
-                      </Box>
-                      <Box sx={{ p: 4 }}>
-                        <Typography>Month:</Typography>
-                      </Box>
-                      <Box sx={{ width: '30%' }}>
-                        <Grid item xs={6}>
-                          <TextField fullWidth label='Month' placeholder='6' />
-                        </Grid>
-                      </Box>
-                      <Box sx={{ p: 4 }}>
-                        <Typography>Year:</Typography>
-                      </Box>
-                      <Box sx={{ width: '30%' }}>
-                        <Grid item xs={6}>
-                          <TextField fullWidth label='Year' placeholder='2566' />
+                          <TextField fullWidth label='Student Name' placeholder='Student Name' />
                         </Grid>
                       </Box>
                     </Box>
                     <Box sx={{ mt: 6, display: 'flex', flexDirection: 'row' }}>
-                      <Box sx={{ p: 4 }}>
-                        <Typography>Time:</Typography>
+                      <Box sx={{ p: 4, width: '14%' }}>
+                        <Typography>Time supervision : </Typography>
                       </Box>
-                      <Box sx={{ width: '30%' }}>
-                        <Grid item xs={6}>
-                          <TextField fullWidth label='Time' placeholder='08.00' />
-                        </Grid>
-                      </Box>
-                      <Box sx={{ p: 4 }}>
-                        <Typography>Department:</Typography>
-                      </Box>
-                      <Box sx={{ width: '30%' }}>
+                      <Box sx={{ width: '20%' }}>
                         <Grid item xs={10}>
-                          <TextField fullWidth label='Department' placeholder='' />
-                        </Grid>
-                      </Box>
-                    </Box>
-                    <Box sx={{ mt: 6, display: 'flex', flexDirection: 'row' }}>
-                      <Box sx={{ p: 4 }}>
-                        <Typography>Name Manager:</Typography>
-                      </Box>
-                      <Box sx={{ width: '30%' }}>
-                        <Grid item xs={10}>
-                          <TextField fullWidth label='Name Manager' placeholder='' />
-                        </Grid>
-                      </Box>
-                      <Box sx={{ p: 4 }}>
-                        <Typography>Job position:</Typography>
-                      </Box>
-                      <Box sx={{ width: '30%' }}>
-                        <Grid item xs={10}>
-                          <TextField fullWidth label='Job position' placeholder='' />
-                        </Grid>
-                      </Box>
-                    </Box>
-                    <Box sx={{ mt: 6, display: 'flex', flexDirection: 'row' }}>
-                      <Box sx={{ p: 4 }}>
-                        <Typography>Number of students:</Typography>
-                      </Box>
-                      <Box sx={{ width: '30%' }}>
-                        <Grid item xs={10}>
-                          <TextField fullWidth label='Number of students' placeholder='1' />
+                          <TextField fullWidth label='Time supervision' placeholder='1' />
                         </Grid>
                       </Box>
                     </Box>

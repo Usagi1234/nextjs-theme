@@ -24,12 +24,11 @@ export default function doc_updownStudent() {
                 <Box>
                   <Icon path={mdiFileDocumentCheckOutline} size={6} />
                 </Box>
-                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                  <Typography variant='h4'> Document</Typography>
-                  <Typography variant='subtitle1'>
-                    {' '}
-                    Upload document and Follow/Download Document Co-operative{' '}
+                <Box sx={{ display: 'flex', flexDirection: 'column', ml: 6 }}>
+                  <Typography variant='h4' sx={{ mb: 4 }}>
+                    Document
                   </Typography>
+                  <Typography variant='h6'> นักศึกษานำเอกสารเหล่านี้มาให้ อ.ตั้ม เซ็นต์อนุมัติโครงการ </Typography>
                 </Box>
               </Box>
               <TabContext value={value}>

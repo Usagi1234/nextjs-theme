@@ -1,7 +1,19 @@
 import { Box } from '@mui/system'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Button, Card, CardHeader, Grid, Modal, TextField, Typography } from '@mui/material'
+import {
+  Button,
+  Card,
+  CardHeader,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  TextField,
+  Typography
+} from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import Icon from '@mdi/react'
 import { mdiChartBar } from '@mdi/js'
@@ -13,20 +25,22 @@ const bo_Student_manage = () => {
     stu_id: '',
     stu_name: '',
     stu_lname: '',
-    curriculum_name: '',
-    studygroup_name: '',
+    curriculum_id: '',
+    studygroup_id: '',
     stu_rmail: '',
     stu_sex: ''
   }
   const [rowDataSt, setRowDataSt] = useState('')
   const [dataSt, setDataSt] = useState(intial)
+  const [curriculumSt, setCurriculumSt] = useState([])
+  const [studyGroupSt, setStudyGroupSt] = useState([])
 
   const [coloChange, setColoChange] = useState({
     stu_id: false,
     stu_name: false,
     stu_lname: false,
-    curriculum_name: false,
-    studygroup_name: false,
+    curriculum_id: false,
+    studygroup_id: false,
     stu_rmail: false,
     stu_sex: false
   })
@@ -35,7 +49,7 @@ const bo_Student_manage = () => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => {
     setOpen(false)
-    setDataSt()
+    setDataSt(intial)
   }
 
   const style = {
@@ -83,6 +97,12 @@ const bo_Student_manage = () => {
     axios.post('http://localhost:3200/api/v1/students').then(res => {
       setRowDataSt(res.data.data)
     })
+    axios.post('http://localhost:3200/api/v1/curriculum').then(res => {
+      setCurriculumSt(res.data.results)
+    })
+    axios.post('http://localhost:3200/api/v1/studygroup').then(res => {
+      setStudyGroupSt(res.data.results)
+    })
   }, [])
 
   useEffect(() => {
@@ -98,14 +118,6 @@ const bo_Student_manage = () => {
         setColoChange(pre => ({ ...pre, stu_id: false }))
       }
       setDataSt(pre => ({ ...pre, stu_id: newStr })) //เก็บค่าเก่าไว้ใน dataDog
-    } else if (type === 'curriculum_name') {
-      //เช็ค type ที่ส่งมาใช้ dog_name ?
-      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
-      if (dataSt.curriculum_name !== '') {
-        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
-        setColoChange(pre => ({ ...pre, curriculum_name: false }))
-      }
-      setDataSt(pre => ({ ...pre, curriculum_name: newStr })) //เก็บค่าเก่าไว้ใน dataDog
     } else if (type === 'stu_name') {
       //เช็ค type ที่ส่งมาใช้ dog_name ?
       const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
@@ -130,17 +142,26 @@ const bo_Student_manage = () => {
         setColoChange(pre => ({ ...pre, stu_status: false }))
       }
       setDataSt(pre => ({ ...pre, stu_status: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+    } else if (type === 'curriculum_id') {
+      //เช็ค type ที่ส่งมาใช้ dog_name ?
+      const newStr = event.target.value // อีเว้นที่เกิด เป้าหมายคือค่า value
+      if (dataSt.curriculum_id !== '') {
+        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
+        setColoChange(pre => ({ ...pre, curriculum_id: false }))
+      }
+      setDataSt(pre => ({ ...pre, curriculum_id: newStr })) //เก็บค่าเก่าไว้ใน dataDo
     }
   }
 
   const HandleInsSubmit = () => {
     if (
       dataSt.stu_id !== '' &&
-      dataSt.curriculum_name !== '' &&
+      dataSt.curriculum_id !== '' &&
       dataSt.stu_name !== '' &&
-      dataSt.stu_lame !== '' &&
+      dataSt.stu_lname !== '' &&
       dataSt.stu_status !== '' &&
-      dataSt.stu_status !== ''
+      dataSt.stu_status !== '' &&
+      dataSt.studygroup_id !== ''
     ) {
       setDataSt(pre => ({
         ...pre, // เก็บค่าเก่า
@@ -159,12 +180,6 @@ const bo_Student_manage = () => {
       console.log('std_id ว่าง')
       setColoChange(pre => ({ ...pre, stu_id: true }))
     }
-    if (dataSt.curriculum_name !== '') {
-      console.log('curriculum_name ไม่ว่าง')
-    } else {
-      console.log('curriculum_name ว่าง')
-      setColoChange(pre => ({ ...pre, curriculum_name: true }))
-    }
     if (dataSt.stu_name !== '') {
       console.log('std_name ไม่ว่าง')
     } else {
@@ -176,12 +191,6 @@ const bo_Student_manage = () => {
     } else {
       console.log('stu_lname ว่าง')
       setColoChange(pre => ({ ...pre, stu_lname: true }))
-    }
-    if (dataSt.stu_status !== '') {
-      console.log('stu_status ไม่ว่าง')
-    } else {
-      console.log('stu_status ว่าง')
-      setColoChange(pre => ({ ...pre, stu_status: true }))
     }
   }
 
@@ -233,16 +242,27 @@ const bo_Student_manage = () => {
                               <Box sx={{ p: 4 }}>
                                 <Typography>Curriculum:</Typography>
                               </Box>
-                              <Box>
-                                <Grid container spacing={5}>
-                                  <Grid item xs={12}>
-                                    <TextField
-                                      fullWidth
+                              <Box sx={{ width: '80%' }}>
+                                <Grid item xs={12} sm={6}>
+                                  <FormControl variant='outlined' fullWidth sx={{ mb: 2 }}>
+                                    <InputLabel id='curriculum-label'>Curriculum:</InputLabel>
+                                    <Select
+                                      required
+                                      labelId='curriculum-label'
+                                      id='curriculumId'
+                                      name='curriculumId'
+                                      // value={dataSt.curriculum_id}
+                                      // helperText={dataSt.curriculum_id && 'Curriculum'}
                                       label='Curriculum'
-                                      onChange={event => HandleChange(event, 'curriculum_name')}
-                                      error={coloChange.curriculum_name}
-                                    />
-                                  </Grid>
+                                      onChange={event => HandleChange(event, 'curriculum_id')}
+                                    >
+                                      {curriculumSt.map(row => (
+                                        <MenuItem key={row.curriculum_id} value={row.curriculum_id}>
+                                          {row.curriculum_name}
+                                        </MenuItem>
+                                      ))}
+                                    </Select>
+                                  </FormControl>
                                 </Grid>
                               </Box>
                             </Box>

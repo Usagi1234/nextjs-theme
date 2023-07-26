@@ -30,6 +30,7 @@ export default function bo_Establishment_manage() {
   const handleClose = () => {
     setOpen(false)
     setDataCompany(intialComp)
+    setColoChangeComp(false)
   }
 
   const [openEdit, setOpenEdit] = useState(false)
@@ -248,6 +249,36 @@ export default function bo_Establishment_manage() {
         .catch(err => {
           console.log(err)
         })
+    }
+    if (dataCompany.com_name !== '') {
+      console.log('com_name ไม่ว่าง')
+    } else {
+      console.log('com_name ว่าง')
+      setColoChangeComp(pre => ({ ...pre, com_name: true }))
+    }
+    if (dataCompany.com_type !== '') {
+      console.log('com_type ไม่ว่าง')
+    } else {
+      console.log('com_type ว่าง')
+      setColoChangeComp(pre => ({ ...pre, com_type: true }))
+    }
+    if (dataCompany.com_add !== '') {
+      console.log('com_add ไม่ว่าง')
+    } else {
+      console.log('com_add ว่าง')
+      setColoChangeComp(pre => ({ ...pre, com_add: true }))
+    }
+    if (dataCompany.com_province !== '') {
+      console.log('com_province ไม่ว่าง')
+    } else {
+      console.log('com_province ว่าง')
+      setColoChangeComp(pre => ({ ...pre, com_province: true }))
+    }
+    if (dataCompany.com_contact !== '') {
+      console.log('com_contact ไม่ว่าง')
+    } else {
+      console.log('com_contact ว่าง')
+      setColoChangeComp(pre => ({ ...pre, com_contact: true }))
     }
   }
 
