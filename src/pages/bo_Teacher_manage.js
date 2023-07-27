@@ -139,7 +139,6 @@ export default function bo_Teacher_manage() {
 
   const HandleChange = (event, type) => {
     if (type === 'tea_name') {
-      //เช็ค type ที่ส่งมาใช้ dog_name ?
       const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
       if (dataTeacher.tea_name !== '') {
         //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
@@ -147,7 +146,6 @@ export default function bo_Teacher_manage() {
       }
       setDataTeacher(pre => ({ ...pre, tea_name: newStr })) //เก็บค่าเก่าไว้ใน dataDog
     } else if (type === 'tea_lname') {
-      //เช็ค type ที่ส่งมาใช้ dog_name ?
       const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
       if (dataTeacher.tea_lname !== '') {
         //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
@@ -155,7 +153,6 @@ export default function bo_Teacher_manage() {
       }
       setDataTeacher(pre => ({ ...pre, tea_lname: newStr })) //เก็บค่าเก่าไว้ใน dataDog
     } else if (type === 'tea_status') {
-      //เช็ค type ที่ส่งมาใช้ dog_name ?
       const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
       if (dataTeacher.tea_status !== '') {
         //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
@@ -163,7 +160,6 @@ export default function bo_Teacher_manage() {
       }
       setDataTeacher(pre => ({ ...pre, tea_status: newStr })) //เก็บค่าเก่าไว้ใน dataDog
     } else if (type === 'tea_tel') {
-      //เช็ค type ที่ส่งมาใช้ dog_name ?
       const newStr = event.target.value.replace(/[^\d.-]+/g, '') // อีเว้นที่เกิด เป้าหมายคือค่า value
       if (dataTeacher.tea_tel !== '') {
         //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
@@ -171,7 +167,6 @@ export default function bo_Teacher_manage() {
       }
       setDataTeacher(pre => ({ ...pre, tea_tel: newStr })) //เก็บค่าเก่าไว้ใน dataDo
     } else if (type === 'curriculum_id') {
-      //เช็ค type ที่ส่งมาใช้ dog_name ?
       const newStr = event.target.value // อีเว้นที่เกิด เป้าหมายคือค่า value
       if (dataTeacher.curriculum_id !== '') {
         //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
@@ -179,7 +174,6 @@ export default function bo_Teacher_manage() {
       }
       setDataTeacher(pre => ({ ...pre, curriculum_id: newStr })) //เก็บค่าเก่าไว้ใน dataDo
     } else if (type === 'studygroup_id') {
-      //เช็ค type ที่ส่งมาใช้ dog_name ?
       const newStr = event.target.value // อีเว้นที่เกิด เป้าหมายคือค่า value
       if (dataTeacher.studygroup_id !== '') {
         //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ

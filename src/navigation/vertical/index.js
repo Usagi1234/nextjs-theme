@@ -152,6 +152,11 @@ const navigation = () => {
       title: 'Establishment Management',
       icon: ChevronDoubleRight,
       path: '/bo_Establishment_manage'
+    },
+    {
+      title: 'Supervision Establishment',
+      icon: ChevronDoubleRight,
+      path: '/bo_SupervisionES'
     }
   ]
 }

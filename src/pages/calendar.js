@@ -15,6 +15,21 @@ import {
 import CardMedia from '@mui/material/CardMedia'
 
 export default function calendar() {
+  const pdfC1 = 'http://localhost:3000/calendar/calendar_coop_66.pdf'
+  const pdfC2 = 'http://localhost:3000/calendar/calendar_coop_65.pdf'
+  const pdfC3 = 'http://localhost:3000/calendar/calendar_coop_64_1.pdf'
+  const pdfC4 = 'http://localhost:3000/calendar/calendar_coop_2-63_covid.pdf'
+
+  const DownloadFileAtURL = url => {
+    const fileName = url.split('/').pop()
+    const aTag = document.createElement('a')
+    aTag.href = url
+    aTag.setAttribute('download', fileName)
+    document.body.appendChild(aTag)
+    aTag.click()
+    aTag.remove()
+  }
+
   return (
     <Box>
       <Grid container spacing={6}>
@@ -38,19 +53,25 @@ export default function calendar() {
                         <TableRow>
                           <TableCell>ปฏิทินกำหนดการโครงการพัฒนาทักษะวิชาชีพนักศึกษา ประจำปีการศึกษา 2566</TableCell>
                           <TableCell>
-                            <Button variant='contained'>PDF</Button>
+                            <Button variant='contained' onClick={() => DownloadFileAtURL(pdfC1)}>
+                              PDF
+                            </Button>
                           </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell>ปฏิทินกำหนดการโครงการพัฒนาทักษะวิชาชีพนักศึกษา ประจำปีการศึกษา 2565</TableCell>
                           <TableCell>
-                            <Button variant='contained'>PDF</Button>
+                            <Button variant='contained' onClick={() => DownloadFileAtURL(pdfC2)}>
+                              PDF
+                            </Button>
                           </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell>ปฏิทินกำหนดการโครงการพัฒนาทักษะวิชาชีพนักศึกษา ประจำปีการศึกษา 2564</TableCell>
                           <TableCell>
-                            <Button variant='contained'>PDF</Button>
+                            <Button variant='contained' onClick={() => DownloadFileAtURL(pdfC3)}>
+                              PDF
+                            </Button>
                           </TableCell>
                         </TableRow>
                         <TableRow>
@@ -58,7 +79,9 @@ export default function calendar() {
                             ปฏิทินกำหนดการโครงการพัฒนาทักษะวิชาชีพนักศึกษา ประจำปีการศึกษา 2563 (ฉบับที่ 2) COVID-19
                           </TableCell>
                           <TableCell>
-                            <Button variant='contained'>PDF</Button>
+                            <Button variant='contained' onClick={() => DownloadFileAtURL(pdfC4)}>
+                              PDF
+                            </Button>
                           </TableCell>
                         </TableRow>
                       </TableBody>
