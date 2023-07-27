@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, Grid, Typography } from '@mui/material'
+import { Box, Button, Card, CardContent, Grid, Input, Typography } from '@mui/material'
 import TabContext from '@mui/lab/TabContext'
 import Tab from '@mui/material/Tab'
 import TabList from '@mui/lab/TabList'
@@ -13,6 +13,17 @@ export default function doc_updownStudent() {
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
+
+  // const [getpdf, setGetpdf] = useState('')
+  // const [selectedFile, setSelectedFile] = useState(null)
+  // const [fileName, setFileName] = useState('')
+
+  // useEffect(() => {
+  //   axios.get('http://localhost:3200/api/getfilepdf').then(response => {
+  //     console.log(response)
+  //     setGetpdf(response.data)
+  //   })
+  // }, [])
 
   return (
     <Box>
@@ -58,7 +69,7 @@ export default function doc_updownStudent() {
                         </Box>
                         <Box sx={{ width: '33%' }}></Box>
                         <Box sx={{ width: '33%' }}>
-                          <Button>Upload</Button>
+                          <Input type='file'>Upload</Input>
                         </Box>
                       </Box>
                       <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', mb: 6, ml: 20 }}>
@@ -69,7 +80,7 @@ export default function doc_updownStudent() {
                           {/* <Typography> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</Typography> */}
                         </Box>
                         <Box sx={{ width: '33%' }}>
-                          <Button>Upload</Button>
+                          <Input type='file'>Upload</Input>
                         </Box>
                       </Box>
                       <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', mb: 6, ml: 20 }}>
@@ -80,7 +91,7 @@ export default function doc_updownStudent() {
                           {/* <Typography> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</Typography> */}
                         </Box>
                         <Box sx={{ width: '33%' }}>
-                          <Button>Upload</Button>
+                          <Input type='file'>Upload</Input>
                         </Box>
                       </Box>
                       <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', mb: 6, ml: 20 }}>
@@ -91,8 +102,12 @@ export default function doc_updownStudent() {
                           {/* <Typography> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</Typography> */}
                         </Box>
                         <Box sx={{ width: '33%' }}>
-                          <Button>Upload</Button>
+                          <Input type='file'>Upload</Input>
                         </Box>
+                      </Box>
+                      <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
+                        <Button>submit</Button>
+                        <Button>cancel</Button>
                       </Box>
                     </Box>
                   </TabPanel>
