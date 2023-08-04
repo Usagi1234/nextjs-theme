@@ -20,6 +20,12 @@ const navigation = () => {
       path: '/'
     },
     {
+      title: 'Login',
+      icon: Login,
+      path: '/pages/login',
+      openInNewTab: true
+    },
+    {
       sectionTitle: 'CWIE'
     },
     {
@@ -38,16 +44,20 @@ const navigation = () => {
       path: '/cwie/uplond',
     },
     {
-      title: 'แบบประเมิน',
+      title: 'แบบประเมิน(ระหว่างนิเทศ)',
       icon: AccessibilityNewIcon,
       path: '/cwie/assessment',
     },
-    // {
-    //   title: 'Login',
-    //   icon: Login,
-    //   path: '/pages/login',
-    //   openInNewTab: true
-    // },
+    {
+      title: 'แบบประเมิน(อาจารย์ประเมินบริษัท)',
+      icon: AccessibilityNewIcon,
+      path: '/cwie/assessmentcom',
+    },
+    {
+      title: 'แบบประเมิน(นักศึกษา)',
+      icon: AccessibilityNewIcon,
+      path: '/cwie/assessmentstudent',
+    },
     // {
     //   title: 'Register',
     //   icon: AccountPlusOutline,

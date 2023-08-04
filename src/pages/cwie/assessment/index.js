@@ -44,10 +44,10 @@ const SurveyForm = () => {
     // Handle form submission, and you can access the selected values as costnSum1_2.es_id1 and costnSum1_2.es_id2
   }
 
-  useEffect(() => {
-    console.log(costnSum1_2)
-    console.log(sum_12);
-  }, [handleSubmit])
+  // useEffect(() => {
+  //   console.log(costnSum1_2)
+  //   console.log(sum_12);
+  // }, [handleSubmit])
 
   // console.log(costnSum3_7)
 
@@ -77,16 +77,21 @@ const SurveyForm = () => {
     setSum3_7(es_id3Value + es_id4Value + es_id5Value + es_id6Value + es_id6_2Value + es_id6_3Value + es_id6_4_7Value + es_id7Value);
   }, [costnSum3_7]);
 
-  useEffect(() => {
-    // Perform the division by 2 if sum_12 is not 0, otherwise, keep it as 0
-    if (sum3_7 !== 0) {
-      setSum3_7fi(sum3_7 / 4);
-    }
-  }, [sum3_7]);
+  // useEffect(() => {
+  //   // Perform the division by 2 if sum_12 is not 0, otherwise, keep it as 0
+  //   if (sum3_7 !== 0) {
+  //     setSum3_7fi(sum3_7 / 4);
+  //   }
+  // }, [sum3_7]);
 
-  useEffect(() => {
-    console.log(sum3_7fi)
-  }, [handleSubmit])
+  // useEffect(() => {
+  //   console.log(sum3_7fi)
+  // }, [handleSubmit])
+
+  const handleSubmitClik = event => {
+    setSum3_7fi(sum3_7 + sum_12)
+    // Handle form submission, and you can access the selected values as costnSum1_2.es_id1 and costnSum1_2.es_id2
+  }
 
   return (
     <>
@@ -428,9 +433,10 @@ const SurveyForm = () => {
               <Grid container justifyContent='center' mt={3}>
                 <Grid item xs={12} md={6}>
                   {/* <TextField name='es_complain' label='ข้อเสนอแนะเพิ่มเติม' multiline rows={3} fullWidth /> */}
-                  <Button type='submit' variant='contained' onClick={handleSubmit}>
+                  <Button type='submit' variant='contained' onClick={handleSubmitClik}>
                     ส่งแบบประเมิน
                   </Button>
+                  {sum3_7fi !== 0 && <p>ผลรวมคะแนน: {sum3_7fi}</p>}
                 </Grid>
               </Grid>
             </form>
