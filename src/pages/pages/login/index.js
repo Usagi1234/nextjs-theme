@@ -82,7 +82,7 @@ const LoginPage = () => {
 
   const submitForm = () => {
     axios
-      .post('http://localhost:3200/api/authentication', {
+      .post('http://localhost:3200/api/authenticationstu', {
         username: values.email,
         password: values.password
         // api/authentication
@@ -186,7 +186,7 @@ const LoginPage = () => {
               onChange={handleChange('email')}
             />
             <FormControl fullWidth>
-              <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
+              <InputLabel htmlFor='auth-login-password'> Password </InputLabel>
               <OutlinedInput
                 label='Password'
                 value={values.password}
