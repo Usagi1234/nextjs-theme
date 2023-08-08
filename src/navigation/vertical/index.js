@@ -23,7 +23,6 @@ const navigation = () => {
       title: 'Login',
       icon: Login,
       path: '/pages/login',
-      openInNewTab: true
     },
     {
       sectionTitle: 'CWIE'
@@ -58,18 +57,6 @@ const navigation = () => {
       icon: AccessibilityNewIcon,
       path: '/cwie/assessmentstudent',
     },
-    // {
-    //   title: 'Register',
-    //   icon: AccountPlusOutline,
-    //   path: '/pages/register',
-    //   openInNewTab: true
-    // },
-    // {
-    //   title: 'Error',
-    //   icon: AlertCircleOutline,
-    //   path: '/pages/error',
-    //   openInNewTab: true
-    // },
     {
       sectionTitle: 'User Interface'
     },

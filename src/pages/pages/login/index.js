@@ -103,6 +103,7 @@ const LoginPage = () => {
           })
           setSuccess(true)
         }
+        console.log(data);
       })
   }
 
@@ -120,11 +121,13 @@ const LoginPage = () => {
         title: 'Signed in successfully'
       })
       setSuccess(null)
-      setTimeout(() => {
-        window.location.href = '/'
-      }, 1000)
+      // setTimeout(() => {
+      //   window.location.href = '/'
+      // }, 1000)
+
     }
   }, [success])
+  
 
   // ** Hook
   const theme = useTheme()
