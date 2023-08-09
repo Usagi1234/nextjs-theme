@@ -13,57 +13,8 @@ import Magnify from 'mdi-material-ui/Magnify'
 import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
 import UserDropdown from 'src/@core/layouts/components/shared-components/UserDropdown'
 import NotificationDropdown from 'src/@core/layouts/components/shared-components/NotificationDropdown'
-import Cookies from 'js-cookie'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
 
 const AppBarContent = props => {
-
-    // -------------------- getCookie
-    const username = Cookies.get('._jwtUsername')
-    const role = Cookies.get('._jwtRole')
-    // ===============================
-
-    
-  const [user, setUsername] = useState('')
-  const [status, setStatus] = useState('')
-  const [showname, setShowname] = useState('')
-  const [showstatus, setShowstate] = useState('')
-
-    useEffect(() => {
-      axios
-        .post('http://localhost:3200/api/verify_authen', {
-          token: username,
-          tokenRole: role
-        })
-        .then(data => {
-          setUsername(data.data.User)
-          setStatus(data.data.stateRole)
-        })
-    }, [])
-
-    console.log(username);
-
-    useEffect(() => {
-      if (user !== undefined) {
-        if (status === 'นักศึกษา') {
-          axios.post('http://localhost:3200/api/ReadStudent', { username: user }).then(data => {
-            const setFristName = data.data[0].first_name
-            setShowname(setFristName)
-            setShowstate(status)
-          })
-        }
-        // if (status === 'อาจารย์') {
-        //   axios
-        //     .post('http://0.0.0.0:3200/api/ReadTeacher', { username: user })
-        //     .then((data) => {
-        //       const setFristName = data.data[0].first_name;
-        //       setShowname(setFristName);
-        //       setShowstate(status);
-        //     });
-        // }
-      }
-    }, [user, status])
   // ** Props
   const { hidden, settings, saveSettings, toggleNavVisibility } = props
 

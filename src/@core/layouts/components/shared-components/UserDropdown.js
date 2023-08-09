@@ -23,6 +23,7 @@ import AccountOutline from 'mdi-material-ui/AccountOutline'
 import MessageOutline from 'mdi-material-ui/MessageOutline'
 import HelpCircleOutline from 'mdi-material-ui/HelpCircleOutline'
 import Cookies from 'js-cookie'
+import cookieCutter from 'cookie-cutter'
 import axios from 'axios'
 
 // ** Styled Components
@@ -39,12 +40,14 @@ const UserDropdown = () => {
   const username = Cookies.get('._jwtUsername')
   const role = Cookies.get('._jwtRole')
   // ===============================
-  const [isLogin, setIslogin] = useState(false)
 
   const [user, setUsername] = useState('')
   const [status, setStatus] = useState('')
   const [showname, setShowname] = useState('')
   const [showstatus, setShowstate] = useState('')
+
+  // console.log(Cookies.get('._jwtUsername'))
+  // console.log(role)
 
   useEffect(() => {
     axios
@@ -59,31 +62,29 @@ const UserDropdown = () => {
   }, [])
 
   useEffect(() => {
-    if (user !== undefined) {
+    if (user !== undefined && status !== undefined) {
       if (status === 'นักศึกษา') {
         axios.post('http://localhost:3200/api/ReadStudent', { username: user }).then(data => {
-          const setFristName = data.data[0].first_name
-          setShowname(setFristName)
-          setShowstate(status)
+          if (data.data.length > 0) {
+            const setFristName = data.data[0].stu_name
+            setShowname(setFristName)
+            setShowstate(status)
+          }
         })
       }
-      // if (status === 'อาจารย์') {
-      //   axios
-      //     .post('http://0.0.0.0:3200/api/ReadTeacher', { username: user })
-      //     .then((data) => {
-      //       const setFristName = data.data[0].first_name;
-      //       setShowname(setFristName);
-      //       setShowstate(status);
-      //     });
-      // }
+      if (status === 'อาจารย์') {
+        axios.post('http://localhost:3200/api/ReadTeacher', { username: user }).then(data => {
+          if (data.data.length > 0) {
+            const setFristName = data.data[0].tea_name
+            setShowname(setFristName);
+            setShowstate(status);
+          }
+        });
+      }
     }
   }, [user, status])
+  
 
-  useEffect(() => {
-    if (username !== undefined && role !== undefined) {
-      setIslogin(true)
-    }
-  }, [username])
   // ** States
   const [anchorEl, setAnchorEl] = useState(null)
 
@@ -96,14 +97,19 @@ const UserDropdown = () => {
 
   const handleDropdownClose = url => {
     if (url) {
-      router.push(url) // Use history.push to navigate to the specified URL
+      router.push(url);
     }
-    Cookies.remove('._jwtUsername')
-    Cookies.remove('._jwtRole')
-    setIslogin(false)
-    setAnchorEl(null)
+    setAnchorEl(null);
   }
 
+  const handleDropdownCloselogout = url => {
+    if (url) {
+      router.push(url);
+      cookieCutter.set('._jwtUsername', '', { expires: new Date(0) }) //ใช้เพื่อกำหนดเวลาให้คุกกี้หมดเวลา
+      cookieCutter.set('._jwtRole', '', { expires: new Date(0) })
+    }
+  }
+  
   const styles = {
     py: 2,
     px: 4,
@@ -119,6 +125,7 @@ const UserDropdown = () => {
   }
 
   return (
+    <Fragment>
       <Badge
         overlap='circular'
         onClick={handleDropdownOpen}
@@ -126,73 +133,85 @@ const UserDropdown = () => {
         badgeContent={<BadgeContentSpan />}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        <Avatar alt={showname} onClick={handleDropdownOpen} sx={{ width: 40, height: 40 }} src='/images/avatars/1.png' />
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={() => handleDropdownClose()}
-          sx={{ '& .MuiMenu-paper': { width: 230, marginTop: 4 } }}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        >
-          <Box sx={{ pt: 2, pb: 3, px: 4 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Badge
-                overlap='circular'
-                badgeContent={<BadgeContentSpan />}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              >
-                <Avatar alt={showname} src='/images/avatars/1.png' sx={{ width: '2.5rem', height: '2.5rem' }} />
-              </Badge>
-              <Box
-                sx={{
-                  display: 'flex',
-                  marginLeft: 3,
-                  alignItems: 'flex-start',
-                  flexDirection: 'column'
-                }}
-              >
-                <Typography sx={{ fontWeight: 600 }}>{showname}</Typography>
-                <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
-                  {showstatus}
-                </Typography>
-              </Box>
+        <Avatar
+          alt='John Doe'
+          onClick={handleDropdownOpen}
+          sx={{ width: 40, height: 40 }}
+          src='/images/avatars/1.png'
+        />
+      </Badge>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={() => handleDropdownClose()}
+        sx={{ '& .MuiMenu-paper': { width: 230, marginTop: 4 } }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Box sx={{ pt: 2, pb: 3, px: 4 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Badge
+              overlap='circular'
+              badgeContent={<BadgeContentSpan />}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            >
+              <Avatar alt='John Doe' src='/images/avatars/1.png' sx={{ width: '2.5rem', height: '2.5rem' }} />
+            </Badge>
+            <Box sx={{ display: 'flex', marginLeft: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
+              <Typography sx={{ fontWeight: 600 }}>{showname}</Typography>
+              <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
+                {showstatus}
+              </Typography>
             </Box>
           </Box>
-          <Divider sx={{ mt: 0, mb: 1 }} />
-          <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
-            <Box sx={styles}>
-              <AccountOutline sx={{ marginRight: 2 }} />
-              Profile
-            </Box>
-          </MenuItem>
-          <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
-            <Box sx={styles}>
-              <EmailOutline sx={{ marginRight: 2 }} />
-              Inbox
-            </Box>
-          </MenuItem>
-          <Divider />
-          <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
-            <Box sx={styles}>
-              <CogOutline sx={{ marginRight: 2 }} />
-              Settings
-            </Box>
-          </MenuItem>
-          <Divider />
-          <MenuItem sx={{ py: 2 }} onClick={() => handleDropdownClose('/pages/login')}>
-            <LogoutVariant
-              sx={{
-                marginRight: 2,
-                fontSize: '1.375rem',
-                color: 'text.secondary'
-              }}
-            />
-            Logout
-          </MenuItem>
-        </Menu>
-      </Badge>// ถ้าไม่ใช่เงื่อนไข isLogin ให้แสดง null
-  );  
+        </Box>
+        <Divider sx={{ mt: 0, mb: 1 }} />
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
+          <Box sx={styles}>
+            <AccountOutline sx={{ marginRight: 2 }} />
+            Profile
+          </Box>
+        </MenuItem>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
+          <Box sx={styles}>
+            <EmailOutline sx={{ marginRight: 2 }} />
+            Inbox
+          </Box>
+        </MenuItem>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
+          <Box sx={styles}>
+            <MessageOutline sx={{ marginRight: 2 }} />
+            Chat
+          </Box>
+        </MenuItem>
+        <Divider />
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
+          <Box sx={styles}>
+            <CogOutline sx={{ marginRight: 2 }} />
+            Settings
+          </Box>
+        </MenuItem>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
+          <Box sx={styles}>
+            <CurrencyUsd sx={{ marginRight: 2 }} />
+            Pricing
+          </Box>
+        </MenuItem>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
+          <Box sx={styles}>
+            <HelpCircleOutline sx={{ marginRight: 2 }} />
+            FAQ
+          </Box>
+        </MenuItem>
+        <Divider />
+        <MenuItem sx={{ py: 2 }} onClick={() => handleDropdownCloselogout('/pages/login_teacher')}>
+          <LogoutVariant sx={{ marginRight: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
+          Logout
+        </MenuItem>
+      </Menu>
+    </Fragment>
+  )
+  
 }
 
 export default UserDropdown

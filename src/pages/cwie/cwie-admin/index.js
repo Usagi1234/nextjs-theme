@@ -30,7 +30,7 @@ const MUITables = () => {
   })
 
   useEffect(() => {
-    axios.post('http://localhost:3200/api/v1/students').then(response => {
+    axios.get('http://localhost:3200/api/v1/students').then(response => {
       console.log(response)
       setStudentlist(response.data.data)
     })

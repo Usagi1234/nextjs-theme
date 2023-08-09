@@ -83,7 +83,7 @@ const LoginPage = () => {
 
   const submitForm = () => {
     axios
-      .post('http://localhost:3200/api/authenticationstu', {
+      .post('http://localhost:3200/api/authenticationtea', {
         username: values.email,
         password: values.password
         // api/authentication

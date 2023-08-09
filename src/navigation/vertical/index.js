@@ -11,9 +11,31 @@ import AlertCircleOutline from 'mdi-material-ui/AlertCircleOutline'
 import BlindIcon from '@mui/icons-material/Blind';
 import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
 import GoogleCirclesExtended from 'mdi-material-ui/GoogleCirclesExtended'
+import Cookies from 'js-cookie'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 const navigation = () => {
-  return [
+  // -------------------- getCookie
+  const username = Cookies.get('._jwtUsername')
+  const role = Cookies.get('._jwtRole')
+  // ===============================
+
+  const [status, setStatus] = useState('')
+
+  useEffect(() => {
+    axios
+      .post('http://localhost:3200/api/verify_authen', {
+        token: username,
+        tokenRole: role
+      })
+      .then(data => {
+        setStatus(data.data.stateRole)
+      })
+  }, [])
+
+  // ข้อมูลเมนูตามสิทธิ์การมองเห็น
+  let menuItems = [
     {
       title: 'Dashboard',
       icon: HomeOutline,
@@ -25,67 +47,58 @@ const navigation = () => {
       path: '/pages/login',
     },
     {
-      sectionTitle: 'CWIE'
+      title: 'Login',
+      icon: Login,
+      path: '/pages/login_teacher',
     },
-    {
-      title: 'Admin',
-      icon: BlindIcon,
-      path: '/cwie/cwie-admin',
-    },
-    {
-      title: 'Student',
-      icon: AccessibilityNewIcon,
-      path: '/cwie/cwie-student',
-    },
-    {
-      title: 'Uplond',
-      icon: BlindIcon,
-      path: '/cwie/uplond',
-    },
-    {
-      title: 'แบบประเมิน(ระหว่างนิเทศ)',
-      icon: AccessibilityNewIcon,
-      path: '/cwie/assessment',
-    },
-    {
-      title: 'แบบประเมิน(อาจารย์ประเมินบริษัท)',
-      icon: AccessibilityNewIcon,
-      path: '/cwie/assessmentcom',
-    },
-    {
-      title: 'แบบประเมิน(นักศึกษา)',
-      icon: AccessibilityNewIcon,
-      path: '/cwie/assessmentstudent',
-    },
-    {
-      sectionTitle: 'User Interface'
-    },
-    {
-      title: 'Typography',
-      icon: FormatLetterCase,
-      path: '/typography'
-    },
-    {
-      title: 'Icons',
-      path: '/icons',
-      icon: GoogleCirclesExtended
-    },
-    {
-      title: 'Cards',
-      icon: CreditCardOutline,
-      path: '/cards'
-    },
-    {
-      title: 'Tables',
-      icon: Table,
-      path: '/tables'
-    },
-    {
-      icon: CubeOutline,
-      title: 'Form Layouts',
-      path: '/form-layouts'
-    }
   ]
+
+  if (status === 'นักศึกษา') {
+    menuItems.push(
+      {
+        sectionTitle: 'CWIE'
+      },
+      {
+        title: 'Student',
+        icon: AccessibilityNewIcon,
+        path: '/cwie/cwie-student',
+      },
+      {
+        title: 'Uplond',
+        icon: BlindIcon,
+        path: '/cwie/uplond',
+      },
+      {
+        title: 'แบบประเมิน(นักศึกษา)',
+        icon: AccessibilityNewIcon,
+        path: '/cwie/assessmentstudent',
+      }
+    )
+  } else if (status === 'อาจารย์') {
+    menuItems.push(
+      {
+        sectionTitle: 'CWIE'
+      },
+      {
+        title: 'Admin',
+        icon: BlindIcon,
+        path: '/cwie/cwie-admin',
+      },
+      {
+        title: 'แบบประเมิน(ระหว่างนิเทศ)',
+        icon: AccessibilityNewIcon,
+        path: '/cwie/assessment',
+      },
+      {
+        title: 'แบบประเมิน(อาจารย์ประเมินบริษัท)',
+        icon: AccessibilityNewIcon,
+        path: '/cwie/assessmentcom',
+      }
+    )
+  }
+
+  return menuItems
 }
+
 
 export default navigation
