@@ -56,7 +56,7 @@ export default function report_weeklyEstablishment() {
   ]
 
   useEffect(() => {
-    axios.post('http://localhost:3200/api/v1/getreport').then(res => {
+    axios.get('http://localhost:3200/api/v1/getreport').then(res => {
       setRowReportStd(res.data.data)
     })
   }, [])

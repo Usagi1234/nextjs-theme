@@ -6,6 +6,7 @@ import TabPanel from '@mui/lab/TabPanel'
 import { useState } from 'react'
 import Icon from '@mdi/react'
 import { mdiFileDocumentCheckOutline } from '@mdi/js'
+import axios from 'axios'
 
 export default function doc_updownStudent() {
   const [value, setValue] = useState('1')
@@ -14,16 +15,25 @@ export default function doc_updownStudent() {
     setValue(newValue)
   }
 
-  // const [getpdf, setGetpdf] = useState('')
-  // const [selectedFile, setSelectedFile] = useState(null)
-  // const [fileName, setFileName] = useState('')
+  // const [file, setFile] = useState()
 
-  // useEffect(() => {
-  //   axios.get('http://localhost:3200/api/getfilepdf').then(response => {
-  //     console.log(response)
-  //     setGetpdf(response.data)
-  //   })
-  // }, [])
+  // const HandleFile = event => {
+  //   setFile(event.target.files[0])
+  //   console.log(event.target.files[0])
+  // }
+
+  // const HandleOnUpload = () => {
+  //   const formData = new FormData()
+  //   formData.append('file', file)
+  //   axios
+  //     .post('http://localhost:3200/api/uploadfilepdf', formData)
+  //     .then(res => {
+  //       console.log(res)
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
 
   return (
     <Box>

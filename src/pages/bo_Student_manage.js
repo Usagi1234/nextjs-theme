@@ -28,7 +28,8 @@ const bo_Student_manage = () => {
     curriculum_id: '',
     studygroup_id: '',
     stu_rmail: '',
-    stu_sex: ''
+    stu_sex: '',
+    stu_status: ''
   }
   const [rowDataSt, setRowDataSt] = useState('')
   const [dataSt, setDataSt] = useState(intial)
@@ -42,7 +43,8 @@ const bo_Student_manage = () => {
     curriculum_id: false,
     studygroup_id: false,
     stu_rmail: false,
-    stu_sex: false
+    stu_sex: false,
+    stu_status: false
   })
 
   const [open, setOpen] = useState(false)
@@ -94,7 +96,7 @@ const bo_Student_manage = () => {
   ]
 
   useEffect(() => {
-    axios.post('http://localhost:3200/api/v1/students').then(res => {
+    axios.get('http://localhost:3200/api/v1/students').then(res => {
       setRowDataSt(res.data.data)
     })
     axios.post('http://localhost:3200/api/v1/curriculum').then(res => {
@@ -142,14 +144,6 @@ const bo_Student_manage = () => {
         setColoChange(pre => ({ ...pre, stu_status: false }))
       }
       setDataSt(pre => ({ ...pre, stu_status: newStr })) //เก็บค่าเก่าไว้ใน dataDog
-    } else if (type === 'curriculum_id') {
-      //เช็ค type ที่ส่งมาใช้ dog_name ?
-      const newStr = event.target.value // อีเว้นที่เกิด เป้าหมายคือค่า value
-      if (dataSt.curriculum_id !== '') {
-        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
-        setColoChange(pre => ({ ...pre, curriculum_id: false }))
-      }
-      setDataSt(pre => ({ ...pre, curriculum_id: newStr })) //เก็บค่าเก่าไว้ใน dataDo
     }
   }
 
@@ -312,6 +306,59 @@ const bo_Student_manage = () => {
                                       error={coloChange.stu_status}
                                     />
                                   </Grid>
+                                </Grid>
+                              </Box>
+                              <Box sx={{ p: 4 }}>
+                                <Typography>Sex :</Typography>
+                              </Box>
+                              <Box sx={{ width: '35%' }}>
+                                <Grid container spacing={5}>
+                                  <Grid item xs={8}>
+                                    <TextField
+                                      fullWidth
+                                      label='Sex'
+                                      onChange={event => HandleChange(event, 'stu_sex')}
+                                      error={coloChange.stu_sex}
+                                    />
+                                  </Grid>
+                                </Grid>
+                              </Box>
+                            </Box>
+                            <Box sx={{ display: 'flex', width: '100%', mt: 4 }}>
+                              <Box sx={{ p: 4 }}>
+                                <Typography>RMUTL Email:</Typography>
+                              </Box>
+                              <Box sx={{ width: '35%' }}>
+                                <Grid container spacing={5}>
+                                  <Grid item xs={8}>
+                                    <TextField
+                                      fullWidth
+                                      label='RMUTL Email'
+                                      onChange={event => HandleChange(event, 'stu_rmail')}
+                                      error={coloChange.stu_rmail}
+                                    />
+                                  </Grid>
+                                </Grid>
+                              </Box>
+                              <Box sx={{ width: '80%' }}>
+                                <Grid item xs={12} sm={6}>
+                                  <FormControl variant='outlined' fullWidth sx={{ mb: 2 }}>
+                                    <InputLabel id='StudyGroup-label'>Study Group:</InputLabel>
+                                    <Select
+                                      required
+                                      labelId='StudyGroup-label'
+                                      id='StudyGroup'
+                                      name='StudyGroup'
+                                      label='StudyGroup'
+                                      onChange={event => HandleChange(event, 'studygroup_id')}
+                                    >
+                                      {studyGroupSt.map(row => (
+                                        <MenuItem key={row.studygroup_id} value={row.studygroup_id}>
+                                          {row.studygroup_name}
+                                        </MenuItem>
+                                      ))}
+                                    </Select>
+                                  </FormControl>
                                 </Grid>
                               </Box>
                             </Box>

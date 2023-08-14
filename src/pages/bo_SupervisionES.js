@@ -19,7 +19,7 @@ export default function bo_SupervisionES() {
   ]
 
   useEffect(() => {
-    axios.post('http://localhost:3200/api/v1/supervisioncom').then(res => {
+    axios.get('http://localhost:3200/api/v1/supervisioncom').then(res => {
       setDataRowSuperES(res.data.data)
     })
   }, [])

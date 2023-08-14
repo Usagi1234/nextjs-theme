@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Grid'
 import { Box, Button, Card, CardContent, Typography } from '@mui/material'
 import CardMedia from '@mui/material/CardMedia'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Icon from '@mdi/react'
 import { mdiAccountGroup } from '@mdi/js'
 import TabList from '@mui/lab/TabList'
@@ -9,6 +9,7 @@ import TabPanel from '@mui/lab/TabPanel'
 import Tab from '@mui/material/Tab'
 import TabContext from '@mui/lab/TabContext'
 import TextField from '@mui/material/TextField'
+import axios from 'axios'
 
 export default function supervisionStudent() {
   const [value, setValue] = useState('1')
@@ -16,6 +17,164 @@ export default function supervisionStudent() {
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
+
+  const intialSt = {
+    su_name: '',
+    su_lname: '',
+    su_timein: '',
+    su_timeout: '',
+    su_holiday: '',
+    su_time: '',
+    su_work: '',
+    su_sugges: ''
+  }
+
+  const [dataSt, setDataSt] = useState(intialSt)
+
+  const colorSt = {
+    su_name: false,
+    su_lname: false,
+    su_timein: false,
+    su_timeout: false,
+    su_holiday: false,
+    su_time: false,
+    su_work: false,
+    su_sugges: false
+  }
+
+  const [colorChangeSt, setColorChangeSt] = useState(colorSt)
+
+  const HandleChangeSt = (event, type) => {
+    if (type === 'su_name') {
+      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
+      if (dataSt.su_name !== '') {
+        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
+        setColorChangeSt(pre => ({ ...pre, su_name: false }))
+      }
+      setDataSt(pre => ({ ...pre, su_name: newStr }))
+    } else if (type === 'su_lname') {
+      const newStr = event.target.value.replace('', '')
+      if (dataSt.su_lname !== '') {
+        setColorChangeSt(pre => ({ ...pre, su_lname: false }))
+      }
+      setDataSt(pre => ({ ...pre, su_lname: newStr }))
+    } else if (type === 'su_timein') {
+      const newStr = event.target.value.replace('', '')
+      if (dataSt.su_timein !== '') {
+        setColorChangeSt(pre => ({ ...pre, su_timein: false }))
+      }
+      setDataSt(pre => ({ ...pre, su_timein: newStr }))
+    } else if (type === 'su_timeout') {
+      const newStr = event.target.value.replace('', '')
+      if (dataSt.su_timeout !== '') {
+        setColorChangeSt(pre => ({ ...pre, su_timeout: false }))
+      }
+      setDataSt(pre => ({ ...pre, su_timeout: newStr }))
+    } else if (type === 'su_holiday') {
+      const newStr = event.target.value.replace('', '')
+      if (dataSt.su_holiday !== '') {
+        setColorChangeSt(pre => ({ ...pre, su_holiday: false }))
+      }
+      setDataSt(pre => ({ ...pre, su_holiday: newStr }))
+    } else if (type === 'su_time') {
+      const newStr = event.target.value.replace('', '')
+      if (dataSt.su_time !== '') {
+        setColorChangeSt(pre => ({ ...pre, su_time: false }))
+      }
+      setDataSt(pre => ({ ...pre, su_time: newStr }))
+    } else if (type === 'su_work') {
+      const newStr = event.target.value.replace('', '')
+      if (dataSt.su_work !== '') {
+        setColorChangeSt(pre => ({ ...pre, su_work: false }))
+      }
+      setDataSt(pre => ({ ...pre, su_work: newStr }))
+    } else if (type === 'su_sugges') {
+      const newStr = event.target.value.replace('', '')
+      if (dataSt.su_sugges !== '') {
+        setColorChangeSt(pre => ({ ...pre, su_sugges: false }))
+      }
+      setDataSt(pre => ({ ...pre, su_sugges: newStr }))
+    }
+  }
+
+  const HandleInsertSt = () => {
+    if (
+      dataSt.su_name !== '' &&
+      dataSt.su_lname !== '' &&
+      dataSt.su_timein !== '' &&
+      dataSt.su_timeout !== '' &&
+      dataSt.su_holiday !== '' &&
+      dataSt.su_time !== '' &&
+      dataSt.su_work !== '' &&
+      dataSt.su_sugges !== ''
+    ) {
+      setDataSt(pre => ({
+        ...pre, // เก็บค่าเก่า
+        ...dataSt // การจาย ที่เป็นก้อนออก ถ้าสลับข้อมูลจะอยู่ด้านหน้า
+      }))
+      axios
+        .post('http://localhost:3200/api/v1/supervisionstuinsert', dataSt)
+        .then(res => {
+          // window.location.reload()
+          // setDataSt(intialSt)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+    if (dataSt.su_name !== '') {
+      console.log('su_name ไม่ว่าง')
+    } else {
+      console.log('su_name ว่าง')
+      setColorChangeSt(pre => ({ ...pre, su_name: true }))
+    }
+    if (dataSt.su_lname !== '') {
+      console.log('su_lname ไม่ว่าง')
+    } else {
+      console.log('su_lname ว่าง')
+      setColorChangeSt(pre => ({ ...pre, su_lname: true }))
+    }
+    if (dataSt.su_timein !== '') {
+      console.log('su_timein ไม่ว่าง')
+    } else {
+      console.log('su_timein ว่าง')
+      setColorChangeSt(pre => ({ ...pre, su_timein: true }))
+    }
+    if (dataSt.su_timeout !== '') {
+      console.log('su_timeout ไม่ว่าง')
+    } else {
+      console.log('su_timeout ว่าง')
+      setColorChangeSt(pre => ({ ...pre, su_timeout: true }))
+    }
+    if (dataSt.su_holiday !== '') {
+      console.log('su_holiday ไม่ว่าง')
+    } else {
+      console.log('su_holiday ว่าง')
+      setColorChangeSt(pre => ({ ...pre, su_holiday: true }))
+    }
+    if (dataSt.su_time !== '') {
+      console.log('su_time ไม่ว่าง')
+    } else {
+      console.log('su_time ว่าง')
+      setColorChangeSt(pre => ({ ...pre, su_time: true }))
+    }
+    if (dataSt.su_work !== '') {
+      console.log('su_work ไม่ว่าง')
+    } else {
+      console.log('su_work ว่าง')
+      setColorChangeSt(pre => ({ ...pre, su_work: true }))
+    }
+    if (dataSt.su_sugges !== '') {
+      console.log('su_sugges ไม่ว่าง')
+    } else {
+      console.log('su_sugges ว่าง')
+      setColorChangeSt(pre => ({ ...pre, su_sugges: true }))
+    }
+  }
+
+  useEffect(() => {
+    console.log(dataSt)
+  }, [dataSt])
 
   return (
     <Box>
@@ -45,7 +204,14 @@ export default function supervisionStudent() {
                       </Box>
                       <Box sx={{ width: '35%' }}>
                         <Grid item xs={6}>
-                          <TextField fullWidth label='Name' placeholder='Name[TH]' />
+                          <TextField
+                            fullWidth
+                            label='Name'
+                            placeholder='Name[TH]'
+                            onChange={event => HandleChangeSt(event, 'su_name')}
+                            error={colorChangeSt.su_name}
+                            value={dataSt.su_name}
+                          />
                         </Grid>
                       </Box>
                       <Box sx={{ p: 3, ml: 20 }}>
@@ -53,7 +219,14 @@ export default function supervisionStudent() {
                       </Box>
                       <Box sx={{ width: '35%' }}>
                         <Grid item xs={6}>
-                          <TextField fullWidth label='Last Name' placeholder='Last Name[TH]' />
+                          <TextField
+                            fullWidth
+                            label='Last Name'
+                            placeholder='Last Name[TH]'
+                            onChange={event => HandleChangeSt(event, 'su_lname')}
+                            error={colorChangeSt.su_lname}
+                            value={dataSt.su_lname}
+                          />
                         </Grid>
                       </Box>
                     </Box>
@@ -63,7 +236,14 @@ export default function supervisionStudent() {
                       </Box>
                       <Box sx={{ width: '20%' }}>
                         <Grid item xs={8}>
-                          <TextField fullWidth label='Time in' placeholder='8.00' />
+                          <TextField
+                            fullWidth
+                            label='Time in'
+                            placeholder='8.00'
+                            onChange={event => HandleChangeSt(event, 'su_timein')}
+                            error={colorChangeSt.su_timein}
+                            value={dataSt.su_timein}
+                          />
                         </Grid>
                       </Box>
                       <Box sx={{ p: 3, ml: 65 }}>
@@ -71,7 +251,14 @@ export default function supervisionStudent() {
                       </Box>
                       <Box sx={{ width: '20%', ml: 4 }}>
                         <Grid item xs={6}>
-                          <TextField fullWidth label='Time Out' placeholder='17.00' />
+                          <TextField
+                            fullWidth
+                            label='Time Out'
+                            placeholder='17.00'
+                            onChange={event => HandleChangeSt(event, 'su_timeout')}
+                            error={colorChangeSt.su_timeout}
+                            value={dataSt.su_timeout}
+                          />
                         </Grid>
                       </Box>
                     </Box>
@@ -81,7 +268,14 @@ export default function supervisionStudent() {
                       </Box>
                       <Box sx={{ width: '20%' }}>
                         <Grid item xs={6}>
-                          <TextField fullWidth label='weekly holiday' placeholder='Saturday,Sunday' />
+                          <TextField
+                            fullWidth
+                            label='weekly holiday'
+                            placeholder='Saturday,Sunday'
+                            onChange={event => HandleChangeSt(event, 'su_holiday')}
+                            error={colorChangeSt.su_holiday}
+                            value={dataSt.su_holiday}
+                          />
                         </Grid>
                       </Box>
                       <Box sx={{ p: 3, ml: 31 }}>
@@ -89,7 +283,14 @@ export default function supervisionStudent() {
                       </Box>
                       <Box sx={{ width: '20%' }}>
                         <Grid item xs={6}>
-                          <TextField fullWidth label='Time supervision' placeholder='Saturday,Sunday' />
+                          <TextField
+                            fullWidth
+                            label='Time supervision'
+                            placeholder='1,2'
+                            onChange={event => HandleChangeSt(event, 'su_time')}
+                            error={colorChangeSt.su_time}
+                            value={dataSt.su_time}
+                          />
                         </Grid>
                       </Box>
                     </Box>
@@ -106,6 +307,9 @@ export default function supervisionStudent() {
                           placeholder='Nature of work'
                           multiline
                           minRows={6}
+                          onChange={event => HandleChangeSt(event, 'su_work')}
+                          error={colorChangeSt.su_work}
+                          value={dataSt.su_work}
                         />
                       </Box>
                     </Box>
@@ -116,11 +320,20 @@ export default function supervisionStudent() {
                         </Typography>
                       </Box>
                       <Box>
-                        <TextField fullWidth label='Suggestion' placeholder='Suggestion' multiline minRows={6} />
+                        <TextField
+                          fullWidth
+                          label='Suggestion'
+                          placeholder='Suggestion'
+                          multiline
+                          minRows={6}
+                          onChange={event => HandleChangeSt(event, 'su_sugges')}
+                          error={colorChangeSt.su_sugges}
+                          value={dataSt.su_sugges}
+                        />
                       </Box>
                     </Box>
                     <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', mb: 6 }}>
-                      <Button>submit</Button>
+                      <Button onClick={() => HandleInsertSt()}>submit</Button>
                       <Button>Cancel</Button>
                     </Box>
                   </TabPanel>

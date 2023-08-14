@@ -31,14 +31,18 @@ export default function doc_officer() {
               </Box>
               <TabContext value={value}>
                 <TabList onChange={handleChange} aria-label='card navigation example'>
-                  <Tab value='1' label='Download Document' />
-                  <Tab value='2' label='Upload Document ' />
+                  <Tab value='1' label='Download Document Student' />
+                  <Tab value='2' label='Download Document Establishment' />
+                  <Tab value='3' label='Upload Document' />
                 </TabList>
                 <CardContent>
                   <TabPanel value='1' sx={{ p: 0 }}>
                     {/* <Box>{DataGrid Map }</Box> */}
                   </TabPanel>
                   <TabPanel value='2' sx={{ p: 0 }}>
+                    {/* <Box>{Data Grid Map}</Box> */}
+                  </TabPanel>
+                  <TabPanel value='3' sx={{ p: 0 }}>
                     {/* <Box>{Data Grid Map}</Box> */}
                   </TabPanel>
                 </CardContent>

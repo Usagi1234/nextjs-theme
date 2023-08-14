@@ -107,7 +107,7 @@ export default function bo_Establishment_manage() {
     const onDel = { com_id: id }
     console.log('id', onDel)
     axios
-      .post('http://localhost:3200/api/v1/companydelete', onDel)
+      .delete('http://localhost:3200/api/v1/companydelete', onDel)
       .then(res => {
         console.log(res)
         window.location.reload()
@@ -218,7 +218,7 @@ export default function bo_Establishment_manage() {
   }
 
   useEffect(() => {
-    axios.post('http://localhost:3200/api/v1/companys').then(res => {
+    axios.get('http://localhost:3200/api/v1/companys').then(res => {
       setRowDataComp(res.data.data)
     })
   }, [])

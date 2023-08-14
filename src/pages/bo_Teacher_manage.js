@@ -126,7 +126,7 @@ export default function bo_Teacher_manage() {
   ]
 
   useEffect(() => {
-    axios.post('http://localhost:3200/api/v1/teachers').then(res => {
+    axios.get('http://localhost:3200/api/v1/teachers').then(res => {
       setRowDataTeacher(res.data.data)
     })
     axios.post('http://localhost:3200/api/v1/studygroup').then(res => {
@@ -286,8 +286,9 @@ export default function bo_Teacher_manage() {
 
   const HandleDelTc = id => {
     const onDelTc = { tea_id: id }
+    console.log('sss', onDelTc)
     axios
-      .post('http://localhost:3200/api/v1/teacherdelete', onDelTc)
+      .delete('http://localhost:3200/api/v1/teacherdelete', onDelTc)
       .then(res => {
         console.log(res)
         window.location.reload()

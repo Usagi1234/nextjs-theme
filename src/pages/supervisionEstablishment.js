@@ -99,11 +99,47 @@ export default function supervisionEstabishment() {
         .then(res => {
           console.log(res)
           setDataSupervisionEs(intialSE)
-          // window.location.reload()
+          window.location.reload()
         })
         .catch(err => {
           console.log(err)
         })
+    }
+    if (dataSupervisionEs.su_need !== '') {
+      console.log('su_need ไม่ว่าง')
+    } else {
+      console.log('su_need ว่าง')
+      setColorChangeES(pre => ({ ...pre, su_need: true }))
+    }
+    if (dataSupervisionEs.su_time !== '') {
+      console.log('su_time ไม่ว่าง')
+    } else {
+      console.log('su_time ว่าง')
+      setColorChangeES(pre => ({ ...pre, su_time: true }))
+    }
+    if (dataSupervisionEs.su_detail !== '') {
+      console.log('su_detail ไม่ว่าง')
+    } else {
+      console.log('su_detail ว่าง')
+      setColorChangeES(pre => ({ ...pre, su_detail: true }))
+    }
+    if (dataSupervisionEs.su_date !== '') {
+      console.log('su_date ไม่ว่าง')
+    } else {
+      console.log('su_date ว่าง')
+      setColorChangeES(pre => ({ ...pre, su_date: true }))
+    }
+    if (dataSupervisionEs.su_coor !== '') {
+      console.log('su_coor ไม่ว่าง')
+    } else {
+      console.log('su_coor ว่าง')
+      setColorChangeES(pre => ({ ...pre, su_coor: true }))
+    }
+    if (dataSupervisionEs.su_sugges !== '') {
+      console.log('su_sugges ไม่ว่าง')
+    } else {
+      console.log('su_sugges ว่าง')
+      setColorChangeES(pre => ({ ...pre, su_sugges: true }))
     }
   }
 

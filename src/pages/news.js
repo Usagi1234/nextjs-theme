@@ -1,8 +1,56 @@
 import Grid from '@mui/material/Grid'
 import { Box, Button, Card, CardContent, Typography } from '@mui/material'
 import CardMedia from '@mui/material/CardMedia'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import Modal from '@mui/material/Modal'
 
-export default function process() {
+const dummyImage = [
+  {
+    img: 'https://scontent.fbkk29-4.fna.fbcdn.net/v/t1.6435-9/169092375_3837059186331511_6795198715943974550_n.jpg?_nc_cat=110&cb=99be929b-3346023f&ccb=1-7&_nc_sid=7f8c78&_nc_ohc=BNAgiLAyWjQAX9AYoAf&_nc_ht=scontent.fbkk29-4.fna&oh=00_AfBAhUCk8TBUCU8FVm-rcpkXBcCKbio3r5QBsimwhVHVtg&oe=650166B2'
+  },
+  {
+    img: 'https://cdn.chiangmainews.co.th/wp-content/uploads/2023/08/08095936/1691463576_223549-chiangmainews.jpg'
+  }
+]
+
+export default function news() {
+  const [dataNews, setDataNews] = useState('')
+  const [dataNewsRow, setDataNewsRow] = useState('')
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 600,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 1
+  }
+
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
+
+  const HandleRowAndOpenNews = data => {
+    setDataNewsRow(data)
+    setOpen(true)
+  }
+
+  useEffect(() => {
+    axios
+      .post('http://localhost:3200/api/v1/getnews')
+      .then(res => {
+        setDataNews(res.data.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }, [])
+
   return (
     <Box>
       <Grid container spacing={6} sx={{ mb: 6 }}>
@@ -17,20 +65,50 @@ export default function process() {
         </Grid>
       </Grid>
       <Grid container spacing={6}>
-        <Grid item xs={12} sm={6} md={4}>
-          <Card>
-            <CardMedia sx={{ height: '14.5625rem' }} image='/images/cards/glass-house.png' />
-            <CardContent sx={{ display: 'flex', textAlign: 'center', alignItems: 'center', flexDirection: 'column' }}>
-              <Typography variant='h5' sx={{ marginBottom: 2 }}>
-                Influencing The Influencer
-              </Typography>
-              <Button variant='contained' sx={{ padding: theme => theme.spacing(1.75, 5.5), mt: 4 }}>
-                Contact Now
-              </Button>
-            </CardContent>
-          </Card>
-        </Grid>
+        {Object.values(dataNews)?.map((datanews, index) => (
+          <Grid item xs={12} sm={6} md={4}>
+            <Card>
+              <CardMedia sx={{ height: '14.5625rem' }} image={dummyImage[index].img} />
+              <CardContent sx={{ display: 'flex', textAlign: 'center', alignItems: 'center', flexDirection: 'column' }}>
+                <Typography variant='h5' sx={{ marginBottom: 2 }}>
+                  {datanews.new_name}
+                </Typography>
+                <Button
+                  variant='contained'
+                  sx={{ padding: theme => theme.spacing(1.75, 5.5), mt: 4 }}
+                  onClick={() => HandleRowAndOpenNews(datanews)}
+                >
+                  Contact Now
+                </Button>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
       </Grid>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
+      >
+        <Box sx={style}>
+          <Grid container spacing={6}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', m: 10, width: '100%' }}>
+              <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                <Typography variant='h5'>{dataNewsRow.new_name}</Typography>
+              </Box>
+              <Box sx={{ display: 'flex' }}>
+                <Typography sx={{ m: 2 }} variant='h6'>
+                  รายละเอียดขาว :
+                </Typography>
+                <Typography sx={{ m: 2 }} variant='h6'>
+                  {dataNewsRow.new_details}
+                </Typography>
+              </Box>
+            </Box>
+          </Grid>
+        </Box>
+      </Modal>
     </Box>
   )
 }

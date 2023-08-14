@@ -8,6 +8,7 @@ const DefaultPalette = (mode, themeColor) => {
     if (themeColor === 'primary') {
       // return '#C6A7FE'
       return '#e394b5'
+      // #1e88e5
     } else if (themeColor === 'secondary') {
       return '#9C9FA4'
     } else if (themeColor === 'success') {

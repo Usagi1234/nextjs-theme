@@ -55,7 +55,7 @@ export default function report_weeklyTeacher() {
 
   useEffect(() => {
     axios
-      .post('http://localhost:3200/api/v1/getreport')
+      .get('http://localhost:3200/api/v1/getreport')
       .then(res => {
         setRowReportStd(res.data.data)
       })
