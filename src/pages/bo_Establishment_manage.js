@@ -38,6 +38,7 @@ export default function bo_Establishment_manage() {
   const handleCloseEdit = () => {
     setOpenEdit(false)
     setDataCompany(intialComp)
+    setColoChangeComp(false)
   }
 
   const [openDel, setOpenDel] = useState(false)
@@ -107,7 +108,7 @@ export default function bo_Establishment_manage() {
     const onDel = { com_id: id }
     console.log('id', onDel)
     axios
-      .delete('http://localhost:3200/api/v1/companydelete', onDel)
+      .delete('http://localhost:3200/api/v1/companydelete', { data: onDel })
       .then(res => {
         console.log(res)
         window.location.reload()

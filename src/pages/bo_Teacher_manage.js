@@ -61,6 +61,7 @@ export default function bo_Teacher_manage() {
   const handleClose = () => {
     setOpenTc(false)
     setDataTeacher(intialTea)
+    setColorChangeTc(false)
   }
 
   const [openEditTc, setOpenEditTc] = useState(false)
@@ -68,14 +69,16 @@ export default function bo_Teacher_manage() {
   const handleCloseEdit = () => {
     setDataTeacher(intialTea)
     setOpenEditTc(false)
+    setColorChangeTc(false)
   }
 
-  const [getIdDelTc, setGetIdDelTc] = useState()
+  const [getIdDelTc, setGetIdDelTc] = useState('')
   const [openDelTc, setOpenDelTc] = useState(false)
   const handleOpenDel = () => setOpenDelTc(true)
   const handleCloseDel = () => {
     setDataTeacher(intialTea)
     setOpenDelTc(false)
+    setColorChangeTc(false)
   }
 
   const columns = [
@@ -200,7 +203,6 @@ export default function bo_Teacher_manage() {
         .post('http://localhost:3200/api/v1/insertteacher', dataTeacher)
         .then(res => {
           console.log(res)
-          setDataTeacher(intialTea)
           window.location.reload()
           handleClose()
         })
@@ -212,25 +214,25 @@ export default function bo_Teacher_manage() {
       console.log('tea_name ไม่ว่าง')
     } else {
       console.log('tea_name ว่าง')
-      setDataTeacher(pre => ({ ...pre, tea_name: true }))
+      setColorChangeTc(pre => ({ ...pre, tea_name: true }))
     }
     if (dataTeacher.tea_lname !== '') {
       console.log('tea_lname ไม่ว่าง')
     } else {
       console.log('tea_lname ว่าง')
-      setDataTeacher(pre => ({ ...pre, tea_lname: true }))
+      setColorChangeTc(pre => ({ ...pre, tea_lname: true }))
     }
     if (dataTeacher.tea_status !== '') {
       console.log('tea_status ไม่ว่าง')
     } else {
       console.log('tea_status ว่าง')
-      setDataTeacher(pre => ({ ...pre, tea_status: true }))
+      setColorChangeTc(pre => ({ ...pre, tea_status: true }))
     }
     if (dataTeacher.tea_tel !== '') {
       console.log('tea_tel ไม่ว่าง')
     } else {
       console.log('tea_tel ว่าง')
-      setDataTeacher(pre => ({ ...pre, tea_tel: true }))
+      setColorChangeTc(pre => ({ ...pre, tea_tel: true }))
     }
   }
 
@@ -262,25 +264,25 @@ export default function bo_Teacher_manage() {
       console.log('tea_name ไม่ว่าง')
     } else {
       console.log('tea_name ว่าง')
-      setDataTeacher(pre => ({ ...pre, tea_name: true }))
+      setColorChangeTc(pre => ({ ...pre, tea_name: true }))
     }
     if (dataTeacher.tea_lname !== '') {
       console.log('tea_lname ไม่ว่าง')
     } else {
       console.log('tea_lname ว่าง')
-      setDataTeacher(pre => ({ ...pre, tea_lname: true }))
+      setColorChangeTc(pre => ({ ...pre, tea_lname: true }))
     }
     if (dataTeacher.tea_status !== '') {
       console.log('tea_status ไม่ว่าง')
     } else {
       console.log('tea_status ว่าง')
-      setDataTeacher(pre => ({ ...pre, tea_status: true }))
+      setColorChangeTc(pre => ({ ...pre, tea_status: true }))
     }
     if (dataTeacher.tea_tel !== '') {
       console.log('tea_tel ไม่ว่าง')
     } else {
       console.log('tea_tel ว่าง')
-      setDataTeacher(pre => ({ ...pre, tea_tel: true }))
+      setColorChangeTc(pre => ({ ...pre, tea_tel: true }))
     }
   }
 
@@ -288,7 +290,7 @@ export default function bo_Teacher_manage() {
     const onDelTc = { tea_id: id }
     console.log('sss', onDelTc)
     axios
-      .delete('http://localhost:3200/api/v1/teacherdelete', onDelTc)
+      .delete('http://localhost:3200/api/v1/teacherdelete', { data: onDelTc })
       .then(res => {
         console.log(res)
         window.location.reload()
@@ -458,7 +460,7 @@ export default function bo_Teacher_manage() {
                             <Button type='submit' variant='contained' size='large' onClick={() => HandleOnInsTc()}>
                               submit
                             </Button>
-                            <Button>Cancel</Button>
+                            <Button onClick={() => handleClose()}>Cancel</Button>
                           </Box>
                         </form>
                       </CardContent>

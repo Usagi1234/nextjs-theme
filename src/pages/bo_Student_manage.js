@@ -35,6 +35,7 @@ const bo_Student_manage = () => {
   const [dataSt, setDataSt] = useState(intial)
   const [curriculumSt, setCurriculumSt] = useState([])
   const [studyGroupSt, setStudyGroupSt] = useState([])
+  const [getDelSt, setGetDelSt] = useState('')
 
   const [coloChange, setColoChange] = useState({
     stu_id: false,
@@ -52,6 +53,22 @@ const bo_Student_manage = () => {
   const handleClose = () => {
     setOpen(false)
     setDataSt(intial)
+    setColoChange(false)
+  }
+
+  const [openEditSt, setOpenEditSt] = useState(false)
+  const handleOpenEditSt = () => setOpenEditSt(true)
+  const handleCloseEditSt = () => {
+    setOpenEditSt(false)
+    setDataSt(intial)
+    setColoChange(false)
+  }
+
+  const [openDelSt, setOpenDelSt] = useState(false)
+  const handleOpenDelSt = () => setOpenDelSt(true)
+  const handleClosDelSt = () => {
+    setOpenDelSt(false)
+    setDataSt(intial)
   }
 
   const style = {
@@ -59,7 +76,7 @@ const bo_Student_manage = () => {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '80%',
+    width: '70%',
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -85,11 +102,31 @@ const bo_Student_manage = () => {
         <Button
           variant='text'
           onClick={() => {
-            // handleOpenEdit()
+            setDataSt(params.row)
+            handleOpenEditSt()
             console.log(params.row)
           }}
         >
           Edit
+        </Button>
+      )
+    },
+    {
+      field: 'Del',
+      headerName: 'Del',
+      width: 150,
+      renderCell: (
+        params //ทั้งหมดมี button edit
+      ) => (
+        <Button
+          variant='text'
+          onClick={() => {
+            setDataSt(params.id)
+            handleOpenDelSt()
+            console.log(params.row)
+          }}
+        >
+          Del
         </Button>
       )
     }
@@ -144,6 +181,38 @@ const bo_Student_manage = () => {
         setColoChange(pre => ({ ...pre, stu_status: false }))
       }
       setDataSt(pre => ({ ...pre, stu_status: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+    } else if (type === 'stu_rmail') {
+      //เช็ค type ที่ส่งมาใช้ dog_name ?
+      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
+      if (dataSt.stu_rmail !== '') {
+        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
+        setColoChange(pre => ({ ...pre, stu_rmail: false }))
+      }
+      setDataSt(pre => ({ ...pre, stu_rmail: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+    } else if (type === 'stu_sex') {
+      //เช็ค type ที่ส่งมาใช้ dog_name ?
+      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
+      if (dataSt.stu_sex !== '') {
+        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
+        setColoChange(pre => ({ ...pre, stu_sex: false }))
+      }
+      setDataSt(pre => ({ ...pre, stu_sex: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+    } else if (type === 'curriculum_id') {
+      //เช็ค type ที่ส่งมาใช้ dog_name ?
+      const newStr = event.target.value // อีเว้นที่เกิด เป้าหมายคือค่า value
+      if (dataSt.curriculum_id !== '') {
+        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
+        setColoChange(pre => ({ ...pre, curriculum_id: false }))
+      }
+      setDataSt(pre => ({ ...pre, curriculum_id: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+    } else if (type === 'studygroup_id') {
+      //เช็ค type ที่ส่งมาใช้ dog_name ?
+      const newStr = event.target.value // อีเว้นที่เกิด เป้าหมายคือค่า value
+      if (dataSt.studygroup_id !== '') {
+        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
+        setColoChange(pre => ({ ...pre, studygroup_id: false }))
+      }
+      setDataSt(pre => ({ ...pre, studygroup_id: newStr })) //เก็บค่าเก่าไว้ใน dataDog
     }
   }
 
@@ -153,7 +222,7 @@ const bo_Student_manage = () => {
       dataSt.curriculum_id !== '' &&
       dataSt.stu_name !== '' &&
       dataSt.stu_lname !== '' &&
-      dataSt.stu_status !== '' &&
+      dataSt.stu_rmail !== '' &&
       dataSt.stu_status !== '' &&
       dataSt.studygroup_id !== ''
     ) {
@@ -162,11 +231,17 @@ const bo_Student_manage = () => {
         ...dataSt // การจาย ที่เป็นก้อนออก ถ้าสลับข้อมูลจะอยู่ด้านหน้า
       }))
 
-      axios.post('http://localhost:3200/api/v1/studentinsert', dataSt).then(res => {
-        console.log(res)
-        window.location.reload()
-        handleClose()
-      })
+      axios
+        .post('http://localhost:3200/api/v1/studentinsert', dataSt)
+        .then(res => {
+          console.log(res)
+          window.location.reload()
+          handleClose()
+          setDataSt(intial)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
     if (dataSt.stu_id !== '') {
       console.log('std_id ไม่ว่าง')
@@ -185,6 +260,89 @@ const bo_Student_manage = () => {
     } else {
       console.log('stu_lname ว่าง')
       setColoChange(pre => ({ ...pre, stu_lname: true }))
+    }
+    if (dataSt.stu_status !== '') {
+      console.log('stu_status ไม่ว่าง')
+    } else {
+      console.log('stu_status ว่าง')
+      setColoChange(pre => ({ ...pre, stu_status: true }))
+    }
+    if (dataSt.stu_sex !== '') {
+      console.log('stu_sex ไม่ว่าง')
+    } else {
+      console.log('stu_sex ว่าง')
+      setColoChange(pre => ({ ...pre, stu_sex: true }))
+    }
+    if (dataSt.stu_rmail !== '') {
+      console.log('stu_rmail ไม่ว่าง')
+    } else {
+      console.log('stu_rmail ว่าง')
+      setColoChange(pre => ({ ...pre, stu_rmail: true }))
+    }
+  }
+
+  const HandleOnEditSt = () => {
+    if (
+      dataSt.stu_id !== '' &&
+      dataSt.curriculum_id !== '' &&
+      dataSt.stu_name !== '' &&
+      dataSt.stu_lname !== '' &&
+      dataSt.stu_rmail !== '' &&
+      dataSt.stu_status !== '' &&
+      dataSt.studygroup_id !== '' &&
+      dataSt.stu_sex !== ''
+    ) {
+      setDataSt(pre => ({
+        ...pre,
+        ...dataSt
+      }))
+      axios
+        .post('http://localhost:3200/api/v1/studentupdate', dataSt)
+        .then(res => {
+          console.log(res)
+          window.location.reload()
+          handleCloseEditSt()
+          setDataSt(intial)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+    if (dataSt.stu_id !== '') {
+      console.log('std_id ไม่ว่าง')
+    } else {
+      console.log('std_id ว่าง')
+      setColoChange(pre => ({ ...pre, stu_id: true }))
+    }
+    if (dataSt.stu_name !== '') {
+      console.log('std_name ไม่ว่าง')
+    } else {
+      console.log('stu_name ว่าง')
+      setColoChange(pre => ({ ...pre, stu_name: true }))
+    }
+    if (dataSt.stu_lname !== '') {
+      console.log('stu_lname ไม่ว่าง')
+    } else {
+      console.log('stu_lname ว่าง')
+      setColoChange(pre => ({ ...pre, stu_lname: true }))
+    }
+    if (dataSt.stu_status !== '') {
+      console.log('stu_status ไม่ว่าง')
+    } else {
+      console.log('stu_status ว่าง')
+      setColoChange(pre => ({ ...pre, stu_status: true }))
+    }
+    if (dataSt.stu_sex !== '') {
+      console.log('stu_sex ไม่ว่าง')
+    } else {
+      console.log('stu_sex ว่าง')
+      setColoChange(pre => ({ ...pre, stu_sex: true }))
+    }
+    if (dataSt.stu_rmail !== '') {
+      console.log('stu_rmail ไม่ว่าง')
+    } else {
+      console.log('stu_rmail ว่าง')
+      setColoChange(pre => ({ ...pre, stu_rmail: true }))
     }
   }
 
@@ -229,6 +387,7 @@ const bo_Student_manage = () => {
                                       label='id'
                                       onChange={event => HandleChange(event, 'stu_id')}
                                       error={coloChange.stu_id}
+                                      value={dataSt.stu_id}
                                     />
                                   </Grid>
                                 </Grid>
@@ -249,6 +408,7 @@ const bo_Student_manage = () => {
                                       // helperText={dataSt.curriculum_id && 'Curriculum'}
                                       label='Curriculum'
                                       onChange={event => HandleChange(event, 'curriculum_id')}
+                                      value={curriculumSt.curriculum_id}
                                     >
                                       {curriculumSt.map(row => (
                                         <MenuItem key={row.curriculum_id} value={row.curriculum_id}>
@@ -272,6 +432,7 @@ const bo_Student_manage = () => {
                                       label='Name'
                                       onChange={event => HandleChange(event, 'stu_name')}
                                       error={coloChange.stu_name}
+                                      value={dataSt.stu_name}
                                     />
                                   </Grid>
                                 </Grid>
@@ -287,6 +448,7 @@ const bo_Student_manage = () => {
                                       label='Last Name'
                                       onChange={event => HandleChange(event, 'stu_lname')}
                                       error={coloChange.stu_lname}
+                                      value={dataSt.stu_lname}
                                     />
                                   </Grid>
                                 </Grid>
@@ -304,6 +466,7 @@ const bo_Student_manage = () => {
                                       label='Status'
                                       onChange={event => HandleChange(event, 'stu_status')}
                                       error={coloChange.stu_status}
+                                      value={dataSt.stu_status}
                                     />
                                   </Grid>
                                 </Grid>
@@ -319,6 +482,7 @@ const bo_Student_manage = () => {
                                       label='Sex'
                                       onChange={event => HandleChange(event, 'stu_sex')}
                                       error={coloChange.stu_sex}
+                                      value={dataSt.stu_sex}
                                     />
                                   </Grid>
                                 </Grid>
@@ -336,6 +500,7 @@ const bo_Student_manage = () => {
                                       label='RMUTL Email'
                                       onChange={event => HandleChange(event, 'stu_rmail')}
                                       error={coloChange.stu_rmail}
+                                      value={dataSt.stu_rmail}
                                     />
                                   </Grid>
                                 </Grid>
@@ -351,6 +516,7 @@ const bo_Student_manage = () => {
                                       name='StudyGroup'
                                       label='StudyGroup'
                                       onChange={event => HandleChange(event, 'studygroup_id')}
+                                      value={studyGroupSt.studygroup_name}
                                     >
                                       {studyGroupSt.map(row => (
                                         <MenuItem key={row.studygroup_id} value={row.studygroup_id}>
@@ -374,10 +540,265 @@ const bo_Student_manage = () => {
                               <Button type='submit' variant='contained' size='large' onClick={() => HandleInsSubmit()}>
                                 Insert
                               </Button>
-                              <Button size='large' onClick={() => handleClose()}>
+                              <Button
+                                size='large'
+                                onClick={() => {
+                                  handleClose()
+                                  setDataSt(intial)
+                                }}
+                              >
                                 Cancel
                               </Button>
                             </Box>
+                          </form>
+                        </CardContent>
+                      </Card>
+                    </Box>
+                  </Modal>
+                  {/* EditModal */}
+                  <Modal
+                    open={openEditSt}
+                    onClose={handleCloseEditSt}
+                    aria-labelledby='modal-modal-title'
+                    aria-describedby='modal-modal-description'
+                  >
+                    <Box sx={style}>
+                      <Card>
+                        <CardHeader title='Insert Student' titleTypographyProps={{ variant: 'h6' }} />
+                        <CardContent>
+                          <form onSubmit={e => e.preventDefault()}>
+                            <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+                              <Box sx={{ p: 4 }}>
+                                <Typography>Student Code:</Typography>
+                              </Box>
+                              <Box>
+                                <Grid container spacing={5}>
+                                  <Grid item xs={12}>
+                                    <TextField
+                                      fullWidth
+                                      label='id'
+                                      onChange={event => HandleChange(event, 'stu_id')}
+                                      error={coloChange.stu_id}
+                                      value={dataSt.stu_id}
+                                    />
+                                  </Grid>
+                                </Grid>
+                              </Box>
+                              <Box sx={{ p: 4 }}>
+                                <Typography>Curriculum:</Typography>
+                              </Box>
+                              <Box sx={{ width: '80%' }}>
+                                <Grid item xs={12} sm={6}>
+                                  <FormControl variant='outlined' fullWidth sx={{ mb: 2 }}>
+                                    <InputLabel id='curriculum-label'>Curriculum:</InputLabel>
+                                    <Select
+                                      required
+                                      labelId='curriculum-label'
+                                      id='curriculumId'
+                                      name='curriculumId'
+                                      // value={dataSt.curriculum_id}
+                                      // helperText={dataSt.curriculum_id && 'Curriculum'}
+                                      label='Curriculum'
+                                      onChange={event => HandleChange(event, 'curriculum_id')}
+                                      value={curriculumSt.curriculum_id}
+                                    >
+                                      {curriculumSt.map(row => (
+                                        <MenuItem key={row.curriculum_id} value={row.curriculum_id}>
+                                          {row.curriculum_name}
+                                        </MenuItem>
+                                      ))}
+                                    </Select>
+                                  </FormControl>
+                                </Grid>
+                              </Box>
+                            </Box>
+                            <Box sx={{ display: 'flex', width: '100%', mt: 4 }}>
+                              <Box sx={{ p: 4 }}>
+                                <Typography>Name:</Typography>
+                              </Box>
+                              <Box sx={{ width: '35%' }}>
+                                <Grid container spacing={5}>
+                                  <Grid item xs={12}>
+                                    <TextField
+                                      fullWidth
+                                      label='Name'
+                                      onChange={event => HandleChange(event, 'stu_name')}
+                                      error={coloChange.stu_name}
+                                      value={dataSt.stu_name}
+                                    />
+                                  </Grid>
+                                </Grid>
+                              </Box>
+                              <Box sx={{ p: 4 }}>
+                                <Typography>Last Name:</Typography>
+                              </Box>
+                              <Box sx={{ width: '35%' }}>
+                                <Grid container spacing={5}>
+                                  <Grid item xs={8}>
+                                    <TextField
+                                      fullWidth
+                                      label='Last Name'
+                                      onChange={event => HandleChange(event, 'stu_lname')}
+                                      error={coloChange.stu_lname}
+                                      value={dataSt.stu_lname}
+                                    />
+                                  </Grid>
+                                </Grid>
+                              </Box>
+                            </Box>
+                            <Box sx={{ display: 'flex', width: '100%', mt: 4 }}>
+                              <Box sx={{ p: 4 }}>
+                                <Typography>Status:</Typography>
+                              </Box>
+                              <Box sx={{ width: '35%' }}>
+                                <Grid container spacing={5}>
+                                  <Grid item xs={8}>
+                                    <TextField
+                                      fullWidth
+                                      label='Status'
+                                      onChange={event => HandleChange(event, 'stu_status')}
+                                      error={coloChange.stu_status}
+                                      value={dataSt.stu_status}
+                                    />
+                                  </Grid>
+                                </Grid>
+                              </Box>
+                              <Box sx={{ p: 4 }}>
+                                <Typography>Sex :</Typography>
+                              </Box>
+                              <Box sx={{ width: '35%' }}>
+                                <Grid container spacing={5}>
+                                  <Grid item xs={8}>
+                                    <TextField
+                                      fullWidth
+                                      label='Sex'
+                                      onChange={event => HandleChange(event, 'stu_sex')}
+                                      error={coloChange.stu_sex}
+                                      value={dataSt.stu_sex}
+                                    />
+                                  </Grid>
+                                </Grid>
+                              </Box>
+                            </Box>
+                            <Box sx={{ display: 'flex', width: '100%', mt: 4 }}>
+                              <Box sx={{ p: 4 }}>
+                                <Typography>RMUTL Email:</Typography>
+                              </Box>
+                              <Box sx={{ width: '35%' }}>
+                                <Grid container spacing={5}>
+                                  <Grid item xs={8}>
+                                    <TextField
+                                      fullWidth
+                                      label='RMUTL Email'
+                                      onChange={event => HandleChange(event, 'stu_rmail')}
+                                      error={coloChange.stu_rmail}
+                                      value={dataSt.stu_rmail}
+                                    />
+                                  </Grid>
+                                </Grid>
+                              </Box>
+                              <Box sx={{ width: '80%' }}>
+                                <Grid item xs={12} sm={6}>
+                                  <FormControl variant='outlined' fullWidth sx={{ mb: 2 }}>
+                                    <InputLabel id='StudyGroup-label'>Study Group:</InputLabel>
+                                    <Select
+                                      required
+                                      labelId='StudyGroup-label'
+                                      id='StudyGroup'
+                                      name='StudyGroup'
+                                      label='StudyGroup'
+                                      onChange={event => HandleChange(event, 'studygroup_id')}
+                                      value={studyGroupSt.studygroup_id}
+                                    >
+                                      {studyGroupSt.map(row => (
+                                        <MenuItem key={row.studygroup_id} value={row.studygroup_id}>
+                                          {row.studygroup_name}
+                                        </MenuItem>
+                                      ))}
+                                    </Select>
+                                  </FormControl>
+                                </Grid>
+                              </Box>
+                            </Box>
+                            <Box
+                              sx={{
+                                gap: 5,
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                                alignItems: 'center',
+                                mt: 6
+                              }}
+                            >
+                              <Button type='submit' variant='contained' size='large' onClick={() => HandleOnEditSt()}>
+                                Update
+                              </Button>
+                              <Button
+                                size='large'
+                                onClick={() => {
+                                  handleCloseEditSt()
+                                  setDataSt(intial)
+                                }}
+                              >
+                                Cancel
+                              </Button>
+                            </Box>
+                          </form>
+                        </CardContent>
+                      </Card>
+                    </Box>
+                  </Modal>
+                  <Modal
+                    open={openDelSt}
+                    onClose={handleClosDelSt}
+                    aria-labelledby='modal-modal-title'
+                    aria-describedby='modal-modal-description'
+                  >
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '60%',
+                        bgcolor: 'background.paper',
+                        border: '2px solid #000',
+                        boxShadow: 24,
+                        p: 4,
+                        borderRadius: 2
+                      }}
+                    >
+                      <Card>
+                        <CardHeader title='Delete' titleTypographyProps={{ variant: 'h6' }} />
+                        <CardContent>
+                          <form onSubmit={e => e.preventDefault()}>
+                            <Grid container spacing={4}>
+                              <Grid item xs={12}>
+                                <Box
+                                  sx={{
+                                    gap: 5,
+                                    display: 'flex',
+                                    flexWrap: 'rows',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    width: '100%'
+                                  }}
+                                >
+                                  <Button type='submit' variant='contained' size='large'>
+                                    delete
+                                  </Button>
+                                  <Button
+                                    type='submit'
+                                    variant='contained'
+                                    size='large'
+                                    onClick={() => {
+                                      handleClosDelSt(false)
+                                    }}
+                                  >
+                                    Cancel
+                                  </Button>
+                                </Box>
+                              </Grid>
+                            </Grid>
                           </form>
                         </CardContent>
                       </Card>
