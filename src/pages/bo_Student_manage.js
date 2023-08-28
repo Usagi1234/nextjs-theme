@@ -68,7 +68,6 @@ const bo_Student_manage = () => {
   const handleOpenDelSt = () => setOpenDelSt(true)
   const handleClosDelSt = () => {
     setOpenDelSt(false)
-    setDataSt(intial)
   }
 
   const style = {
@@ -121,7 +120,7 @@ const bo_Student_manage = () => {
         <Button
           variant='text'
           onClick={() => {
-            setDataSt(params.id)
+            setGetDelSt(params.id)
             handleOpenDelSt()
             console.log(params.row)
           }}
@@ -344,6 +343,21 @@ const bo_Student_manage = () => {
       console.log('stu_rmail ว่าง')
       setColoChange(pre => ({ ...pre, stu_rmail: true }))
     }
+  }
+
+  const HandleDelSt = id => {
+    const onDelTc = { Id: id }
+    console.log('sss', onDelTc)
+    axios
+      .delete('http://localhost:3200/api/v1/Studentdelete', { data: onDelTc })
+      .then(res => {
+        console.log(res)
+        // window.location.reload()
+        handleClosDelSt()
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   return (
@@ -783,7 +797,12 @@ const bo_Student_manage = () => {
                                     width: '100%'
                                   }}
                                 >
-                                  <Button type='submit' variant='contained' size='large'>
+                                  <Button
+                                    type='submit'
+                                    variant='contained'
+                                    size='large'
+                                    onClick={() => HandleDelSt(getDelSt)}
+                                  >
                                     delete
                                   </Button>
                                   <Button
