@@ -1,5 +1,5 @@
 import Grid from '@mui/material/Grid'
-import { Box, Button, Card, CardContent, Typography } from '@mui/material'
+import { Box, Button, Card, CardContent, TextField, Typography } from '@mui/material'
 import Icon from '@mdi/react'
 import { mdiChartBar } from '@mdi/js'
 import { useEffect, useState } from 'react'
@@ -9,6 +9,7 @@ import { Modal } from '@mui/base'
 
 export default function report_weeklyTeacher() {
   const [rowReportStd, setRowReportStd] = useState('')
+  const [getRow, setGetRow] = useState('')
 
   const [openReStd, setOpenReStd] = useState(false)
   const handleOpenReStd = () => setOpenReStd(true)
@@ -45,6 +46,7 @@ export default function report_weeklyTeacher() {
           onClick={() => {
             handleOpenReStd()
             console.log(params.row)
+            setGetRow(params.row)
           }}
         >
           Show
@@ -73,10 +75,78 @@ export default function report_weeklyTeacher() {
         aria-describedby='modal-modal-description'
       >
         <Box sx={style}>
-          <Box>
-            <Typography>show data student</Typography>
+          <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+            <Typography id='modal-modal-title' variant='h6' component='h2' sx={{ mb: 6 }}>
+              Add New Report Weekly
+            </Typography>
           </Box>
-          <Button onClick={() => handleCloseReStd()}>Cancel</Button>
+
+          <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+            <Box sx={{ p: 6 }}>
+              <Typography variant='h6'>Topic Report detail : </Typography>
+            </Box>
+            <Box>
+              <Grid container spacing={5}>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label='Report'
+                    placeholder='Report'
+                    multiline
+                    minRows={2}
+                    sx={{ width: 500 }}
+                    value={getRow.re_hname}
+                  />
+                </Grid>
+              </Grid>
+            </Box>
+            <Box sx={{ p: 6 }}>
+              <Typography>Week : </Typography>
+            </Box>
+            <Box>
+              <TextField fullWidth label='week' placeholder='1' sx={{ width: 100, p: 2 }} value={getRow.re_week} />
+            </Box>
+          </Box>
+          <Box sx={{ p: 6 }}>
+            <Box sx={{ mb: 6 }}>
+              <Typography variant='h6'>Report detail</Typography>
+            </Box>
+            <form onSubmit={e => e.preventDefault()}>
+              <Grid container spacing={5}>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label='Report'
+                    placeholder='Report'
+                    multiline
+                    minRows={6}
+                    value={getRow.re_details}
+                  />
+                </Grid>
+              </Grid>
+            </form>
+          </Box>
+          <Box sx={{ width: '100%', display: 'flex' }}>
+            <Box sx={{ width: '32%', p: 4 }}>
+              <Typography variant='h6'>Name Establishment:</Typography>
+            </Box>
+            <Box sx={{ width: '65%' }}>
+              <Grid container spacing={5}>
+                <Grid item xs={12}>
+                  <TextField fullWidth label='Name Establishment' placeholder='Establishment' value={getRow.com_name} />
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+            <Button
+              onClick={() => {
+                handleCloseReStd(false)
+              }}
+            >
+              Cancel
+            </Button>
+          </Box>
         </Box>
       </Modal>
       <Grid container spacing={6}>

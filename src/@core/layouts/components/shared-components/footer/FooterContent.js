@@ -16,7 +16,7 @@ const FooterContent = () => {
       {hidden ? null : (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': { mr: 4 } }}>
           <Typography>โทรศัพท์ : 0 5392 1444</Typography>
-          <Link target='_blank' href='https://themeselection.com/'>
+          <Link target='_blank' href='https://www.facebook.com/TechnicComputerRmutl'>
             facebook
           </Link>
         </Box>
