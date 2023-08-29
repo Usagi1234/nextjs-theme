@@ -96,7 +96,13 @@ export default function report_weeklyStudent() {
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                     <Button>submit</Button>
-                    <Button>Cancel</Button>
+                    <Button
+                      onClick={() => {
+                        handleClose(false)
+                      }}
+                    >
+                      Cancel
+                    </Button>
                   </Box>
                 </Box>
               </Modal>

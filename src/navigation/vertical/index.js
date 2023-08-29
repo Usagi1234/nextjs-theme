@@ -157,6 +157,11 @@ const navigation = () => {
       title: 'Supervision Establishment',
       icon: ChevronDoubleRight,
       path: '/bo_SupervisionES'
+    },
+    {
+      title: 'Supervision Teacher',
+      icon: ChevronDoubleRight,
+      path: '/bo_SupervisionTC'
     }
   ]
 }

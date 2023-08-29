@@ -37,47 +37,41 @@ export default function supervisionEstabishment() {
 
   const HandleOnChangeSE = (event, type) => {
     if (type === 'su_need') {
-      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
+      const newStr = event.target.value.replace('', '')
       if (dataSupervisionEs.su_need !== '') {
-        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColorChangeES(pre => ({ ...pre, su_need: false }))
       }
-      setDataSupervisionEs(pre => ({ ...pre, su_need: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+      setDataSupervisionEs(pre => ({ ...pre, su_need: newStr }))
     } else if (type === 'su_time') {
-      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
+      const newStr = event.target.value.replace('', '')
       if (dataSupervisionEs.su_time !== '') {
-        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColorChangeES(pre => ({ ...pre, su_time: false }))
       }
-      setDataSupervisionEs(pre => ({ ...pre, su_time: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+      setDataSupervisionEs(pre => ({ ...pre, su_time: newStr }))
     } else if (type === 'su_detail') {
-      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
-      if (dataSupervisionEs.su_time !== '') {
-        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
+      const newStr = event.target.value.replace('', '')
+      if (dataSupervisionEs.su_detail !== '') {
         setColorChangeES(pre => ({ ...pre, su_detail: false }))
       }
-      setDataSupervisionEs(pre => ({ ...pre, su_detail: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+      setDataSupervisionEs(pre => ({ ...pre, su_detail: newStr }))
     } else if (type === 'su_coor') {
-      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
+      const newStr = event.target.value.replace('', '')
       if (dataSupervisionEs.su_coor !== '') {
-        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColorChangeES(pre => ({ ...pre, su_coor: false }))
       }
-      setDataSupervisionEs(pre => ({ ...pre, su_coor: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+      setDataSupervisionEs(pre => ({ ...pre, su_coor: newStr }))
     } else if (type === 'su_date') {
-      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
+      const newStr = event.target.value.replace('', '')
       if (dataSupervisionEs.su_date !== '') {
-        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColorChangeES(pre => ({ ...pre, su_date: false }))
       }
-      setDataSupervisionEs(pre => ({ ...pre, su_date: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+      setDataSupervisionEs(pre => ({ ...pre, su_date: newStr }))
     } else if (type === 'su_sugges') {
-      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
+      const newStr = event.target.value.replace('', '')
       if (dataSupervisionEs.su_sugges !== '') {
-        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColorChangeES(pre => ({ ...pre, su_sugges: false }))
       }
-      setDataSupervisionEs(pre => ({ ...pre, su_sugges: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+      setDataSupervisionEs(pre => ({ ...pre, su_sugges: newStr }))
     }
   }
 
