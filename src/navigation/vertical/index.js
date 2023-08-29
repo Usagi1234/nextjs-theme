@@ -18,6 +18,7 @@ const navigation = () => {
       icon: HomeOutline,
       path: '/'
     },
+
     // {
     //   title: 'Account Settings',
     //   icon: AccountCogOutline,
@@ -29,7 +30,7 @@ const navigation = () => {
     {
       title: 'Document Student',
       icon: ChevronDoubleRight,
-      path: '/doc_updownStudent',
+      path: '/student/doc_updownStudent',
       openInNewTab: false
     },
     {
@@ -50,6 +51,7 @@ const navigation = () => {
       path: '/doc_officer',
       openInNewTab: false
     },
+
     // {
     //   title: 'Login',
     //   icon: Login,
@@ -86,6 +88,7 @@ const navigation = () => {
       icon: ChevronDoubleRight,
       path: '/report_weeklyEstablishment'
     },
+
     // {
     //   title: 'Typography',
     //   icon: FormatLetterCase,
