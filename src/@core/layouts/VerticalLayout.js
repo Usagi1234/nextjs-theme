@@ -15,7 +15,6 @@ import themeConfig from 'src/configs/themeConfig'
 // ** Components
 import AppBar from './components/vertical/appBar'
 import Navigation from './components/vertical/navigation'
-import Footer from './components/shared-components/footer'
 import ScrollToTop from 'src/@core/components/scroll-to-top'
 
 // ** Styled Component
@@ -84,8 +83,6 @@ const VerticalLayout = props => {
           >
             {children}
           </ContentWrapper>
-
-          <Footer {...props} />
 
           <DatePickerWrapper sx={{ zIndex: 11 }}>
             <Box id='react-datepicker-portal'></Box>
