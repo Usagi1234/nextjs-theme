@@ -149,69 +149,53 @@ const bo_Student_manage = () => {
 
   const HandleChange = (event, type) => {
     if (type === 'stu_id') {
-      //เช็ค type ที่ส่งมาใช้ dog_name ?
-      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
+      const newStr = event.target.value.replace('', '')
       if (dataSt.stu_id !== '') {
-        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColoChange(pre => ({ ...pre, stu_id: false }))
       }
-      setDataSt(pre => ({ ...pre, stu_id: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+      setDataSt(pre => ({ ...pre, stu_id: newStr }))
     } else if (type === 'stu_name') {
-      //เช็ค type ที่ส่งมาใช้ dog_name ?
-      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
+      const newStr = event.target.value.replace('', '')
       if (dataSt.stu_name !== '') {
-        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColoChange(pre => ({ ...pre, stu_name: false }))
       }
-      setDataSt(pre => ({ ...pre, stu_name: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+      setDataSt(pre => ({ ...pre, stu_name: newStr }))
     } else if (type === 'stu_lname') {
-      //เช็ค type ที่ส่งมาใช้ dog_name ?
-      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
+      const newStr = event.target.value.replace('', '')
       if (dataSt.stu_lname !== '') {
-        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColoChange(pre => ({ ...pre, stu_lname: false }))
       }
-      setDataSt(pre => ({ ...pre, stu_lname: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+      setDataSt(pre => ({ ...pre, stu_lname: newStr }))
     } else if (type === 'stu_status') {
-      //เช็ค type ที่ส่งมาใช้ dog_name ?
-      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
+      const newStr = event.target.value.replace('', '')
       if (dataSt.stu_status !== '') {
-        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColoChange(pre => ({ ...pre, stu_status: false }))
       }
-      setDataSt(pre => ({ ...pre, stu_status: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+      setDataSt(pre => ({ ...pre, stu_status: newStr }))
     } else if (type === 'stu_rmail') {
-      //เช็ค type ที่ส่งมาใช้ dog_name ?
-      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
+      const newStr = event.target.value.replace('', '')
       if (dataSt.stu_rmail !== '') {
-        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColoChange(pre => ({ ...pre, stu_rmail: false }))
       }
-      setDataSt(pre => ({ ...pre, stu_rmail: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+      setDataSt(pre => ({ ...pre, stu_rmail: newStr }))
     } else if (type === 'stu_sex') {
-      //เช็ค type ที่ส่งมาใช้ dog_name ?
-      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
+      const newStr = event.target.value.replace('', '')
       if (dataSt.stu_sex !== '') {
-        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColoChange(pre => ({ ...pre, stu_sex: false }))
       }
-      setDataSt(pre => ({ ...pre, stu_sex: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+      setDataSt(pre => ({ ...pre, stu_sex: newStr }))
     } else if (type === 'curriculum_id') {
-      //เช็ค type ที่ส่งมาใช้ dog_name ?
-      const newStr = event.target.value // อีเว้นที่เกิด เป้าหมายคือค่า value
+      const newStr = event.target.value
       if (dataSt.curriculum_id !== '') {
-        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColoChange(pre => ({ ...pre, curriculum_id: false }))
       }
-      setDataSt(pre => ({ ...pre, curriculum_id: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+      setDataSt(pre => ({ ...pre, curriculum_id: newStr }))
     } else if (type === 'studygroup_id') {
-      //เช็ค type ที่ส่งมาใช้ dog_name ?
-      const newStr = event.target.value // อีเว้นที่เกิด เป้าหมายคือค่า value
+      const newStr = event.target.value
       if (dataSt.studygroup_id !== '') {
-        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColoChange(pre => ({ ...pre, studygroup_id: false }))
       }
-      setDataSt(pre => ({ ...pre, studygroup_id: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+      setDataSt(pre => ({ ...pre, studygroup_id: newStr }))
     }
   }
 

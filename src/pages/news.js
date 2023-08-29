@@ -11,6 +11,21 @@ const dummyImage = [
   },
   {
     img: 'https://cdn.chiangmainews.co.th/wp-content/uploads/2023/08/08095936/1691463576_223549-chiangmainews.jpg'
+  },
+  {
+    img: 'https://cdn.chiangmainews.co.th/wp-content/uploads/2023/08/08095936/1691463576_223549-chiangmainews.jpg'
+  },
+  {
+    img: 'https://cdn.chiangmainews.co.th/wp-content/uploads/2023/08/08095936/1691463576_223549-chiangmainews.jpg'
+  },
+  {
+    img: 'https://cdn.chiangmainews.co.th/wp-content/uploads/2023/08/08095936/1691463576_223549-chiangmainews.jpg'
+  },
+  {
+    img: 'https://cdn.chiangmainews.co.th/wp-content/uploads/2023/08/08095936/1691463576_223549-chiangmainews.jpg'
+  },
+  {
+    img: 'https://cdn.chiangmainews.co.th/wp-content/uploads/2023/08/08095936/1691463576_223549-chiangmainews.jpg'
   }
 ]
 

@@ -3,12 +3,83 @@ import { Box, Button, Card, CardContent, Modal, TextField, Typography } from '@m
 import CardMedia from '@mui/material/CardMedia'
 import Icon from '@mdi/react'
 import { mdiPoll } from '@mdi/js'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 export default function report_weeklyStudent() {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+  const handleClose = () => {
+    setOpen(false)
+    setReportData(intialReport)
+    setColoChangeReport(colorReport)
+  }
+
+  const intialReport = {
+    re_hname: '',
+    re_week: '',
+    re_details: '',
+    com_name: ''
+  }
+
+  const [reportData, setReportData] = useState(intialReport)
+
+  const colorReport = {
+    re_hname: false,
+    re_week: false,
+    re_details: false,
+    com_name: false
+  }
+
+  const [colorChangeReport, setColoChangeReport] = useState(colorReport)
+
+  const HandleOnChangeReport = (event, type) => {
+    if (type === 're_hname') {
+      const newStr = event.target.value.replace('', '')
+      if (reportData.re_hname !== '') {
+        setColoChangeReport(pre => ({ ...pre, re_hname: false }))
+      }
+      setReportData(pre => ({ ...pre, re_hname: newStr }))
+    } else if (type === 're_week') {
+      const newStr = event.target.value.replace('', '')
+      if (reportData.re_week !== '') {
+        setColoChangeReport(pre => ({ ...pre, re_week: false }))
+      }
+      setReportData(pre => ({ ...pre, re_week: newStr }))
+    } else if (type === 're_details') {
+      const newStr = event.target.value.replace('', '')
+      if (reportData.re_details !== '') {
+        setColoChangeReport(pre => ({ ...pre, re_details: false }))
+      }
+      setReportData(pre => ({ ...pre, re_details: newStr }))
+    } else if (type === 'com_name') {
+      const newStr = event.target.value.replace('', '')
+      if (reportData.com_name !== '') {
+        setColoChangeReport(pre => ({ ...pre, com_name: false }))
+      }
+      setReportData(pre => ({ ...pre, com_name: newStr }))
+    }
+  }
+
+  const handleOnInsertReport = () => {
+    if (
+      reportData.re_hname !== '' &&
+      reportData.re_week !== '' &&
+      reportData.re_details !== '' &&
+      reportData.com_name !== ''
+    ) {
+      setReportData(pre => ({
+        ...pre,
+        ...reportData
+      }))
+    }
+    axios.post('http://localhost:3200/api/v1/insertreport', reportData).then(res => {
+      console.log(res)
+      window.location.reload()
+      handleClose()
+      setReportData(intialReport)
+    })
+  }
 
   const style = {
     position: 'absolute',
@@ -20,6 +91,10 @@ export default function report_weeklyStudent() {
     p: 4,
     borderRadius: 1
   }
+
+  useEffect(() => {
+    console.log(reportData)
+  }, [reportData])
 
   return (
     <Box>
@@ -59,7 +134,16 @@ export default function report_weeklyStudent() {
                     <Box>
                       <Grid container spacing={5}>
                         <Grid item xs={12}>
-                          <TextField fullWidth label='Report' placeholder='Report' multiline minRows={2} />
+                          <TextField
+                            fullWidth
+                            label='Report'
+                            placeholder='Report'
+                            multiline
+                            minRows={2}
+                            onChange={event => HandleOnChangeReport(event, 're_hname')}
+                            error={colorChangeReport.re_hname}
+                            value={reportData.re_hname}
+                          />
                         </Grid>
                       </Grid>
                     </Box>
@@ -67,7 +151,15 @@ export default function report_weeklyStudent() {
                       <Typography>Week : </Typography>
                     </Box>
                     <Box>
-                      <TextField fullWidth label='week' placeholder='1' sx={{ width: 100, p: 2 }} />
+                      <TextField
+                        fullWidth
+                        label='week'
+                        placeholder='1'
+                        sx={{ width: 100, p: 2 }}
+                        onChange={event => HandleOnChangeReport(event, 're_week')}
+                        error={colorChangeReport.re_week}
+                        value={reportData.re_week}
+                      />
                     </Box>
                   </Box>
                   <Box sx={{ p: 6 }}>
@@ -77,7 +169,16 @@ export default function report_weeklyStudent() {
                     <form onSubmit={e => e.preventDefault()}>
                       <Grid container spacing={5}>
                         <Grid item xs={12}>
-                          <TextField fullWidth label='Report' placeholder='Report' multiline minRows={6} />
+                          <TextField
+                            fullWidth
+                            label='Report'
+                            placeholder='Report'
+                            multiline
+                            minRows={6}
+                            onChange={event => HandleOnChangeReport(event, 're_details')}
+                            error={colorChangeReport.re_details}
+                            value={reportData.re_details}
+                          />
                         </Grid>
                       </Grid>
                     </form>
@@ -89,13 +190,20 @@ export default function report_weeklyStudent() {
                     <Box sx={{ width: '65%' }}>
                       <Grid container spacing={5}>
                         <Grid item xs={12}>
-                          <TextField fullWidth label='Name Establishment' placeholder='Establishment' />
+                          <TextField
+                            fullWidth
+                            label='Name Establishment'
+                            placeholder='Establishment'
+                            onChange={event => HandleOnChangeReport(event, 'com_name')}
+                            error={colorChangeReport.com_name}
+                            value={reportData.com_name}
+                          />
                         </Grid>
                       </Grid>
                     </Box>
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-                    <Button>submit</Button>
+                    <Button onClick={() => handleOnInsertReport()}>submit</Button>
                     <Button
                       onClick={() => {
                         handleClose(false)
