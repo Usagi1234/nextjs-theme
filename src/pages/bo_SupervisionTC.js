@@ -11,7 +11,6 @@ export default function bo_SupervisionTC() {
 
   const column = [
     { field: 'su_day', headerName: 'Day', width: 150 },
-    { field: 'su_day', headerName: 'Day', width: 150 },
     { field: 'su_mon', headerName: 'Month ', width: 150 },
     { field: 'su_year', headerName: 'Year', width: 150 },
     { field: 'su_daparment', headerName: 'Department', width: 150 },

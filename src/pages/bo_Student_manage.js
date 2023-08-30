@@ -348,17 +348,15 @@ const bo_Student_manage = () => {
 
   const HandleDelSt = Id => {
     const onDelTc = { Id: Id }
-    // console.log('sss', onDelTc)
     axios
       .delete('http://localhost:3200/api/v1/Studentdelete', { data: onDelTc })
       .then(res => {
-        // console.log(res)
-        // window.location.reload()
+        window.location.reload()
         fetchStudentData()
         handleClosDelSt()
       })
       .catch(err => {
-        // console.log(err)
+        console.log(err)
       })
   }
 
