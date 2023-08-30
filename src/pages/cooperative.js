@@ -26,9 +26,6 @@ const dummy = [
   },
   {
     img: ''
-  },
-  {
-    img: ''
   }
 ]
 

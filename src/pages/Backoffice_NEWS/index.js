@@ -86,13 +86,12 @@ const BackOfficeNEWS = () => {
   }
 
   const handleDelNEWS = id => {
-    const onDelNEWS = { Id: id }
-    console.log('sss', onDelNEWS)
     axios
-      .post('http://localhost:3200/api/v1/deletenew', { data: onDelNEWS })
+      .post('http://localhost:3200/api/v1/deletenew', { new_id: id })
       .then(res => {
         window.location.reload()
         handleCloseDel()
+        console.log(res)
       })
       .catch(err => {
         console.log(err)

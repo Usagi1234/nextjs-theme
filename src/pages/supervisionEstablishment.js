@@ -167,7 +167,7 @@ export default function supervisionEstabishment() {
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', mb: 6 }}>
                       <Box sx={{ p: 3, width: '20%' }}>
-                        <Typography variant='h6'>Need more interns : </Typography>
+                        <Typography variant='h6'>Need more interns </Typography>
                       </Box>
                       <Box sx={{ width: '35%' }}>
                         <Grid item xs={6}>
@@ -182,7 +182,7 @@ export default function supervisionEstabishment() {
                         </Grid>
                       </Box>
                       <Box sx={{ p: 3, width: '20%' }}>
-                        <Typography variant='h6'>Time supervision : </Typography>
+                        <Typography variant='h6'>Time supervision </Typography>
                       </Box>
                       <Box sx={{ width: '35%' }}>
                         <Grid item xs={6}>
@@ -199,7 +199,7 @@ export default function supervisionEstabishment() {
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
                       <Box sx={{ p: 3 }}>
-                        <Typography variant='h6'>How to apply and interview interns : </Typography>
+                        <Typography variant='h6'>How to apply and interview interns</Typography>
                       </Box>
                     </Box>
                     <Box sx={{ width: '100%', mb: 6 }}>
@@ -218,7 +218,7 @@ export default function supervisionEstabishment() {
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
                       <Box sx={{ p: 3, width: '20%' }}>
-                        <Typography variant='h6'>Contact coordinator :</Typography>
+                        <Typography variant='h6'>Contact coordinator</Typography>
                       </Box>
                       <Box sx={{ width: '35%' }}>
                         <Grid item xs={6}>
@@ -233,7 +233,7 @@ export default function supervisionEstabishment() {
                         </Grid>
                       </Box>
                       <Box sx={{ p: 3, width: '15%' }}>
-                        <Typography variant='h6'>Validity period : </Typography>
+                        <Typography variant='h6'>Validity period </Typography>
                       </Box>
                       <Box sx={{ width: '32%' }}>
                         <Grid item xs={6}>
@@ -250,7 +250,7 @@ export default function supervisionEstabishment() {
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
                       <Box sx={{ p: 3 }}>
-                        <Typography variant='h6'>Suggestions : </Typography>
+                        <Typography variant='h6'>Suggestions </Typography>
                       </Box>
                     </Box>
                     <Box sx={{ width: '100%', mb: 6 }}>

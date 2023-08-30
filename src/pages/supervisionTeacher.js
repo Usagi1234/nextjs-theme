@@ -233,7 +233,7 @@ export default function SupervisionTeacher() {
                         </Grid>
                       </Box>
                       <Box sx={{ p: 4 }}>
-                        <Typography>Month:</Typography>
+                        <Typography>Month</Typography>
                       </Box>
                       <Box sx={{ width: '30%' }}>
                         <Grid item xs={6}>
@@ -265,7 +265,7 @@ export default function SupervisionTeacher() {
                     </Box>
                     <Box sx={{ mt: 6, display: 'flex', flexDirection: 'row' }}>
                       <Box sx={{ p: 4 }}>
-                        <Typography>Time:</Typography>
+                        <Typography>Time</Typography>
                       </Box>
                       <Box sx={{ width: '30%' }}>
                         <Grid item xs={6}>
@@ -280,7 +280,7 @@ export default function SupervisionTeacher() {
                         </Grid>
                       </Box>
                       <Box sx={{ p: 4, ml: 20 }}>
-                        <Typography>Department:</Typography>
+                        <Typography>Department</Typography>
                       </Box>
                       <Box sx={{ width: '30%' }}>
                         <Grid item xs={10}>
@@ -297,7 +297,7 @@ export default function SupervisionTeacher() {
                     </Box>
                     <Box sx={{ mt: 6, display: 'flex', flexDirection: 'row' }}>
                       <Box sx={{ p: 4 }}>
-                        <Typography>Name Manager:</Typography>
+                        <Typography>Name Manager</Typography>
                       </Box>
                       <Box sx={{ width: '30%' }}>
                         <Grid item xs={10}>
@@ -312,7 +312,7 @@ export default function SupervisionTeacher() {
                         </Grid>
                       </Box>
                       <Box sx={{ p: 4 }}>
-                        <Typography>Job position:</Typography>
+                        <Typography>Job position</Typography>
                       </Box>
                       <Box sx={{ width: '30%' }}>
                         <Grid item xs={10}>
@@ -329,7 +329,7 @@ export default function SupervisionTeacher() {
                     </Box>
                     <Box sx={{ mt: 6, display: 'flex', flexDirection: 'row' }}>
                       <Box sx={{ p: 4 }}>
-                        <Typography>Number of students:</Typography>
+                        <Typography>Number of students</Typography>
                       </Box>
                       <Box sx={{ width: '30%' }}>
                         <Grid item xs={10}>
@@ -347,7 +347,7 @@ export default function SupervisionTeacher() {
 
                     <Box sx={{ mt: 6, display: 'flex', flexDirection: 'column' }}>
                       <Box sx={{ p: 4 }}>
-                        <Typography>Teacher's comments:</Typography>
+                        <Typography>Teacher's comments</Typography>
                       </Box>
                       <Box sx={{ width: '100%' }}>
                         <Grid item xs={12}>

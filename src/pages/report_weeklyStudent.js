@@ -1,12 +1,33 @@
 import Grid from '@mui/material/Grid'
-import { Box, Button, Card, CardContent, Modal, TextField, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Modal,
+  TextField,
+  Typography,
+  Select,
+  FormControl,
+  InputLabel,
+  MenuItem
+} from '@mui/material'
 import CardMedia from '@mui/material/CardMedia'
 import Icon from '@mdi/react'
 import { mdiPoll } from '@mdi/js'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+Select, FormControl, InputLabel, MenuItem
+
+import { DailyReport, MonthlyReport, YearReport } from './DummyDay/dailyReport'
 
 export default function report_weeklyStudent() {
+  const dropDown = {
+    DailyReport: DailyReport,
+    MonthlyReport: MonthlyReport,
+    YearReport: YearReport
+  }
+
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => {
@@ -126,10 +147,56 @@ export default function report_weeklyStudent() {
                       Add New Report Weekly
                     </Typography>
                   </Box>
-
-                  <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
-                    <Box sx={{ p: 6 }}>
-                      <Typography variant='h6'>Topic Report detail : </Typography>
+                  <Box sx={{ display: 'flex' }}>
+                    <Box sx={{ display: 'flex' }}>
+                      <Typography sx={{ p: 4, mt: 4 }} variant='h6'>
+                        Day
+                      </Typography>
+                      <FormControl variant='outlined' sx={{ my: 4, width: 100 }}>
+                        <InputLabel id='Daily'>Daily</InputLabel>
+                        <Select required labelId='Daily' id='Daily' name='Daily' label='Daily'>
+                          {dropDown.DailyReport?.map(row => (
+                            <MenuItem key={row.id} value={row.id}>
+                              {row.day}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Box>
+                    <Box sx={{ display: 'flex', ml: 8 }}>
+                      <Typography sx={{ p: 4, mt: 4 }} variant='h6'>
+                        Month
+                      </Typography>
+                      <FormControl variant='outlined' sx={{ my: 4, width: 150 }}>
+                        <InputLabel id='Daily'>Month</InputLabel>
+                        <Select required labelId='Daily' id='Daily' name='Daily' label='Daily'>
+                          {dropDown.MonthlyReport?.map(row => (
+                            <MenuItem key={row.id} value={row.id}>
+                              {row.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Box>
+                    <Box sx={{ display: 'flex', ml: 8 }}>
+                      <Typography sx={{ p: 4, mt: 4 }} variant='h6'>
+                        Year
+                      </Typography>
+                      <FormControl variant='outlined' sx={{ my: 4, width: 100 }}>
+                        <InputLabel id='Daily'>Year</InputLabel>
+                        <Select required labelId='Daily' id='Daily' name='Daily' label='Daily'>
+                          {dropDown.YearReport?.map(row => (
+                            <MenuItem key={row.id} value={row.id}>
+                              {row.year}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Box>
+                  </Box>
+                  <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', mt: 6 }}>
+                    <Box sx={{ p: 4 }}>
+                      <Typography variant='h6'>Topic Report detail </Typography>
                     </Box>
                     <Box>
                       <Grid container spacing={5}>
@@ -139,7 +206,6 @@ export default function report_weeklyStudent() {
                             label='Report'
                             placeholder='Report'
                             multiline
-                            minRows={2}
                             onChange={event => HandleOnChangeReport(event, 're_hname')}
                             error={colorChangeReport.re_hname}
                             value={reportData.re_hname}
@@ -147,15 +213,15 @@ export default function report_weeklyStudent() {
                         </Grid>
                       </Grid>
                     </Box>
-                    <Box sx={{ p: 6 }}>
-                      <Typography>Week : </Typography>
+                    <Box sx={{ p: 4 }}>
+                      <Typography>Week </Typography>
                     </Box>
                     <Box>
                       <TextField
                         fullWidth
                         label='week'
                         placeholder='1'
-                        sx={{ width: 100, p: 2 }}
+                        sx={{ width: 100 }}
                         onChange={event => HandleOnChangeReport(event, 're_week')}
                         error={colorChangeReport.re_week}
                         value={reportData.re_week}

@@ -115,8 +115,8 @@ export default function supervisionStudent() {
       axios
         .post('http://localhost:3200/api/v1/supervisionstuinsert', dataSt)
         .then(res => {
-          // window.location.reload()
-          // setDataSt(intialSt)
+          window.location.reload()
+          setDataSt(intialSt)
         })
         .catch(err => {
           console.log(err)
@@ -184,7 +184,7 @@ export default function supervisionStudent() {
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
                       <Box sx={{ p: 3 }}>
-                        <Typography variant='h6'>Name : </Typography>
+                        <Typography variant='h6'>Name</Typography>
                       </Box>
                       <Box sx={{ width: '35%' }}>
                         <Grid item xs={6}>
@@ -199,7 +199,7 @@ export default function supervisionStudent() {
                         </Grid>
                       </Box>
                       <Box sx={{ p: 3, ml: 20 }}>
-                        <Typography variant='h6'>Last Name : </Typography>
+                        <Typography variant='h6'>Last Name</Typography>
                       </Box>
                       <Box sx={{ width: '35%' }}>
                         <Grid item xs={6}>
@@ -216,7 +216,7 @@ export default function supervisionStudent() {
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', mt: 5 }}>
                       <Box sx={{ p: 3 }}>
-                        <Typography variant='h6'>Time in : </Typography>
+                        <Typography variant='h6'>Time in</Typography>
                       </Box>
                       <Box sx={{ width: '20%' }}>
                         <Grid item xs={8}>
@@ -231,7 +231,7 @@ export default function supervisionStudent() {
                         </Grid>
                       </Box>
                       <Box sx={{ p: 3, ml: 65 }}>
-                        <Typography variant='h6'>Time Out : </Typography>
+                        <Typography variant='h6'>Time Out</Typography>
                       </Box>
                       <Box sx={{ width: '20%', ml: 4 }}>
                         <Grid item xs={6}>
@@ -248,7 +248,7 @@ export default function supervisionStudent() {
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', mt: 5 }}>
                       <Box sx={{ p: 3 }}>
-                        <Typography variant='h6'>weekly holiday : </Typography>
+                        <Typography variant='h6'>weekly holiday</Typography>
                       </Box>
                       <Box sx={{ width: '20%' }}>
                         <Grid item xs={6}>
@@ -263,7 +263,7 @@ export default function supervisionStudent() {
                         </Grid>
                       </Box>
                       <Box sx={{ p: 3, ml: 31 }}>
-                        <Typography variant='h6'>Time supervision :</Typography>
+                        <Typography variant='h6'>Time supervision</Typography>
                       </Box>
                       <Box sx={{ width: '20%' }}>
                         <Grid item xs={6}>

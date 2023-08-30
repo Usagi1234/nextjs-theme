@@ -14,33 +14,6 @@ const dummyImage = [
   },
   {
     img: 'https://cdn.chiangmainews.co.th/wp-content/uploads/2023/08/08095936/1691463576_223549-chiangmainews.jpg'
-  },
-  {
-    img: 'https://cdn.chiangmainews.co.th/wp-content/uploads/2023/08/08095936/1691463576_223549-chiangmainews.jpg'
-  },
-  {
-    img: 'https://cdn.chiangmainews.co.th/wp-content/uploads/2023/08/08095936/1691463576_223549-chiangmainews.jpg'
-  },
-  {
-    img: 'https://cdn.chiangmainews.co.th/wp-content/uploads/2023/08/08095936/1691463576_223549-chiangmainews.jpg'
-  },
-  {
-    img: 'https://cdn.chiangmainews.co.th/wp-content/uploads/2023/08/08095936/1691463576_223549-chiangmainews.jpg'
-  },
-  {
-    img: 'https://cdn.chiangmainews.co.th/wp-content/uploads/2023/08/08095936/1691463576_223549-chiangmainews.jpg'
-  },
-  {
-    img: 'https://cdn.chiangmainews.co.th/wp-content/uploads/2023/08/08095936/1691463576_223549-chiangmainews.jpg'
-  },
-  {
-    img: 'https://cdn.chiangmainews.co.th/wp-content/uploads/2023/08/08095936/1691463576_223549-chiangmainews.jpg'
-  },
-  {
-    img: 'https://cdn.chiangmainews.co.th/wp-content/uploads/2023/08/08095936/1691463576_223549-chiangmainews.jpg'
-  },
-  {
-    img: '/images/news/1691463576_223549-chiangmainews'
   }
 ]
 
@@ -98,7 +71,7 @@ export default function news() {
         {Object.values(dataNews)?.map((datanews, index) => (
           <Grid item xs={12} sm={6} md={4}>
             <Card>
-              <CardMedia sx={{ height: '14.5625rem' }} image={dummyImage.img} />
+              <CardMedia sx={{ height: '14.5625rem' }} image={dummyImage[index].img} />
               <CardContent sx={{ display: 'flex', textAlign: 'center', alignItems: 'center', flexDirection: 'column' }}>
                 <Typography variant='h5' sx={{ marginBottom: 2 }}>
                   {datanews.new_name}
