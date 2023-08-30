@@ -84,17 +84,17 @@ const bo_Student_manage = () => {
   }
 
   const columns = [
-    { field: 'stu_id', headerName: 'id', width: 150 },
+    { field: 'stu_id', headerName: 'Id', width: 150 },
     { field: 'stu_name', headerName: 'Name', width: 100 },
     { field: 'stu_lname', headerName: 'Last Name', width: 120 },
     { field: 'curriculum_name', headerName: 'curriculum', width: 150 },
     { field: 'studygroup_name', headerName: 'Study Group', width: 200 },
-    { field: 'stu_rmail', headerName: 'RMUTL Email', width: 250 },
+    { field: 'stu_rmail', headerName: 'RMUTL Email', width: 200 },
     { field: 'stu_sex', headerName: 'Sex', width: 80 },
     {
       field: 'Edit',
       headerName: 'Edit',
-      width: 150,
+      width: 80,
       renderCell: (
         params //ทั้งหมดมี button edit
       ) => (
@@ -103,7 +103,6 @@ const bo_Student_manage = () => {
           onClick={() => {
             setDataSt(params.row)
             handleOpenEditSt()
-            console.log(params.row)
           }}
         >
           Edit
@@ -113,14 +112,14 @@ const bo_Student_manage = () => {
     {
       field: 'Del',
       headerName: 'Del',
-      width: 150,
+      width: 80,
       renderCell: (
         params //ทั้งหมดมี button edit
       ) => (
         <Button
           variant='text'
           onClick={() => {
-            setGetDelSt(params.id)
+            setGetDelSt(params.row.Id)
             handleOpenDelSt()
             console.log(params.row)
           }}
@@ -144,8 +143,23 @@ const bo_Student_manage = () => {
   }, [])
 
   useEffect(() => {
-    console.log(dataSt)
-  }, [dataSt])
+    fetchStudentData()
+  }, [])
+
+  const fetchStudentData = () => {
+    axios
+      .get('http://localhost:3200/api/v1/students')
+      .then(response => {
+        setRowDataSt(res.data.data)
+      })
+      .catch(error => {
+        console.error('Error:', error)
+      })
+  }
+
+  // useEffect(() => {
+  //   console.log(dataSt)
+  // }, [dataSt])
 
   const HandleChange = (event, type) => {
     if (type === 'stu_id') {
@@ -197,6 +211,7 @@ const bo_Student_manage = () => {
       }
       setDataSt(pre => ({ ...pre, studygroup_id: newStr }))
     }
+    fetchStudentData()
   }
 
   const HandleInsSubmit = () => {
@@ -217,7 +232,7 @@ const bo_Student_manage = () => {
       axios
         .post('http://localhost:3200/api/v1/studentinsert', dataSt)
         .then(res => {
-          console.log(res)
+          // console.log(res)
           window.location.reload()
           handleClose()
           setDataSt(intial)
@@ -262,6 +277,7 @@ const bo_Student_manage = () => {
       console.log('stu_rmail ว่าง')
       setColoChange(pre => ({ ...pre, stu_rmail: true }))
     }
+    fetchStudentData()
   }
 
   const HandleOnEditSt = () => {
@@ -282,7 +298,7 @@ const bo_Student_manage = () => {
       axios
         .post('http://localhost:3200/api/v1/studentupdate', dataSt)
         .then(res => {
-          console.log(res)
+          // console.log(res)
           window.location.reload()
           handleCloseEditSt()
           setDataSt(intial)
@@ -327,20 +343,22 @@ const bo_Student_manage = () => {
       console.log('stu_rmail ว่าง')
       setColoChange(pre => ({ ...pre, stu_rmail: true }))
     }
+    fetchStudentData()
   }
 
-  const HandleDelSt = id => {
-    const onDelTc = { Id: id }
-    console.log('sss', onDelTc)
+  const HandleDelSt = Id => {
+    const onDelTc = { Id: Id }
+    // console.log('sss', onDelTc)
     axios
       .delete('http://localhost:3200/api/v1/Studentdelete', { data: onDelTc })
       .then(res => {
-        console.log(res)
+        // console.log(res)
         // window.location.reload()
+        fetchStudentData()
         handleClosDelSt()
       })
       .catch(err => {
-        console.log(err)
+        // console.log(err)
       })
   }
 
