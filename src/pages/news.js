@@ -7,10 +7,10 @@ import Modal from '@mui/material/Modal'
 
 const dummyImage = [
   {
-    img: 'https://scontent.fbkk29-4.fna.fbcdn.net/v/t1.6435-9/169092375_3837059186331511_6795198715943974550_n.jpg?_nc_cat=110&cb=99be929b-3346023f&ccb=1-7&_nc_sid=7f8c78&_nc_ohc=BNAgiLAyWjQAX9AYoAf&_nc_ht=scontent.fbkk29-4.fna&oh=00_AfBAhUCk8TBUCU8FVm-rcpkXBcCKbio3r5QBsimwhVHVtg&oe=650166B2'
+    img: '/images/news/169092375_3837059186331511_6795198715943974550_n'
   },
   {
-    img: 'https://cdn.chiangmainews.co.th/wp-content/uploads/2023/08/08095936/1691463576_223549-chiangmainews.jpg'
+    img: '/images/news/1691463576_223549-chiangmainews'
   }
 ]
 
@@ -68,7 +68,7 @@ export default function news() {
         {Object.values(dataNews)?.map((datanews, index) => (
           <Grid item xs={12} sm={6} md={4}>
             <Card>
-              <CardMedia sx={{ height: '14.5625rem' }} image={dummyImage[index].img} />
+              <CardMedia sx={{ height: '14.5625rem' }} image={dummyImage.img} />
               <CardContent sx={{ display: 'flex', textAlign: 'center', alignItems: 'center', flexDirection: 'column' }}>
                 <Typography variant='h5' sx={{ marginBottom: 2 }}>
                   {datanews.new_name}

@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, Fragment } from 'react'
+import { useState, Fragment, useEffect } from 'react'
 
 // ** Next Import
 import { useRouter } from 'next/router'
@@ -22,6 +22,9 @@ import LogoutVariant from 'mdi-material-ui/LogoutVariant'
 import AccountOutline from 'mdi-material-ui/AccountOutline'
 import MessageOutline from 'mdi-material-ui/MessageOutline'
 import HelpCircleOutline from 'mdi-material-ui/HelpCircleOutline'
+import Cookies from 'js-cookie'
+import cookieCutter from 'cookie-cutter'
+import axios from 'axios'
 
 // ** Styled Components
 const BadgeContentSpan = styled('span')(({ theme }) => ({
@@ -33,6 +36,64 @@ const BadgeContentSpan = styled('span')(({ theme }) => ({
 }))
 
 const UserDropdown = () => {
+  // -------------------- getCookie
+  const username = Cookies.get('._jwtUsername')
+  const role = Cookies.get('._jwtRole')
+  // ===============================
+
+  const [user, setUsername] = useState('')
+  const [status, setStatus] = useState('')
+  const [showname, setShowname] = useState('')
+  const [showstatus, setShowstate] = useState('')
+
+  // console.log(Cookies.get('._jwtUsername'))
+  // console.log(role)
+
+  useEffect(() => {
+    axios
+      .post('http://localhost:3200/api/verify_authen', {
+        token: username,
+        tokenRole: role
+      })
+      .then(data => {
+        setUsername(data.data.User)
+        setStatus(data.data.stateRole)
+      })
+  }, [])
+
+  useEffect(() => {
+    if (user !== undefined && status !== undefined) {
+      if (status === 'นักศึกษา') {
+        axios.post('http://localhost:3200/api/ReadStudent', { username: user }).then(data => {
+          if (data.data.length > 0) {
+            const setFristName = data.data[0].stu_name
+            setShowname(setFristName)
+            setShowstate(status)
+          }
+        })
+      }
+      if (status === 'อาจารย์') {
+        axios.post('http://localhost:3200/api/ReadTeacher', { username: user }).then(data => {
+          if (data.data.length > 0) {
+            const setFristName = data.data[0].tea_name
+            setShowname(setFristName);
+            setShowstate(status);
+          }
+        });
+      }
+      if (status === 'เจ้าหน้าที่') {
+        axios.post('http://localhost:3200/api/Readofficer', { username: user }).then(data => {
+          if (data.data.length > 0) {
+            const setFristName = data.data[0].off_name
+            setShowname(setFristName);
+            setShowstate(status);
+          }
+        });
+      }
+    }
+  }, [user, status])
+  
+
   // ** States
   const [anchorEl, setAnchorEl] = useState(null)
 
@@ -45,11 +106,19 @@ const UserDropdown = () => {
 
   const handleDropdownClose = url => {
     if (url) {
-      router.push(url)
+      router.push(url);
     }
-    setAnchorEl(null)
+    setAnchorEl(null);
   }
 
+  const handleDropdownCloselogout = url => {
+    if (url) {
+      router.push(url);
+      cookieCutter.set('._jwtUsername', '', { expires: new Date(0) }) //ใช้เพื่อกำหนดเวลาให้คุกกี้หมดเวลา
+      cookieCutter.set('._jwtRole', '', { expires: new Date(0) })
+    }
+  }
+  
   const styles = {
     py: 2,
     px: 4,
@@ -98,31 +167,23 @@ const UserDropdown = () => {
               <Avatar alt='John Doe' src='/images/avatars/1.png' sx={{ width: '2.5rem', height: '2.5rem' }} />
             </Badge>
             <Box sx={{ display: 'flex', marginLeft: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
-              <Typography sx={{ fontWeight: 600 }}>John Doe</Typography>
+              <Typography sx={{ fontWeight: 600 }}>{showname}</Typography>
               <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
-                Admin
+                {showstatus}
               </Typography>
             </Box>
           </Box>
         </Box>
         <Divider sx={{ mt: 0, mb: 1 }} />
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/cwie/profile')}>
           <Box sx={styles}>
             <AccountOutline sx={{ marginRight: 2 }} />
             Profile
           </Box>
         </MenuItem>
         <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
-          <Box sx={styles}>
-            <EmailOutline sx={{ marginRight: 2 }} />
-            Inbox
-          </Box>
         </MenuItem>
         <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
-          <Box sx={styles}>
-            <MessageOutline sx={{ marginRight: 2 }} />
-            Chat
-          </Box>
         </MenuItem>
         <Divider />
         <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
@@ -144,13 +205,14 @@ const UserDropdown = () => {
           </Box>
         </MenuItem>
         <Divider />
-        <MenuItem sx={{ py: 2 }} onClick={() => handleDropdownClose('/pages/login')}>
+        <MenuItem sx={{ py: 2 }} onClick={() => handleDropdownCloselogout('/')}>
           <LogoutVariant sx={{ marginRight: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
           Logout
         </MenuItem>
       </Menu>
     </Fragment>
   )
+  
 }
 
 export default UserDropdown

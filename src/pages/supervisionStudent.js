@@ -123,58 +123,42 @@ export default function supervisionStudent() {
         })
     }
     if (dataSt.su_name !== '') {
-      console.log('su_name ไม่ว่าง')
     } else {
-      console.log('su_name ว่าง')
       setColorChangeSt(pre => ({ ...pre, su_name: true }))
     }
     if (dataSt.su_lname !== '') {
-      console.log('su_lname ไม่ว่าง')
     } else {
-      console.log('su_lname ว่าง')
       setColorChangeSt(pre => ({ ...pre, su_lname: true }))
     }
     if (dataSt.su_timein !== '') {
-      console.log('su_timein ไม่ว่าง')
     } else {
-      console.log('su_timein ว่าง')
       setColorChangeSt(pre => ({ ...pre, su_timein: true }))
     }
     if (dataSt.su_timeout !== '') {
-      console.log('su_timeout ไม่ว่าง')
     } else {
-      console.log('su_timeout ว่าง')
       setColorChangeSt(pre => ({ ...pre, su_timeout: true }))
     }
     if (dataSt.su_holiday !== '') {
-      console.log('su_holiday ไม่ว่าง')
     } else {
-      console.log('su_holiday ว่าง')
       setColorChangeSt(pre => ({ ...pre, su_holiday: true }))
     }
     if (dataSt.su_time !== '') {
-      console.log('su_time ไม่ว่าง')
     } else {
-      console.log('su_time ว่าง')
       setColorChangeSt(pre => ({ ...pre, su_time: true }))
     }
     if (dataSt.su_work !== '') {
-      console.log('su_work ไม่ว่าง')
     } else {
-      console.log('su_work ว่าง')
       setColorChangeSt(pre => ({ ...pre, su_work: true }))
     }
     if (dataSt.su_sugges !== '') {
-      console.log('su_sugges ไม่ว่าง')
     } else {
-      console.log('su_sugges ว่าง')
       setColorChangeSt(pre => ({ ...pre, su_sugges: true }))
     }
   }
 
-  useEffect(() => {
-    console.log(dataSt)
-  }, [dataSt])
+  // useEffect(() => {
+  //   console.log(dataSt)
+  // }, [dataSt])
 
   return (
     <Box>
