@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 
 // ** MUI Imports
-import { Box, Button, Card, CardContent, Chip, Grid, Tab, Typography } from '@mui/material'
+import { Box, Button, Card, CardContent, Chip, Divider, Grid, Tab, Typography } from '@mui/material'
 
 // ** MDI Imports
 import Icon from '@mdi/react'
@@ -62,41 +62,44 @@ const StudentDocumentPage = () => {
             </Box>
           </Box>
 
-          {DocumentStudent.map(item => (
-            <Grid
-              container
-              direction='row'
-              justifyContent='center'
-              alignItems='center'
-              spacing={6}
-              key={item.id}
-              sx={{ marginBlock: 2 }}
-            >
-              <Grid item xs={12} sm={6}>
-                <Typography variant='subtitle1' sx={{ fontSize: 18 }}>
-                  อัพโหลดเอกสาร {item.name}
-                </Typography>
-              </Grid>
-              <Grid item xs={6} sm={2} md={2}>
-                <Chip label={item.status} disabled={item.status === ''} sx={{ mx: 2 }} />
-              </Grid>
-              <Grid item xs={6} sm={2} md={2}>
-                <Typography variant='subtitle1' noWrap>
-                  {item.fileName}
-                </Typography>
-              </Grid>
-              <Grid item xs={6} sm={2}>
-                <Button variant='contained' component='label' sx={{ m: 2 }}>
-                  Upload File
-                  <input type='file' hidden />
-                </Button>
-                <Button variant='contained' component='label'>
-                  Download File
-                  <input type='file' hidden />
-                </Button>
-              </Grid>
+          <Divider />
+          <Box sx={{ p: 8 }}>
+            <Grid container justifyContent='center' alignItems='center'>
+              {DocumentStudent.map(item => (
+                <Grid
+                  item
+                  xs={12}
+                  key={item.id}
+                  sx={{ border: '1px solid #ccc', borderRadius: '10px', bgcolor: '#f5f5f5', marginBlock: 2, p: 2 }}
+                >
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                        <Typography variant='subtitle1' sx={{ fontSize: 18 }}>
+                          อัพโหลดเอกสาร {item.name}
+                        </Typography>
+
+                        <Typography variant='subtitle1' noWrap>
+                          {item.fileName ? item.fileName : 'ยังไม่ได้อัพโหลดไฟล์'}
+                        </Typography>
+                      </Box>
+                      <Chip label={item.status} disabled={item.status === ''} sx={{ mx: 2 }} />
+                    </Box>
+                    <Box sx={{ justifyContent: 'space-between' }}>
+                      <Button variant='contained' component='label' sx={{ mr: 2 }}>
+                        Upload File
+                        <input type='file' hidden />
+                      </Button>
+                      <Button variant='contained' component='label' sx={{ mr: 4 }}>
+                        Download File
+                        <input type='file' hidden />
+                      </Button>
+                    </Box>
+                  </Box>
+                </Grid>
+              ))}
             </Grid>
-          ))}
+          </Box>
         </Box>
       </Card>
     </Box>
