@@ -39,6 +39,7 @@ const UserDropdown = () => {
   // -------------------- getCookie
   const username = Cookies.get('._jwtUsername')
   const role = Cookies.get('._jwtRole')
+
   // ===============================
 
   const [user, setUsername] = useState('')
@@ -76,23 +77,22 @@ const UserDropdown = () => {
         axios.post('http://localhost:3200/api/ReadTeacher', { username: user }).then(data => {
           if (data.data.length > 0) {
             const setFristName = data.data[0].tea_name
-            setShowname(setFristName);
-            setShowstate(status);
+            setShowname(setFristName)
+            setShowstate(status)
           }
-        });
+        })
       }
       if (status === 'เจ้าหน้าที่') {
         axios.post('http://localhost:3200/api/Readofficer', { username: user }).then(data => {
           if (data.data.length > 0) {
             const setFristName = data.data[0].off_name
-            setShowname(setFristName);
-            setShowstate(status);
+            setShowname(setFristName)
+            setShowstate(status)
           }
-        });
+        })
       }
     }
   }, [user, status])
-  
 
   // ** States
   const [anchorEl, setAnchorEl] = useState(null)
@@ -106,19 +106,19 @@ const UserDropdown = () => {
 
   const handleDropdownClose = url => {
     if (url) {
-      router.push(url);
+      router.push(url)
     }
-    setAnchorEl(null);
+    setAnchorEl(null)
   }
 
   const handleDropdownCloselogout = url => {
     if (url) {
-      router.push(url);
+      router.push(url)
       cookieCutter.set('._jwtUsername', '', { expires: new Date(0) }) //ใช้เพื่อกำหนดเวลาให้คุกกี้หมดเวลา
       cookieCutter.set('._jwtRole', '', { expires: new Date(0) })
     }
   }
-  
+
   const styles = {
     py: 2,
     px: 4,
@@ -181,10 +181,8 @@ const UserDropdown = () => {
             Profile
           </Box>
         </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
-        </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
-        </MenuItem>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}></MenuItem>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}></MenuItem>
         <Divider />
         <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>
@@ -212,7 +210,6 @@ const UserDropdown = () => {
       </Menu>
     </Fragment>
   )
-  
 }
 
 export default UserDropdown

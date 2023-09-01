@@ -32,8 +32,6 @@ const TeacherDocumentPage = ({ data }) => {
     setTabValue(val)
   }
 
-  const handleUpload = () => {}
-
   return (
     <Box>
       <Card>
@@ -81,10 +79,10 @@ const TeacherDocumentPage = ({ data }) => {
 }
 
 // SSR
-export async function getServerSideProps() {
-  return {
-    props: { data: data }
-  }
-}
+// export async function getServerSideProps() {
+//   return {
+//     props: { data: data }
+//   }
+// }
 
 export default TeacherDocumentPage
