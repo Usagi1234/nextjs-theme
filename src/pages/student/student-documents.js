@@ -105,7 +105,7 @@ const StudentDocumentPage = ({ DocumentStudents }) => {
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'row', p: 6 }}>
             <Typography variant='h6' sx={{ px: 2 }}>
-              ปีการศึกษาที่เปิดให้ลงสหกิจ: {lastedSemesterYear.lsy_semester}/{lastedSemesterYear.lsy_year}
+              ปีการศึกษาที่เปิดให้ลงทะเบียน: {lastedSemesterYear.lsy_semester}/{lastedSemesterYear.lsy_year}
             </Typography>
           </Box>
 
