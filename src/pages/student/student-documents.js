@@ -14,19 +14,23 @@ import { mdiFileDocumentCheckOutline } from '@mdi/js'
 // ** Custom Components
 import Cookies from 'js-cookie'
 
-const notFound = false
-
-const jwtUsername = Cookies.get('._jwtUsername')
-
 const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
+  const jwtUsername = Cookies.get('._jwtUsername')
   const [dataStudent, setDataStudent] = useState([])
 
+  console.log('tes: ', lastedSemesterYear)
+
   useEffect(() => {
+    console.log(process.env.NEXT_PUBLIC_API_BACKEND)
     const dataJwt = { username: jwtUsername }
-    axios.post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getDataStudent`, dataJwt).then(res => {
-      console.log(res.data)
-      setDataStudent(res.data.data[0])
-    })
+    axios
+      .post('http://localhost:3200/api/getDataStudent', dataJwt)
+      .then(res => {
+        setDataStudent('d: ', res.data.data[0])
+      })
+      .catch(err => {
+        console.log('err: ', err)
+      })
   }, [])
 
   const handleFileUpload = async (e, typeID) => {
@@ -45,7 +49,7 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
 
     console.log('uploadFile: ', uploadFile)
 
-    const resApiBackend = await axios.post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/uploadFile`, uploadFile, {
+    const resApiBackend = await axios.post('http://0.0.0.0:3200/api/uploadFile', uploadFile, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -171,7 +175,7 @@ export async function getServerSideProps() {
       status: 'รออนุมัติ'
     }
   ]
-  const resSemesterYear = await axios.get(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getSemesterYear`)
+  const resSemesterYear = await axios.get('http://0.0.0.0:3200/api/getSemesterYear')
   const lastedSemesterYear = resSemesterYear.data.results[0]
 
   return {
