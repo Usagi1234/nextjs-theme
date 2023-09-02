@@ -1,3 +1,6 @@
+// ** React Imports
+import { useEffect, useState } from 'react'
+
 // ** Icon imports
 import Login from 'mdi-material-ui/Login'
 import Table from 'mdi-material-ui/Table'
@@ -13,13 +16,13 @@ import ChevronDoubleRight from 'mdi-material-ui/ChevronDoubleRight'
 import BlindIcon from '@mui/icons-material/Blind'
 import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew'
 import Cookies from 'js-cookie'
-import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-const navigation = () => {
+const Navigation = () => {
   // -------------------- getCookie
   const username = Cookies.get('._jwtUsername')
   const role = Cookies.get('._jwtRole')
+
   // ===============================
 
   const [status, setStatus] = useState('')
@@ -169,4 +172,4 @@ const navigation = () => {
   return menuItems
 }
 
-export default navigation
+export default Navigation

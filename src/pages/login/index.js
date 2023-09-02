@@ -37,8 +37,10 @@ import axios from 'axios'
 import Toastify from 'toastify-js'
 import 'toastify-js/src/toastify.css'
 import Swal from 'sweetalert2'
-// import Cookies from 'js-cookie'
-import cookieCutter from 'cookie-cutter'
+import Cookies from 'js-cookie'
+
+// ! ไม่ได้ใช้แล้ว
+// import cookieCutter from 'cookie-cutter'
 const now = new Date()
 
 // ** Styled Components
@@ -86,25 +88,19 @@ const LoginPage = () => {
       .post('http://localhost:3200/api/authenticationstu', {
         username: values.email,
         password: values.password
-        // api/authentication
       })
       .then(data => {
-        console.log('jwt', data);
+        console.log('jwt', data)
         if (data.data.statusCode === 404) {
           setSuccess(false)
         } else {
-          cookieCutter.set('._jwtUsername', data.data.jwt, {
-            expires: now,
-            secure: true
-            // httpOnly: true,
-          })
-          cookieCutter.set('._jwtRole', data.data.jwtRole, {
-            expires: now,
-            secure: true
-            // httpOnly: true,
-          })
+          Cookies.set('._jwtUsername', data.data.jwt)
+          Cookies.set('._jwtRole', data.data.jwtRole)
           setSuccess(true)
         }
+      })
+      .catch(err => {
+        console.log(err)
       })
   }
 
@@ -127,7 +123,6 @@ const LoginPage = () => {
       }, 1000)
     }
   }, [success])
-  
 
   // ** Hook
   const theme = useTheme()

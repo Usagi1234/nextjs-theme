@@ -1,47 +1,33 @@
 // ** React Imports
 import React, { useEffect, useState } from 'react'
 
+// ** axios
+import axios from 'axios'
+
 // ** MUI Imports
 import { Box, Button, Card, Chip, Divider, Grid, Tab, Typography } from '@mui/material'
 
 // ** MDI Imports
 import Icon from '@mdi/react'
 import { mdiFileDocumentCheckOutline } from '@mdi/js'
-import axios from 'axios'
 
 // ** Custom Components
 import Cookies from 'js-cookie'
 
-const StudentDocumentPage = ({ DocumentStudents }) => {
+const notFound = false
+
+const jwtUsername = Cookies.get('._jwtUsername')
+
+const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
   const [dataStudent, setDataStudent] = useState([])
-  const [lastedSemesterYear, setLastedSemesterYear] = useState([])
-  const username = Cookies.get('._jwtUsername')
 
   useEffect(() => {
-    axios
-      .post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getDataStudent`, {
-        username: username
-      })
-      .then(res => {
-        setDataStudent(res.data[0])
-      })
-      .catch(err => {
-        console.log(err)
-      })
-
-    axios
-      .get(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getSemesterYear`)
-      .then(res => {
-        setLastedSemesterYear(res.data.results[0])
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    const dataJwt = { username: jwtUsername }
+    axios.post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getDataStudent`, dataJwt).then(res => {
+      console.log(res.data)
+      setDataStudent(res.data.data[0])
+    })
   }, [])
-
-  useEffect(() => {
-    console.log('dataStudent: ', dataStudent)
-  }, [dataStudent])
 
   const handleFileUpload = async (e, typeID) => {
     const file = e.target.files[0]
@@ -85,11 +71,11 @@ const StudentDocumentPage = ({ DocumentStudents }) => {
   }
 
   useEffect(() => {
-    console.log('up: ')
-  }, [])
+    console.log('data: ', dataStudent)
+  }, [dataStudent])
 
   if (dataStudent.length === 0) {
-    return <div>loading...</div>
+    return <div>Loading...</div>
   }
 
   return (
@@ -112,7 +98,7 @@ const StudentDocumentPage = ({ DocumentStudents }) => {
           <Divider />
           <Box sx={{ p: 8 }}>
             <Grid container justifyContent='center' alignItems='center'>
-              {DocumentStudents.map(item => (
+              {documentStudent.map(item => (
                 <Grid
                   item
                   xs={12}
@@ -155,7 +141,7 @@ const StudentDocumentPage = ({ DocumentStudents }) => {
 
 // SSR
 export async function getServerSideProps() {
-  const DocumentStudent = [
+  const documentStudent = [
     {
       id: 1,
       name: 'สก.วศ.01_ฟอร์มโครงการพัฒนาทักษะวิชาชีพ',
@@ -185,9 +171,11 @@ export async function getServerSideProps() {
       status: 'รออนุมัติ'
     }
   ]
+  const resSemesterYear = await axios.get(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getSemesterYear`)
+  const lastedSemesterYear = resSemesterYear.data.results[0]
 
   return {
-    props: { DocumentStudents: DocumentStudent }
+    props: { documentStudent, lastedSemesterYear }
   }
 }
 

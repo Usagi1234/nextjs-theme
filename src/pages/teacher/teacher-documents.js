@@ -78,11 +78,4 @@ const TeacherDocumentPage = ({ data }) => {
   )
 }
 
-// SSR
-// export async function getServerSideProps() {
-//   return {
-//     props: { data: data }
-//   }
-// }
-
 export default TeacherDocumentPage
