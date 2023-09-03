@@ -13,6 +13,7 @@ import { mdiFileDocumentCheckOutline } from '@mdi/js'
 
 // ** Custom Components
 import Cookies from 'js-cookie'
+import Swal from 'sweetalert2'
 
 const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
   const jwtUsername = Cookies.get('._jwtUsername')
@@ -56,8 +57,26 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
     getFilesStudent(dataStudent.Id)
   }, [dataStudent])
 
+  //  ** อัพโหลดไฟล์ PDF
   const handleFileUpload = async (e, typeID) => {
     const file = e.target.files[0]
+
+    const displayError = message => {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: message,
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+
+    // Check if the file is a PDF
+    if (file.type !== 'application/pdf') {
+      displayError('กรุณาอัพโหลดไฟล์ PDF')
+
+      return // Stop execution if it's not a PDF
+    }
 
     console.log('file: ', file)
 
@@ -74,35 +93,85 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
 
     console.log('uploadFile: ', uploadFile)
 
-    // const resApiBackend = await axios.post('http://localhost:3200/api/uploadFile', uploadFile, {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data'
-    //   }
-    // })
-
-    // if (resApiBackend.status === 200) {
-    //   console.log('success backend')
-    // } else {
-    //   console.log('error')
-    // }
+    const resApiBackend = await axios.post('http://localhost:3200/api/uploadFile', uploadFile, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
 
     // ? ต้องรัน server.js ก่อน
     const formData = new FormData()
     formData.append('pdf', file)
     formData.append('name', uploadFile.doc_filename)
 
-    const response = await fetch('/api/upload-pdf', {
+    const resApiFrontend = await fetch('/api/upload-pdf', {
       method: 'PUT',
       body: formData
     })
 
-    if (response.status === 200) {
-      console.log('อัปโหลดไฟล์ PDF เรียบร้อยแล้ว')
+    if (resApiFrontend.status === 200 && resApiBackend.status === 200) {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Upload file success',
+        showConfirmButton: false,
+        timer: 1500
+      })
     } else {
-      console.log('เกิดข้อผิดพลาดในการอัปโหลดไฟล์ PDF')
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Upload file error',
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
 
-    // getFilesStudent(dataStudent.Id)
+    getFilesStudent(dataStudent.Id)
+    console.log('test')
+  }
+
+  const handleFileDownload = async typeID => {
+    try {
+      const fileName = `${dataStudent.stu_id}_Document_${typeID}`
+
+      console.log('fileName: ', fileName)
+
+      // Send a GET request to the download URL
+      const response = await axios.get(`/api/download-pdf/${fileName}.pdf`, {
+        responseType: 'blob' // Specify the response type as 'blob' to handle binary data (PDF)
+      })
+
+      if (response.status === 200) {
+        // Create a Blob from the response data
+        const fileBlob = new Blob([response.data], { type: 'application/pdf' })
+
+        // Create a temporary URL for the Blob
+        const fileUrl = window.URL.createObjectURL(fileBlob)
+
+        // Create an anchor element for downloading the file
+        const downloadLink = document.createElement('a')
+        downloadLink.href = fileUrl
+
+        // Set the file name for the downloaded file
+        downloadLink.download = `${fileName}.pdf`
+
+        // Trigger a click event to initiate the download
+        downloadLink.click()
+
+        // Release the URL object
+        window.URL.revokeObjectURL(fileUrl)
+      } else if (response.status === 404) {
+        // Handle the case where the file was not found
+        console.error('File not found')
+      } else {
+        // Handle other error cases
+        console.error('Error downloading file')
+      }
+    } catch (error) {
+      // Handle any errors that may occur during the download process
+      console.error('Error:', error)
+    }
   }
 
   useEffect(() => {
@@ -115,6 +184,19 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
         return null
       case 1:
         return 'อัพโหลดแล้ว รออนุมัติ'
+    }
+  }
+
+  const handleChipColor = statusValue => {
+    switch (statusValue) {
+      case 1:
+        return 'warning'
+      case 2:
+        return 'success'
+      case 3:
+        return 'success'
+      case 4:
+        return 'success'
     }
   }
 
@@ -149,30 +231,33 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
                   key={item.id}
                   sx={{ border: '1px solid #ccc', borderRadius: '10px', bgcolor: '#f5f5f5', marginBlock: 2, p: 2 }}
                 >
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                        <Typography variant='subtitle1' sx={{ fontSize: 18 }}>
-                          อัพโหลดเอกสาร {item.name}
-                        </Typography>
+                  <Grid container justifyContent='space-between' alignItems='center'>
+                    <Grid item xs={5}>
+                      <Typography variant='subtitle1' sx={{ fontSize: 18 }}>
+                        อัพโหลดเอกสาร {item.name}
+                      </Typography>
 
-                        <Typography variant='subtitle1' noWrap>
-                          {item.fileName ? item.fileName : 'ยังไม่ได้อัพโหลดไฟล์'}
-                        </Typography>
-                      </Box>
-                      {item.status !== 0 && <Chip label={handleStatusValueChangeToText(item.status)} sx={{ mx: 2 }} />}
-                    </Box>
-                    <Box sx={{ justifyContent: 'space-between' }}>
-                      <Button variant='contained' component='label' sx={{ mr: 2 }}>
+                      <Typography variant='subtitle1' noWrap>
+                        ชื่อไฟล์: {item.fileName ? item.fileName : 'ยังไม่ได้อัพโหลดไฟล์'}
+                      </Typography>
+                    </Grid>
+                    <Grid xs={7} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                      {item.status !== 0 && (
+                        <Chip
+                          label={handleStatusValueChangeToText(item.status)}
+                          color={handleChipColor(item.status)}
+                          variant='outlined'
+                        />
+                      )}
+                      <Button variant='contained' component='label' sx={{ mx: 2 }}>
                         Upload File
                         <input type='file' hidden onChange={e => handleFileUpload(e, item.id)} />
                       </Button>
-                      <Button variant='contained' component='label' sx={{ mr: 4 }}>
+                      <Button variant='contained' onClick={() => handleFileDownload(item.id)}>
                         Download File
-                        <input type='file' hidden />
                       </Button>
-                    </Box>
-                  </Box>
+                    </Grid>
+                  </Grid>
                 </Grid>
               ))}
             </Grid>

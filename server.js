@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const multer = require('multer')
 const next = require('next')
 const fs = require('fs')
+const path = require('path')
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -15,6 +16,7 @@ app.prepare().then(() => {
 
   const upload = multer({ dest: 'public/documents/' })
 
+  // ** อัปโหลดไฟล์ PDF
   server.put('/api/upload-pdf', upload.single('pdf'), (req, res) => {
     const { originalname, path } = req.file
     const newName = req.body.name // รับชื่อจากข้อมูล POST
@@ -34,6 +36,30 @@ app.prepare().then(() => {
 
       return res.status(200).json({ message: 'อัปโหลดไฟล์ PDF เรียบร้อยแล้ว' })
     })
+  })
+
+  // ** ดาวน์โหลดไฟล์ PDF
+  server.get('/api/download-pdf/:fileName', (req, res) => {
+    const fileName = req.params.fileName
+
+    // Define the path to the PDF file
+    const filePath = path.join(__dirname, 'public/documents/', fileName + '.pdf')
+
+    console.log('filePath: ', filePath)
+
+    // Check if the file exists
+    if (fs.existsSync(filePath)) {
+      // Send the file as a download
+      res.download(filePath, fileName, err => {
+        if (err) {
+          console.error('Error while downloading file:', err)
+          res.status(500).json({ message: 'Error while downloading file' })
+        }
+      })
+    } else {
+      // If the file does not exist, send a 404 response
+      res.status(404).json({ message: 'File not found' })
+    }
   })
 
   server.get('*', (req, res) => {
