@@ -14,6 +14,7 @@ import { mdiFileDocumentCheckOutline } from '@mdi/js'
 // ** Custom Components
 import Cookies from 'js-cookie'
 import Swal from 'sweetalert2'
+import { documentStatus } from 'src/@core/utils/document-status'
 
 const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
   const [dataStudent, setDataStudent] = useState([])
@@ -130,7 +131,6 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
     }
 
     getFilesStudent(dataStudent.Id)
-    console.log('test')
   }
 
   const handleFileDownload = async typeID => {
@@ -186,25 +186,15 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
   }, [dataStudent])
 
   const handleStatusValueChangeToText = statusValue => {
-    switch (statusValue) {
-      case 0:
-        return null
-      case 1:
-        return 'อัพโหลดแล้ว รออนุมัติ'
-    }
+    const status = documentStatus(statusValue)
+
+    return status.text
   }
 
   const handleChipColor = statusValue => {
-    switch (statusValue) {
-      case 1:
-        return 'warning'
-      case 2:
-        return 'success'
-      case 3:
-        return 'success'
-      case 4:
-        return 'success'
-    }
+    const status = documentStatus(statusValue)
+
+    return status.color
   }
 
   if (dataFile.length === 0) {
