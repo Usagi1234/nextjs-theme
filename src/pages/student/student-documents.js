@@ -16,28 +16,26 @@ import Cookies from 'js-cookie'
 import Swal from 'sweetalert2'
 
 const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
-  const jwtUsername = Cookies.get('._jwtUsername')
   const [dataStudent, setDataStudent] = useState([])
   const [dataFile, setDataFile] = useState(documentStudent)
 
-  console.log('tes: ', lastedSemesterYear)
-
   useEffect(() => {
-    console.log(process.env.NEXT_PUBLIC_API_BACKEND)
+    const jwtUsername = Cookies.get('._jwtUsername')
     const dataJwt = { username: jwtUsername }
     axios
-      .post('http://localhost:3200/api/getDataStudent', dataJwt)
+      .post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getDataStudent`, dataJwt)
       .then(res => {
         setDataStudent(res.data.data[0])
+        console.log('res: ', res)
       })
       .catch(err => {
-        console.log('err: ', err)
+        console.log('err1: ', err)
       })
   }, [])
 
   const getFilesStudent = async student_id => {
     axios
-      .post('http://localhost:3200/api/getFileStudent', { student_id: student_id })
+      .post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getFileStudent`, { student_id: student_id })
       .then(res => {
         console.log('resA: ', res.data.data)
         setDataFile(dataFile =>
@@ -93,21 +91,25 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
 
     console.log('uploadFile: ', uploadFile)
 
-    const resApiBackend = await axios.post('http://localhost:3200/api/uploadFile', uploadFile, {
+    // ** API Backend
+    const resApiBackend = await axios.post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/uploadFile`, uploadFile, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     })
+    console.log('resApiBackend: ', resApiBackend)
 
     // ? ต้องรัน server.js ก่อน
     const formData = new FormData()
     formData.append('pdf', file)
     formData.append('name', uploadFile.doc_filename)
 
+    // ** API Frontend
     const resApiFrontend = await fetch('/api/upload-pdf', {
       method: 'PUT',
       body: formData
     })
+    console.log('resApiFrontend: ', resApiFrontend)
 
     if (resApiFrontend.status === 200 && resApiBackend.status === 200) {
       Swal.fire({
@@ -137,6 +139,7 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
 
       console.log('fileName: ', fileName)
 
+      // ** API Frontend
       // Send a GET request to the download URL
       const response = await axios.get(`/api/download-pdf/${fileName}.pdf`, {
         responseType: 'blob' // Specify the response type as 'blob' to handle binary data (PDF)
@@ -177,6 +180,10 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
   useEffect(() => {
     console.log('data: ', dataFile)
   }, [dataFile])
+
+  useEffect(() => {
+    console.log('dataStudent: ', dataStudent)
+  }, [dataStudent])
 
   const handleStatusValueChangeToText = statusValue => {
     switch (statusValue) {
@@ -241,7 +248,7 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
                         ชื่อไฟล์: {item.fileName ? item.fileName : 'ยังไม่ได้อัพโหลดไฟล์'}
                       </Typography>
                     </Grid>
-                    <Grid xs={7} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                    <Grid item xs={7} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
                       {item.status !== 0 && (
                         <Chip
                           label={handleStatusValueChangeToText(item.status)}

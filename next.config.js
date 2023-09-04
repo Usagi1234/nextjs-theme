@@ -14,5 +14,10 @@ module.exports = {
     }
 
     return config
+  },
+  api: {
+    bodyParser: {
+      sizeLimit: '30mb' // ปรับขนาดตามที่คุณต้องการ
+    }
   }
 }
