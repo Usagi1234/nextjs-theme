@@ -1,5 +1,5 @@
 // ** React Imports
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // ** MUI Imports
 import {
@@ -22,15 +22,86 @@ import { DataGrid } from '@mui/x-data-grid'
 // ** MDI Imports
 import Icon from '@mdi/react'
 import { mdiFileDocumentCheckOutline } from '@mdi/js'
+import axios from 'axios'
 
-const TeacherDocumentPage = ({ data }) => {
-  const [uploadFile, setUploadFile] = useState(null)
-  const [semester, setSemester] = useState('')
-  const [year, setYear] = useState('')
+const TeacherDocumentPage = ({ semesterYear }) => {
+  const [selectedSemesterYear, setSelectedSemesterYear] = useState(semesterYear[0].lsy_id)
+  const [semesterYearData, setSemesterYearData] = useState(semesterYear[0])
+  const [documentsData, setDocumentsData] = useState([])
 
-  const handleTabChange = (e, val) => {
-    setTabValue(val)
+  console.log('semesterYear: ', semesterYearData.lsy_semester)
+
+  const handleSelectedSemesterYearChange = event => {
+    setSelectedSemesterYear(event.target.value)
+    const selectedSemesterYearData = semesterYear.find(item => item.lsy_id === event.target.value)
+    setSemesterYearData(selectedSemesterYearData)
   }
+
+  const columns = [
+    {
+      field: 'doc_id',
+      headerName: 'ID',
+      width: 50,
+      editable: false
+    },
+    {
+      field: 'doc_filename',
+      headerName: 'File Name',
+      width: 300,
+      editable: false
+    },
+    {
+      field: 'doc_type',
+      headerName: 'Type',
+      width: 100,
+      editable: false
+    },
+    {
+      field: 'updated_at',
+      headerName: 'Last Update',
+      width: 300,
+      editable: false
+    },
+    {
+      field: 'upload',
+      headerName: 'Upload',
+      width: 100,
+      editable: false,
+      renderCell: params => (
+        <Button variant='contained' color='primary' size='small'>
+          Upload
+        </Button>
+      )
+    },
+    {
+      field: 'download',
+      headerName: 'Download',
+      width: 130,
+      editable: false,
+      renderCell: params => (
+        <Button variant='contained' color='primary' size='small'>
+          Download
+        </Button>
+      )
+    }
+  ]
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log(semesterYearData.lsy_semester, '/', semesterYearData.lsy_year)
+      try {
+        const response = await axios.post('http://localhost:3200/api/getDocumentsForTeacher', {
+          semester: semesterYearData.lsy_semester,
+          year: semesterYearData.lsy_year
+        })
+        setDocumentsData(response.data.results)
+      } catch (error) {
+        console.log('Error fetching data:', error)
+      }
+    }
+
+    fetchData()
+  }, [semesterYearData])
 
   return (
     <Box>
@@ -43,39 +114,60 @@ const TeacherDocumentPage = ({ data }) => {
               <Typography variant='h6'>Download document and Upload Document sign Co-operative</Typography>
             </Box>
           </Box>
-
           <Divider />
-          <Box sx={{ p: 8 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', mr: 6 }}>
-                <FormControl>
-                  <Typography>SEMESTER</Typography>
-                  <Select value={semester} onChange={e => setSemester(e.target.value)}>
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
-
-              <Box sx={{ display: 'flex', flexDirection: 'column', mr: 6 }}>
-                <FormControl>
-                  <Typography>YEAR</Typography>
-                  <Select value={year} onChange={e => setYear(e.target.value)}>
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
-
-              <DataGrid />
-            </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', p: 6 }}>
+            <Typography variant='h6' sx={{ px: 2 }}>
+              เลือกปีการศึกษาที่ต้องการ
+            </Typography>
+            <FormControl sx={{ maxWidth: 300 }}>
+              <Select
+                id='select-semester-year'
+                value={selectedSemesterYear}
+                onChange={handleSelectedSemesterYearChange}
+              >
+                {semesterYear.map(item => (
+                  <MenuItem value={item.lsy_id} key={item.lsy_id}>
+                    {item.lsy_semester}/{item.lsy_year}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Box>
+          {documentsData.length === 0 ? (
+            <Box sx={{ p: 6 }}>
+              <Typography variant='h6'>ไม่มีเอกสารในปีการศึกษานี้</Typography>
+            </Box>
+          ) : (
+            <Box sx={{ p: 6 }}>
+              <DataGrid rows={documentsData} columns={columns} getRowId={row => row.doc_id} />
+            </Box>
+          )}
         </Box>
       </Card>
     </Box>
   )
+}
+
+// ssr
+export async function getServerSideProps() {
+  try {
+    const resAllSemesterYear = await axios.get(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getAllSemesterYear`)
+    const semesterYear = resAllSemesterYear.data.results
+
+    return {
+      props: {
+        semesterYear: semesterYear || [] // Provide a default value (empty array) if semesterYear is falsy
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching semesterYear data:', error)
+
+    return {
+      props: {
+        semesterYear: [] // Provide a default value in case of an error
+      }
+    }
+  }
 }
 
 export default TeacherDocumentPage
