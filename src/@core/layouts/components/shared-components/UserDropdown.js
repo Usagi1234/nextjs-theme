@@ -70,6 +70,7 @@ const UserDropdown = () => {
             const setFristName = data.data[0].stu_name
             setShowname(setFristName)
             setShowstate(status)
+            console.log("studentname", user)
           }
         })
       }
@@ -86,6 +87,15 @@ const UserDropdown = () => {
         axios.post('http://localhost:3200/api/Readofficer', { username: user }).then(data => {
           if (data.data.length > 0) {
             const setFristName = data.data[0].off_name
+            setShowname(setFristName)
+            setShowstate(status)
+          }
+        })
+      }
+      if (status === 'สถานประกอบการ') {
+        axios.post('http://localhost:3200/api/Read_Company', { username: user }).then(data => {
+          if (data.data.length > 0) {
+            const setFristName = data.data[0].com_name
             setShowname(setFristName)
             setShowstate(status)
           }
