@@ -41,7 +41,11 @@ const TeacherDocumentPage = ({ semesterYear }) => {
         semester: semesterYearData.lsy_semester,
         year: semesterYearData.lsy_year
       })
-      setDocumentsData(response.data.results)
+
+      const data = response.data.results.filter(item => {
+        return item.doc_version === 3 || item.doc_version === 4
+      })
+      setDocumentsData(data)
     } catch (error) {
       console.log('Error fetching data:', error)
       Swal.fire({
@@ -88,20 +92,22 @@ const TeacherDocumentPage = ({ semesterYear }) => {
         student_id: id,
         doc_filename: `${stu_id}_Document_${doc_type}.pdf`,
         doc_filepath: 'public/documents/',
-        doc_semester: semester,
-        doc_year: year,
         doc_type: doc_type,
-        doc_version: 3
+        doc_version: 4
       }
 
       console.log('uploadFile: ', uploadFile)
 
       // ** API Backend
-      const resApiBackend = await axios.post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/uploadFile`, uploadFile, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      const resApiBackend = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BACKEND}/api/uploadFileTeacher`,
+        uploadFile,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
         }
-      })
+      )
       console.log('resApiBackend: ', resApiBackend)
 
       // ? ต้องรัน server.js ก่อน
@@ -186,33 +192,6 @@ const TeacherDocumentPage = ({ semesterYear }) => {
     }
   }
 
-  const handleDisapproveFile = async doc_id => {
-    try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getDocumentsNotPass`, { doc_id: doc_id })
-      console.log(res)
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Disapprove file success',
-        text: 'Please check the document again.',
-        showConfirmButton: true,
-        confirmButtonText: 'OK'
-      }).then(() => {
-        fetchData()
-      })
-    } catch (err) {
-      console.error(err)
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: 'An error occurred',
-        text: 'Could not disapprove the file. Please try again.',
-        showConfirmButton: true,
-        confirmButtonText: 'OK'
-      })
-    }
-  }
-
   const columns = [
     {
       field: 'stu_id',
@@ -223,7 +202,7 @@ const TeacherDocumentPage = ({ semesterYear }) => {
     {
       field: 'student_name',
       headerName: 'Name',
-      width: 200,
+      width: 300,
       editable: false,
       renderCell: params => {
         const studentName = `${params.row.stu_name} ${params.row.stu_lname}`
@@ -288,22 +267,6 @@ const TeacherDocumentPage = ({ semesterYear }) => {
           Download
         </Button>
       )
-    },
-    {
-      field: 'disapprove',
-      headerName: 'Disapprove',
-      width: 130,
-      editable: false,
-      renderCell: params => (
-        <Button
-          variant='contained'
-          color='primary'
-          size='small'
-          onClick={() => handleDisapproveFile(params.row.doc_id)}
-        >
-          Disapprove
-        </Button>
-      )
     }
   ]
 
@@ -315,7 +278,12 @@ const TeacherDocumentPage = ({ semesterYear }) => {
           semester: semesterYearData.lsy_semester,
           year: semesterYearData.lsy_year
         })
-        setDocumentsData(response.data.results)
+
+        const data = response.data.results.filter(item => {
+          return item.doc_version === 3 || item.doc_version === 4
+        })
+
+        setDocumentsData(data)
       } catch (error) {
         console.log('Error fetching data:', error)
       }

@@ -88,8 +88,6 @@ const TeacherDocumentPage = ({ semesterYear }) => {
         student_id: id,
         doc_filename: `${stu_id}_Document_${doc_type}.pdf`,
         doc_filepath: 'public/documents/',
-        doc_semester: semester,
-        doc_year: year,
         doc_type: doc_type,
         doc_version: 3
       }
@@ -97,11 +95,15 @@ const TeacherDocumentPage = ({ semesterYear }) => {
       console.log('uploadFile: ', uploadFile)
 
       // ** API Backend
-      const resApiBackend = await axios.post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/uploadFile`, uploadFile, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      const resApiBackend = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BACKEND}/api/uploadFileTeacher`,
+        uploadFile,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
         }
-      })
+      )
       console.log('resApiBackend: ', resApiBackend)
 
       // ? ต้องรัน server.js ก่อน

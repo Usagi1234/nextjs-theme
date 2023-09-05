@@ -41,7 +41,10 @@ const TeacherDocumentPage = ({ semesterYear }) => {
         semester: semesterYearData.lsy_semester,
         year: semesterYearData.lsy_year
       })
-      setDocumentsData(response.data.results)
+
+      const data = response.data.results.filter(item => item.doc_version === 4 || item.doc_version === 5)
+
+      setDocumentsData(data)
     } catch (error) {
       console.log('Error fetching data:', error)
       Swal.fire({
@@ -88,20 +91,22 @@ const TeacherDocumentPage = ({ semesterYear }) => {
         student_id: id,
         doc_filename: `${stu_id}_Document_${doc_type}.pdf`,
         doc_filepath: 'public/documents/',
-        doc_semester: semester,
-        doc_year: year,
         doc_type: doc_type,
-        doc_version: 3
+        doc_version: 5
       }
 
       console.log('uploadFile: ', uploadFile)
 
       // ** API Backend
-      const resApiBackend = await axios.post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/uploadFile`, uploadFile, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      const resApiBackend = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BACKEND}/api/uploadFileTeacher`,
+        uploadFile,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
         }
-      })
+      )
       console.log('resApiBackend: ', resApiBackend)
 
       // ? ต้องรัน server.js ก่อน
@@ -186,33 +191,6 @@ const TeacherDocumentPage = ({ semesterYear }) => {
     }
   }
 
-  const handleDisapproveFile = async doc_id => {
-    try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getDocumentsNotPass`, { doc_id: doc_id })
-      console.log(res)
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Disapprove file success',
-        text: 'Please check the document again.',
-        showConfirmButton: true,
-        confirmButtonText: 'OK'
-      }).then(() => {
-        fetchData()
-      })
-    } catch (err) {
-      console.error(err)
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: 'An error occurred',
-        text: 'Could not disapprove the file. Please try again.',
-        showConfirmButton: true,
-        confirmButtonText: 'OK'
-      })
-    }
-  }
-
   const columns = [
     {
       field: 'stu_id',
@@ -288,22 +266,6 @@ const TeacherDocumentPage = ({ semesterYear }) => {
           Download
         </Button>
       )
-    },
-    {
-      field: 'disapprove',
-      headerName: 'Disapprove',
-      width: 130,
-      editable: false,
-      renderCell: params => (
-        <Button
-          variant='contained'
-          color='primary'
-          size='small'
-          onClick={() => handleDisapproveFile(params.row.doc_id)}
-        >
-          Disapprove
-        </Button>
-      )
     }
   ]
 
@@ -315,7 +277,10 @@ const TeacherDocumentPage = ({ semesterYear }) => {
           semester: semesterYearData.lsy_semester,
           year: semesterYearData.lsy_year
         })
-        setDocumentsData(response.data.results)
+
+        const data = response.data.results.filter(item => item.doc_version === 4 || item.doc_version === 5)
+
+        setDocumentsData(data)
       } catch (error) {
         console.log('Error fetching data:', error)
       }
@@ -336,23 +301,29 @@ const TeacherDocumentPage = ({ semesterYear }) => {
             </Box>
           </Box>
           <Divider />
-          <Box sx={{ display: 'flex', flexDirection: 'column', p: 6 }}>
-            <Typography variant='h6' sx={{ px: 2 }}>
-              เลือกปีการศึกษาที่ต้องการ
-            </Typography>
-            <FormControl sx={{ maxWidth: 300 }}>
-              <Select
-                id='select-semester-year'
-                value={selectedSemesterYear}
-                onChange={handleSelectedSemesterYearChange}
-              >
-                {semesterYear.map(item => (
-                  <MenuItem value={item.lsy_id} key={item.lsy_id}>
-                    {item.lsy_semester}/{item.lsy_year}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+
+          <Box sx={{ display: 'flex', alignItems: 'center', px: 6, pt: 3 }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6}>
+                <Button variant='contained' color='primary' size='medium'>
+                  <input
+                    type='file'
+                    hidden
+                    onChange={event =>
+                      handleUploadFile(
+                        event,
+                        params.row.Id,
+                        params.row.stu_id,
+                        params.row.doc_type,
+                        params.row.doc_semester,
+                        params.row.doc_year
+                      )
+                    }
+                  />
+                  Upload File Document
+                </Button>
+              </Grid>
+            </Grid>
           </Box>
           {documentsData.length === 0 ? (
             <Box sx={{ p: 6 }}>

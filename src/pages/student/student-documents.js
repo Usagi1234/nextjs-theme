@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 // ** MUI Imports
-import { Box, Button, Card, Chip, Divider, Grid, Tab, Typography } from '@mui/material'
+import { Box, Button, Card, Chip, Divider, FormControl, Grid, MenuItem, Tab, Typography, Select } from '@mui/material'
 
 // ** MDI Imports
 import Icon from '@mdi/react'
@@ -16,9 +16,10 @@ import Cookies from 'js-cookie'
 import Swal from 'sweetalert2'
 import { documentStatus } from 'src/@core/utils/document-status'
 
-const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
+const StudentDocumentPage = ({ documentStudent, lastedSemesterYear, establishment }) => {
   const [dataStudent, setDataStudent] = useState([])
   const [dataFile, setDataFile] = useState(documentStudent)
+  const [selectCompany, setSelectCompany] = useState('')
 
   useEffect(() => {
     const jwtUsername = Cookies.get('._jwtUsername')
@@ -39,11 +40,22 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
       .post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getFileStudent`, { student_id: student_id })
       .then(res => {
         console.log('resA: ', res.data.data)
+        const company = establishment.find(item => item.com_id === res.data.data[0].company_id)
+
+        console.log('company: ', company)
+
         setDataFile(dataFile =>
           dataFile.map(item => {
             const matchingDoc = res.data.data.find(doc => doc.doc_type === item.id)
 
-            return matchingDoc ? { ...item, fileName: matchingDoc.doc_filename, status: matchingDoc.doc_version } : item
+            return matchingDoc
+              ? {
+                  ...item,
+                  fileName: matchingDoc.doc_filename,
+                  status: matchingDoc.doc_version,
+                  company: company.com_name
+                }
+              : item
           })
         )
       })
@@ -82,6 +94,7 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
     // ? รอดึงข้อมูลนักศึกษา
     const uploadFile = {
       student_id: dataStudent.Id,
+      company_id: selectCompany,
       doc_filename: `${dataStudent.stu_id}_Document_${typeID}.pdf`,
       doc_filepath: 'public/documents/',
       doc_semester: lastedSemesterYear.lsy_semester,
@@ -185,6 +198,10 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
     console.log('dataStudent: ', dataStudent)
   }, [dataStudent])
 
+  useEffect(() => {
+    console.log('selectCompany: ', selectCompany)
+  }, [selectCompany])
+
   const handleStatusValueChangeToText = statusValue => {
     const status = documentStatus(statusValue)
 
@@ -197,6 +214,11 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
     return status.color
   }
 
+  const handleCompanyChange = e => {
+    console.log('e: ', e.target.value)
+    setSelectCompany(e.target.value)
+  }
+
   if (dataFile.length === 0) {
     return <div>Loading...</div>
   }
@@ -204,7 +226,7 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
   return (
     <Box>
       <Card>
-        <Box sx={{ display: 'flex', flexDirection: 'column', p: 6 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
             <Icon path={mdiFileDocumentCheckOutline} size={6} />
             <Box sx={{ ml: 2 }}>
@@ -213,29 +235,47 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
             </Box>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'row', p: 6 }}>
-            <Typography variant='h6' sx={{ px: 2 }}>
-              ปีการศึกษาที่เปิดให้ลงทะเบียน: {lastedSemesterYear.lsy_semester}/{lastedSemesterYear.lsy_year}
-            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+              <Typography variant='h6' sx={{ px: 2 }}>
+                ปีการศึกษาที่เปิดให้ลงทะเบียน: {lastedSemesterYear.lsy_semester}/{lastedSemesterYear.lsy_year}
+              </Typography>
+              <FormControl sx={{ maxWidth: 500 }}>
+                <Typography variant='h6' sx={{ px: 2 }}>
+                  เลือกสถานประกอบการ
+                </Typography>
+                <Select value={selectCompany} onChange={handleCompanyChange}>
+                  {establishment.map(item => (
+                    <MenuItem key={item.com_id} value={item.com_id}>
+                      {item.com_name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
           </Box>
 
           <Divider />
-          <Box sx={{ p: 8 }}>
+          <Box sx={{ p: 4 }}>
             <Grid container justifyContent='center' alignItems='center'>
               {dataFile.map(item => (
                 <Grid
                   item
                   xs={12}
                   key={item.id}
-                  sx={{ border: '1px solid #ccc', borderRadius: '10px', bgcolor: '#f5f5f5', marginBlock: 2, p: 2 }}
+                  sx={{ border: '1px solid #ccc', borderRadius: '10px', bgcolor: '#f5f5f5', marginBlock: 1, p: 2 }}
                 >
                   <Grid container justifyContent='space-between' alignItems='center'>
                     <Grid item xs={5}>
-                      <Typography variant='subtitle1' sx={{ fontSize: 18 }}>
+                      <Typography variant='subtitle1' sx={{ fontSize: 16 }}>
                         อัพโหลดเอกสาร {item.name}
                       </Typography>
 
                       <Typography variant='subtitle1' noWrap>
                         ชื่อไฟล์: {item.fileName ? item.fileName : 'ยังไม่ได้อัพโหลดไฟล์'}
+                      </Typography>
+
+                      <Typography variant='subtitle1' noWrap>
+                        ชื่อสถานประกอบการ: {item.company ? item.company : 'ยังไม่ได้เลือกสถานประกอบการ '}
                       </Typography>
                     </Grid>
                     <Grid item xs={7} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
@@ -246,11 +286,16 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear }) => {
                           variant='outlined'
                         />
                       )}
-                      <Button variant='contained' component='label' sx={{ mx: 2 }}>
+                      <Button
+                        variant='contained'
+                        component='label'
+                        sx={{ mx: 1, maxWidth: 100 }}
+                        disabled={item.status > 2 ? true : false}
+                      >
                         Upload File
                         <input type='file' hidden onChange={e => handleFileUpload(e, item.id)} />
                       </Button>
-                      <Button variant='contained' onClick={() => handleFileDownload(item.id)}>
+                      <Button variant='contained' onClick={() => handleFileDownload(item.id)} sx={{ maxWidth: 100 }}>
                         Download File
                       </Button>
                     </Grid>
@@ -273,37 +318,44 @@ export async function getServerSideProps() {
       name: 'สก.วศ.01_ฟอร์มโครงการพัฒนาทักษะวิชาชีพ',
       file: null,
       fileName: '',
-      status: 0
+      status: 0,
+      company: ''
     },
     {
       id: 2,
       name: 'สก.วศ.02_ใบสมัครข้อมูลนักศึกษา',
       file: null,
       fileName: '',
-      status: 0
+      status: 0,
+      company: ''
     },
     {
       id: 3,
       name: 'ใบทรานสคริปนักศึกษา (ภาษาอังกฤษ)',
       file: null,
       fileName: '',
-      status: 0
+      status: 0,
+      company: ''
     },
     {
       id: 4,
       name: 'สำเนาบัตรประชาชน (ลงนามเรียบร้อย)',
       file: null,
       fileName: '',
-      status: 0
+      status: 0,
+      company: ''
     }
   ]
 
   // ** Get lasted semester year
-  const resSemesterYear = await axios.get('http://0.0.0.0:3200/api/getSemesterYear')
+  const resSemesterYear = await axios.get(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getSemesterYear`)
   const lastedSemesterYear = resSemesterYear.data.results[0]
 
+  const resCompany = await axios.get(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/v1/companys`)
+  const establishment = resCompany.data.data
+
   return {
-    props: { documentStudent, lastedSemesterYear }
+    props: { documentStudent, lastedSemesterYear, establishment }
   }
 }
 
