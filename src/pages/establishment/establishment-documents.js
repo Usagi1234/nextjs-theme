@@ -31,18 +31,36 @@ import Swal from 'sweetalert2'
 import { documentStatus } from 'src/@core/utils/document-status'
 
 const TeacherDocumentPage = ({ semesterYear }) => {
-  const [selectedSemesterYear, setSelectedSemesterYear] = useState(semesterYear[0].lsy_id)
   const [semesterYearData, setSemesterYearData] = useState(semesterYear[0])
   const [documentsData, setDocumentsData] = useState([])
+  const [dataCompany, setDataCompany] = useState([])
+
+  // ! dummy data
+  const com_id = 1
+
+  useEffect(() => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getCompanyById`, {
+        com_id: com_id
+      })
+      .then(res => {
+        console.log('res: ', res.data.data[0])
+        setDataCompany(res.data.data[0])
+      })
+      .catch(err => {
+        console.log('err: ', err)
+      })
+  }, [])
 
   const fetchData = async () => {
     try {
-      const response = await axios.post('http://localhost:3200/api/getDocumentsForTeacher', {
-        semester: semesterYearData.lsy_semester,
-        year: semesterYearData.lsy_year
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getDocumentsReply`, {
+        com_id: 1
       })
 
-      const data = response.data.results.filter(item => item.doc_version === 4 || item.doc_version === 5)
+      const data = response.data.data
+
+      console.log('data: ', data)
 
       setDocumentsData(data)
     } catch (error) {
@@ -57,15 +75,13 @@ const TeacherDocumentPage = ({ semesterYear }) => {
     }
   }
 
-  const handleSelectedSemesterYearChange = event => {
-    setSelectedSemesterYear(event.target.value)
-    const selectedSemesterYearData = semesterYear.find(item => item.lsy_id === event.target.value)
-    setSemesterYearData(selectedSemesterYearData)
-  }
-
-  const handleUploadFile = async (event, id, stu_id, doc_type, semester, year) => {
+  const handleUploadFile = async event => {
     try {
       const file = event.target.files[0]
+      const currentDate = new Date().toLocaleDateString()
+      const formattedDate = currentDate.replace(/\//g, '_')
+
+      console.log('file: ', file)
 
       const displayError = message => {
         Swal.fire({
@@ -86,20 +102,22 @@ const TeacherDocumentPage = ({ semesterYear }) => {
 
       console.log('file: ', file)
 
-      // ? รอดึงข้อมูลนักศึกษา
+      // ? รอดึงข้อมูลสถานประกอบการ
       const uploadFile = {
-        student_id: id,
-        doc_filename: `${stu_id}_Document_${doc_type}.pdf`,
-        doc_filepath: 'public/documents/',
-        doc_type: doc_type,
-        doc_version: 5
+        company_id: dataCompany.com_id,
+        ad_filename: `Document_${dataCompany.com_id}_${formattedDate}`,
+        ad_filepath: 'public/documents-company/'
       }
+
+      const formData = new FormData()
+      formData.append('pdf', file)
+      formData.append('newName', uploadFile.ad_filename)
 
       console.log('uploadFile: ', uploadFile)
 
       // ** API Backend
       const resApiBackend = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BACKEND}/api/uploadFileTeacher`,
+        `${process.env.NEXT_PUBLIC_API_BACKEND}/api/sendDocumentsReply`,
         uploadFile,
         {
           headers: {
@@ -107,18 +125,15 @@ const TeacherDocumentPage = ({ semesterYear }) => {
           }
         }
       )
+
       console.log('resApiBackend: ', resApiBackend)
 
-      // ? ต้องรัน server.js ก่อน
-      const formData = new FormData()
-      formData.append('pdf', file)
-      formData.append('name', uploadFile.doc_filename)
-
-      // ** API Frontend
-      const resApiFrontend = await fetch('/api/upload-pdf', {
-        method: 'PUT',
-        body: formData
+      const resApiFrontend = await axios.post('/api/upload-com', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       })
+
       console.log('resApiFrontend: ', resApiFrontend)
 
       if (resApiFrontend.status === 200 && resApiBackend.status === 200) {
@@ -147,15 +162,12 @@ const TeacherDocumentPage = ({ semesterYear }) => {
     }
   }
 
-  const handleDownloadFile = async (stu_code, doc_type) => {
+  const handleDownloadFile = async fileName => {
+    console.log('fileName: ', fileName)
     try {
-      const fileName = `${stu_code}_Document_${doc_type}`
-
-      console.log('fileName: ', fileName)
-
       // ** API Frontend
       // Send a GET request to the download URL
-      const response = await axios.get(`/api/download-pdf/${fileName}.pdf`, {
+      const response = await axios.get(`/api/download-com-pdf/${fileName}`, {
         responseType: 'blob' // Specify the response type as 'blob' to handle binary data (PDF)
       })
 
@@ -193,101 +205,72 @@ const TeacherDocumentPage = ({ semesterYear }) => {
 
   const columns = [
     {
-      field: 'stu_id',
-      headerName: 'code',
-      width: 150,
+      field: 'ad_id',
+      headerName: 'ID',
+      width: 100,
       editable: false
     },
     {
-      field: 'student_name',
-      headerName: 'Name',
+      field: 'ad_filename',
+      headerName: 'File Name',
       width: 200,
-      editable: false,
-      renderCell: params => {
-        const studentName = `${params.row.stu_name} ${params.row.stu_lname}`
-
-        return <div>{studentName}</div>
-      }
-    },
-    {
-      field: 'doc_type',
-      headerName: 'Doc No.',
-      width: 80,
       editable: false
     },
     {
-      field: 'status',
-      headerName: 'Status',
+      field: 'created_at',
+      headerName: 'Created At',
       width: 300,
       editable: false,
       renderCell: params => {
-        const status = documentStatus(params.row.doc_version)
-
-        return <div style={{ whiteSpace: 'normal', wordWrap: 'break-word' }}>{status.text}</div>
+        return <Typography variant='body1'>{params.value.slice(0, 10)}</Typography>
       }
-    },
-    {
-      field: 'upload',
-      headerName: 'Upload',
-      width: 130,
-      editable: false,
-      renderCell: params => (
-        <Button variant='contained' component='label' size='small'>
-          Upload File
-          <input
-            type='file'
-            hidden
-            onChange={event =>
-              handleUploadFile(
-                event,
-                params.row.Id,
-                params.row.stu_id,
-                params.row.doc_type,
-                params.row.doc_semester,
-                params.row.doc_year
-              )
-            }
-          />
-        </Button>
-      )
     },
     {
       field: 'download',
       headerName: 'Download',
-      width: 130,
+      width: 200,
       editable: false,
-      renderCell: params => (
-        <Button
-          variant='contained'
-          color='primary'
-          size='small'
-          onClick={() => handleDownloadFile(params.row.stu_id, params.row.doc_type)}
-        >
-          Download
-        </Button>
-      )
+      renderCell: params => {
+        return (
+          <Button
+            variant='contained'
+            color='primary'
+            size='small'
+            onClick={() => handleDownloadFile(params.row.ad_filename)}
+          >
+            Download
+          </Button>
+        )
+      }
     }
   ]
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(semesterYearData.lsy_semester, '/', semesterYearData.lsy_year)
       try {
-        const response = await axios.post('http://localhost:3200/api/getDocumentsForTeacher', {
-          semester: semesterYearData.lsy_semester,
-          year: semesterYearData.lsy_year
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getDocumentsReply`, {
+          com_id: 1
         })
 
-        const data = response.data.results.filter(item => item.doc_version === 4 || item.doc_version === 5)
+        const data = response.data.data
+
+        console.log('data: ', data)
 
         setDocumentsData(data)
       } catch (error) {
         console.log('Error fetching data:', error)
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'An error occurred while fetching documents',
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
     }
 
     fetchData()
-  }, [semesterYearData])
+  }, [])
 
   return (
     <Box>
@@ -305,21 +288,8 @@ const TeacherDocumentPage = ({ semesterYear }) => {
           <Box sx={{ display: 'flex', alignItems: 'center', px: 6, pt: 3 }}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
-                <Button variant='contained' color='primary' size='medium'>
-                  <input
-                    type='file'
-                    hidden
-                    onChange={event =>
-                      handleUploadFile(
-                        event,
-                        params.row.Id,
-                        params.row.stu_id,
-                        params.row.doc_type,
-                        params.row.doc_semester,
-                        params.row.doc_year
-                      )
-                    }
-                  />
+                <Button variant='contained' color='primary' component='label' size='medium'>
+                  <input type='file' hidden onChange={handleUploadFile} />
                   Upload File Document
                 </Button>
               </Grid>
@@ -331,7 +301,7 @@ const TeacherDocumentPage = ({ semesterYear }) => {
             </Box>
           ) : (
             <Box sx={{ p: 6 }}>
-              <DataGrid rows={documentsData} columns={columns} getRowId={row => row.doc_id} />
+              <DataGrid rows={documentsData} columns={columns} getRowId={row => row.ad_id} />
             </Box>
           )}
         </Box>

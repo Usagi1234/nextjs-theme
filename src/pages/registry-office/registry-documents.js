@@ -29,11 +29,13 @@ import { mdiFileDocumentCheckOutline } from '@mdi/js'
 // ** Custom Components
 import Swal from 'sweetalert2'
 import { documentStatus } from 'src/@core/utils/document-status'
+import { TabContext, TabList, TabPanel } from '@mui/lab'
 
 const TeacherDocumentPage = ({ semesterYear }) => {
   const [selectedSemesterYear, setSelectedSemesterYear] = useState(semesterYear[0].lsy_id)
   const [semesterYearData, setSemesterYearData] = useState(semesterYear[0])
   const [documentsData, setDocumentsData] = useState([])
+  const [tabValue, setTabValue] = useState(1)
 
   const fetchData = async () => {
     try {
@@ -292,6 +294,10 @@ const TeacherDocumentPage = ({ semesterYear }) => {
     fetchData()
   }, [semesterYearData])
 
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue)
+  }
+
   return (
     <Box>
       <Card>
@@ -304,33 +310,46 @@ const TeacherDocumentPage = ({ semesterYear }) => {
             </Box>
           </Box>
           <Divider />
-          <Box sx={{ display: 'flex', flexDirection: 'column', p: 6 }}>
-            <Typography variant='h6' sx={{ px: 2 }}>
-              เลือกปีการศึกษาที่ต้องการ
-            </Typography>
-            <FormControl sx={{ maxWidth: 300 }}>
-              <Select
-                id='select-semester-year'
-                value={selectedSemesterYear}
-                onChange={handleSelectedSemesterYearChange}
-              >
-                {semesterYear.map(item => (
-                  <MenuItem value={item.lsy_id} key={item.lsy_id}>
-                    {item.lsy_semester}/{item.lsy_year}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
-          {documentsData.length === 0 ? (
-            <Box sx={{ p: 6 }}>
-              <Typography variant='h6'>ไม่มีเอกสารในปีการศึกษานี้</Typography>
+          <TabContext value={tabValue}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <TabList onChange={handleTabChange} aria-label='lab API tabs example'>
+                <Tab label='เอกสารนักศึกษา' value={1} />
+                <Tab label='เอกสารสถานประกอบ' value={2} />
+              </TabList>
             </Box>
-          ) : (
-            <Box sx={{ p: 6 }}>
-              <DataGrid rows={documentsData} columns={columns} getRowId={row => row.doc_id} />
-            </Box>
-          )}
+            <TabPanel value={1}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', p: 6 }}>
+                <Typography variant='h6' sx={{ px: 2 }}>
+                  เลือกปีการศึกษาที่ต้องการ
+                </Typography>
+                <FormControl sx={{ maxWidth: 300 }}>
+                  <Select
+                    id='select-semester-year'
+                    value={selectedSemesterYear}
+                    onChange={handleSelectedSemesterYearChange}
+                  >
+                    {semesterYear.map(item => (
+                      <MenuItem value={item.lsy_id} key={item.lsy_id}>
+                        {item.lsy_semester}/{item.lsy_year}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+              {documentsData.length === 0 ? (
+                <Box sx={{ p: 6 }}>
+                  <Typography variant='h6'>ไม่มีเอกสารในปีการศึกษานี้</Typography>
+                </Box>
+              ) : (
+                <Box sx={{ p: 6 }}>
+                  <DataGrid rows={documentsData} columns={columns} getRowId={row => row.doc_id} />
+                </Box>
+              )}
+            </TabPanel>
+            <TabPanel value={2}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', p: 6 }}></Box>
+            </TabPanel>
+          </TabContext>
         </Box>
       </Card>
     </Box>
