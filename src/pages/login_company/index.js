@@ -37,8 +37,8 @@ import axios from 'axios'
 import Toastify from 'toastify-js'
 import 'toastify-js/src/toastify.css'
 import Swal from 'sweetalert2'
-// import Cookies from 'js-cookie'
-import cookieCutter from 'cookie-cutter'
+import Cookies from 'js-cookie'
+
 const now = new Date()
 
 // ** Styled Components
@@ -83,80 +83,29 @@ const LoginPage = () => {
 
   const submitForm = () => {
     // ตรวจสอบ API authenticationtea
+    console.log('username', values.email)
+    console.log('password', values.password)
+
     axios
-      .post('http://localhost:3200/api/authenticationtea', {
+      .post('http://localhost:3200/api/authenticationscom', {
         username: values.email,
         password: values.password
       })
-      .then(teaData => {
-        if (teaData.data.statusCode !== 404) {
-          // ถ้าไอดีตรงใน authenticationtea
-          cookieCutter.set('._jwtUsername', teaData.data.jwt, {
-            expires: now,
-            secure: true
-          })
-          cookieCutter.set('._jwtRole', teaData.data.jwtRole, {
-            expires: now,
-            secure: true
-          })
+      .then(scomData => {
+        if (scomData.data.statusCode === 200) {
+          // ถ้าไอดีตรงใน authenticationscom
+          console.log('jwt', scomData.data.jwt)
+          console.log('jwtRole', scomData.data.jwtRole)
+          Cookies.set('._jwtUsername', scomData.data.jwt)
+          Cookies.set('._jwtRole', scomData.data.jwtRole)
           setSuccess(true)
         } else {
-          // ถ้าไอดีไม่ตรงใน authenticationtea
-          // ลองเรียก API authenticationofficer
-          axios
-            .post('http://localhost:3200/api/authenticationofficer', {
-              username: values.email,
-              password: values.password
-            })
-            .then(officerData => {
-              if (officerData.data.statusCode !== 404) {
-                // ถ้าไอดีตรงใน authenticationofficer
-                cookieCutter.set('._jwtUsername', officerData.data.jwt, {
-                  expires: now,
-                  secure: true
-                })
-                cookieCutter.set('._jwtRole', officerData.data.jwtRole, {
-                  expires: now,
-                  secure: true
-                })
-                setSuccess(true)
-              } else {
-                // ถ้าไอดีไม่ตรงใน authenticationofficer
-                // ลองเรียก API authenticationscom
-                axios
-                  .post('http://localhost:3200/api/authenticationcom', {
-                    username: values.email,
-                    password: values.password
-                  })
-                  .then(scomData => {
-                    if (scomData.data.statusCode !== 404) {
-                      // ถ้าไอดีตรงใน authenticationscom
-                      cookieCutter.set('._jwtUsername', scomData.data.jwt, {
-                        expires: now,
-                        secure: true
-                      })
-                      cookieCutter.set('._jwtRole', scomData.data.jwtRole, {
-                        expires: now,
-                        secure: true
-                      })
-                      setSuccess(true)
-                    } else {
-                      // ถ้าไอดีไม่ตรงในทั้งสาม API
-                      setSuccess(false)
-                    }
-                  })
-                  .catch(error => {
-                    console.error('Error calling authenticationscom API:', error)
-                  })
-              }
-            })
-            .catch(error => {
-              console.error('Error calling authenticationofficer API:', error)
-            })
+          // ถ้าไอดีไม่ตรงในทั้งสาม API
+          setSuccess(false)
         }
       })
       .catch(error => {
-        console.error('Error calling authenticationtea API:', error)
+        console.error('Error calling authenticationscom API:', error)
       })
   }
 
@@ -220,7 +169,7 @@ const LoginPage = () => {
                 fontSize: '1.5rem !important'
               }}
             >
-              Login(Teacher)!👋🏻
+              Login(Company)!👋🏻
             </Typography>
           </Box>
           <form noValidate autoComplete='off' onSubmit={handleSubmit}>

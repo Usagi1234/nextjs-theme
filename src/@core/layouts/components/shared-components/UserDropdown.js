@@ -70,7 +70,7 @@ const UserDropdown = () => {
             const setFristName = data.data[0].stu_name
             setShowname(setFristName)
             setShowstate(status)
-            console.log("studentname", user)
+            console.log('studentname', user)
           }
         })
       }
@@ -96,6 +96,7 @@ const UserDropdown = () => {
         axios.post('http://localhost:3200/api/Read_Company', { username: user }).then(data => {
           if (data.data.length > 0) {
             const setFristName = data.data[0].com_name
+            console.log('test:', setFristName)
             setShowname(setFristName)
             setShowstate(status)
           }
@@ -124,8 +125,8 @@ const UserDropdown = () => {
   const handleDropdownCloselogout = url => {
     if (url) {
       router.push(url)
-      cookieCutter.set('._jwtUsername', '', { expires: new Date(0) }) //ใช้เพื่อกำหนดเวลาให้คุกกี้หมดเวลา
-      cookieCutter.set('._jwtRole', '', { expires: new Date(0) })
+      Cookies.remove('._jwtUsername') //ใช้เพื่อกำหนดเวลาให้คุกกี้หมดเวลา
+      Cookies.remove('._jwtRole')
     }
   }
 
