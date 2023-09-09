@@ -65,13 +65,13 @@ const LoginPage = () => {
   const router = useRouter()
 
   useEffect(() => {
-      cookieCutter.set('._jwtUsername', '', { expires: new Date(0) }) //ใช้เพื่อกำหนดเวลาให้คุกกี้หมดเวลา
-      cookieCutter.set('._jwtRole', '', { expires: new Date(0) })
+    cookieCutter.set('._jwtUsername', '', { expires: new Date(0) }) //ใช้เพื่อกำหนดเวลาให้คุกกี้หมดเวลา
+    cookieCutter.set('._jwtRole', '', { expires: new Date(0) })
   }, [])
 
   const handleDropdownCloselogout = url => {
     if (url) {
-      router.push(url);
+      router.push(url)
     }
   }
 
@@ -89,7 +89,9 @@ const LoginPage = () => {
                   fontSize: '1.5rem !important'
                 }}
               >
-                <Button sx={{ py: 5, textTransform: 'none' }} onClick={() => handleDropdownCloselogout('/login')}>Login (Student) 👋🏻</Button>
+                <Button sx={{ py: 5, textTransform: 'none' }} onClick={() => handleDropdownCloselogout('/login')}>
+                  Login (Student) 👋🏻
+                </Button>
               </Typography>
             </Box>
           </CardContent>
@@ -107,16 +109,42 @@ const LoginPage = () => {
                   fontSize: '1.5rem !important'
                 }}
               >
-                <Button sx={{ py: 5, textTransform: 'none' }} onClick={() => handleDropdownCloselogout('/login_teacher')}>Login (Teacher) 👋🏻</Button>
+                <Button
+                  sx={{ py: 5, textTransform: 'none' }}
+                  onClick={() => handleDropdownCloselogout('/login_teacher')}
+                >
+                  Login (Teacher) 👋🏻
+                </Button>
+              </Typography>
+            </Box>
+          </CardContent>
+        </Card>
+      </div>
+      <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+        <Card sx={{ zIndex: 1, width: '80%', maxWidth: 400 }}>
+          <CardContent sx={{ padding: `${theme.spacing(5)} !important` }}>
+            <Box sx={{ mb: 3, textAlign: 'center' }}>
+              <Typography
+                variant='h6'
+                sx={{
+                  fontWeight: 600,
+                  textTransform: 'uppercase',
+                  fontSize: '1.5rem !important'
+                }}
+              >
+                <Button
+                  sx={{ py: 5, textTransform: 'none' }}
+                  onClick={() => handleDropdownCloselogout('/login_company')}
+                >
+                  Login (Company) 👋🏻
+                </Button>
               </Typography>
             </Box>
           </CardContent>
         </Card>
       </div>
     </div>
-  );
-  
-  
+  )
 }
 LoginPage.getLayout = page => <BlankLayout>{page}</BlankLayout>
 
