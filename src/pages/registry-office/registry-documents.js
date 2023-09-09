@@ -31,7 +31,7 @@ import Swal from 'sweetalert2'
 import { documentStatus } from 'src/@core/utils/document-status'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 
-const TeacherDocumentPage = ({ semesterYear }) => {
+const TeacherDocumentPage = ({ semesterYear, documentsCompany }) => {
   const [selectedSemesterYear, setSelectedSemesterYear] = useState(semesterYear[0].lsy_id)
   const [semesterYearData, setSemesterYearData] = useState(semesterYear[0])
   const [documentsData, setDocumentsData] = useState([])
@@ -150,6 +150,7 @@ const TeacherDocumentPage = ({ semesterYear }) => {
     }
   }
 
+  // ? สำหรับเอกสารนักศึกษา
   const handleDownloadFile = async (stu_code, doc_type) => {
     try {
       const fileName = `${stu_code}_Document_${doc_type}`
@@ -159,6 +160,47 @@ const TeacherDocumentPage = ({ semesterYear }) => {
       // ** API Frontend
       // Send a GET request to the download URL
       const response = await axios.get(`/api/download-pdf/${fileName}.pdf`, {
+        responseType: 'blob' // Specify the response type as 'blob' to handle binary data (PDF)
+      })
+
+      if (response.status === 200) {
+        // Create a Blob from the response data
+        const fileBlob = new Blob([response.data], { type: 'application/pdf' })
+
+        // Create a temporary URL for the Blob
+        const fileUrl = window.URL.createObjectURL(fileBlob)
+
+        // Create an anchor element for downloading the file
+        const downloadLink = document.createElement('a')
+        downloadLink.href = fileUrl
+
+        // Set the file name for the downloaded file
+        downloadLink.download = `${fileName}.pdf`
+
+        // Trigger a click event to initiate the download
+        downloadLink.click()
+
+        // Release the URL object
+        window.URL.revokeObjectURL(fileUrl)
+      } else if (response.status === 404) {
+        // Handle the case where the file was not found
+        console.error('File not found')
+      } else {
+        // Handle other error cases
+        console.error('Error downloading file')
+      }
+    } catch (error) {
+      // Handle any errors that may occur during the download process
+      console.error('Error:', error)
+    }
+  }
+
+  // ? สำหรับเอกสารสถานประกอบการ
+  const handleDownloadFileCompany = async fileName => {
+    try {
+      // ** API Frontend
+      // Send a GET request to the download URL
+      const response = await axios.get(`/api/download-com-pdf/${fileName}`, {
         responseType: 'blob' // Specify the response type as 'blob' to handle binary data (PDF)
       })
 
@@ -272,6 +314,57 @@ const TeacherDocumentPage = ({ semesterYear }) => {
     }
   ]
 
+  const columnsCompany = [
+    {
+      field: 'ad_id',
+      headerName: 'ID',
+      width: 100,
+      editable: false
+    },
+    {
+      field: 'com_name',
+      headerName: 'Company Name',
+      width: 300,
+      editable: false
+    },
+    {
+      field: 'ad_filename',
+      headerName: 'File Name',
+      width: 300,
+      editable: false
+    },
+    {
+      field: 'created_at',
+      headerName: 'Created At',
+      width: 200,
+      editable: false,
+      renderCell: params => {
+        const date = new Date(params.value).toLocaleDateString()
+        const time = new Date(params.value).toLocaleTimeString()
+
+        return `${date} ${time}`
+      }
+    },
+    {
+      field: 'download',
+      headerName: 'Download',
+      width: 200,
+      editable: false,
+      renderCell: params => {
+        return (
+          <Button
+            variant='contained'
+            color='primary'
+            size='small'
+            onClick={() => handleDownloadFileCompany(params.row.ad_filename)}
+          >
+            Download
+          </Button>
+        )
+      }
+    }
+  ]
+
   useEffect(() => {
     const fetchData = async () => {
       console.log(semesterYearData.lsy_semester, '/', semesterYearData.lsy_year)
@@ -347,7 +440,9 @@ const TeacherDocumentPage = ({ semesterYear }) => {
               )}
             </TabPanel>
             <TabPanel value={2}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', p: 6 }}></Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column', p: 6 }}>
+                <DataGrid rows={documentsCompany} columns={columnsCompany} getRowId={row => row.ad_id} />
+              </Box>
             </TabPanel>
           </TabContext>
         </Box>
@@ -362,9 +457,15 @@ export async function getServerSideProps() {
     const resAllSemesterYear = await axios.get(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getAllSemesterYear`)
     const semesterYear = resAllSemesterYear.data.results
 
+    const resAllDocumentsCompany = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BACKEND}/api/getFileCompanyForOfficer`
+    )
+    const documentsCompany = resAllDocumentsCompany.data.data
+
     return {
       props: {
-        semesterYear: semesterYear || [] // Provide a default value (empty array) if semesterYear is falsy
+        semesterYear: semesterYear || [],
+        documentsCompany: documentsCompany || []
       }
     }
   } catch (error) {
@@ -372,7 +473,8 @@ export async function getServerSideProps() {
 
     return {
       props: {
-        semesterYear: [] // Provide a default value in case of an error
+        semesterYear: [],
+        documentsCompany: []
       }
     }
   }

@@ -37,11 +37,8 @@ import axios from 'axios'
 import Toastify from 'toastify-js'
 import 'toastify-js/src/toastify.css'
 import Swal from 'sweetalert2'
-
 // import Cookies from 'js-cookie'
-// import cookieCutter from 'cookie-cutter'
-import Cookies from 'js-cookie'
-
+import cookieCutter from 'cookie-cutter'
 const now = new Date()
 
 // ** Styled Components
@@ -86,19 +83,24 @@ const LoginPage = () => {
 
   const submitForm = () => {
     // ตรวจสอบ API authenticationtea
+    console.log('username', values.email)
+    console.log('password', values.password)
+
     axios
-      .post('http://localhost:3200/api/authenticationtea', {
+      .post('http://localhost:3200/api/authenticationscom', {
         username: values.email,
         password: values.password
       })
       .then(teaData => {
         if (teaData.data.statusCode !== 404) {
           // ถ้าไอดีตรงใน authenticationtea
-          Cookies.set('._jwtUsername', teaData.data.jwt, {
-            expires: 7
+          cookieCutter.set('._jwtUsername', teaData.data.jwt, {
+            expires: now,
+            secure: true
           })
-          Cookies.set('._jwtRole', teaData.data.jwtRole, {
-            expires: 7
+          cookieCutter.set('._jwtRole', teaData.data.jwtRole, {
+            expires: now,
+            secure: true
           })
           setSuccess(true)
         } else {
@@ -112,29 +114,33 @@ const LoginPage = () => {
             .then(officerData => {
               if (officerData.data.statusCode !== 404) {
                 // ถ้าไอดีตรงใน authenticationofficer
-                Cookies.set('._jwtUsername', officerData.data.jwt, {
-                  expires: 7
+                cookieCutter.set('._jwtUsername', officerData.data.jwt, {
+                  expires: now,
+                  secure: true
                 })
-                Cookies.set('._jwtRole', officerData.data.jwtRole, {
-                  expires: 7
+                cookieCutter.set('._jwtRole', officerData.data.jwtRole, {
+                  expires: now,
+                  secure: true
                 })
                 setSuccess(true)
               } else {
                 // ถ้าไอดีไม่ตรงใน authenticationofficer
                 // ลองเรียก API authenticationscom
                 axios
-                  .post('http://localhost:3200/api/authenticationscom', {
+                  .post('http://localhost:3200/api/authenticationcom', {
                     username: values.email,
                     password: values.password
                   })
                   .then(scomData => {
                     if (scomData.data.statusCode !== 404) {
                       // ถ้าไอดีตรงใน authenticationscom
-                      Cookies.set('._jwtUsername', scomData.data.jwt, {
-                        expires: 7
+                      cookieCutter.set('._jwtUsername', scomData.data.jwt, {
+                        expires: now,
+                        secure: true
                       })
-                      Cookies.set('._jwtRole', scomData.data.jwtRole, {
-                        expires: 7
+                      cookieCutter.set('._jwtRole', scomData.data.jwtRole, {
+                        expires: now,
+                        secure: true
                       })
                       setSuccess(true)
                     } else {
@@ -217,7 +223,7 @@ const LoginPage = () => {
                 fontSize: '1.5rem !important'
               }}
             >
-              Login(Teacher)!👋🏻
+              Login(Company)!👋🏻
             </Typography>
           </Box>
           <form noValidate autoComplete='off' onSubmit={handleSubmit}>

@@ -56,7 +56,7 @@ const Navigation = () => {
       {
         title: 'Document Student',
         icon: ChevronDoubleRight,
-        path: '/student/doc_updownStudent',
+        path: '/student/student-documents',
         openInNewTab: false
       },
       {
@@ -78,7 +78,7 @@ const Navigation = () => {
       {
         title: 'Document Teacher',
         icon: ChevronDoubleRight,
-        path: '/doc_updownTeacher',
+        path: '/teacher/teacher-documents',
         openInNewTab: false
       },
       {
@@ -100,7 +100,7 @@ const Navigation = () => {
       {
         title: 'Document Establishment',
         icon: ChevronDoubleRight,
-        path: '/doc_updownEstablishment',
+        path: '/establishment/establishment-documents',
         openInNewTab: false
       },
       {
@@ -122,7 +122,7 @@ const Navigation = () => {
       {
         title: 'Document Officer',
         icon: ChevronDoubleRight,
-        path: '/doc_officer',
+        path: '/registry-office/registry-documents',
         openInNewTab: false
       },
       {

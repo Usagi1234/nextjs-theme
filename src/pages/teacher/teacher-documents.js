@@ -379,7 +379,7 @@ export async function getServerSideProps() {
 
     return {
       props: {
-        semesterYear: semesterYear || [] // Provide a default value (empty array) if semesterYear is falsy
+        semesterYear: semesterYear || []
       }
     }
   } catch (error) {

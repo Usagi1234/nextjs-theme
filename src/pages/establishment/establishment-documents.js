@@ -78,8 +78,9 @@ const TeacherDocumentPage = ({ semesterYear }) => {
   const handleUploadFile = async event => {
     try {
       const file = event.target.files[0]
-      const currentDate = new Date().toLocaleDateString()
-      const formattedDate = currentDate.replace(/\//g, '_')
+      const now = new Date()
+      const currentDate = `${now.toISOString().split('T')[0]} ${now.toTimeString().split(' ')[0]}`
+      const formattedDate = currentDate.replace(/:/g, '-').replace(/ /g, '_')
 
       console.log('file: ', file)
 
@@ -163,7 +164,6 @@ const TeacherDocumentPage = ({ semesterYear }) => {
   }
 
   const handleDownloadFile = async fileName => {
-    console.log('fileName: ', fileName)
     try {
       // ** API Frontend
       // Send a GET request to the download URL
@@ -222,7 +222,10 @@ const TeacherDocumentPage = ({ semesterYear }) => {
       width: 300,
       editable: false,
       renderCell: params => {
-        return <Typography variant='body1'>{params.value.slice(0, 10)}</Typography>
+        const date = new Date(params.value).toLocaleDateString()
+        const time = new Date(params.value).toLocaleTimeString()
+
+        return `${date} ${time}`
       }
     },
     {
