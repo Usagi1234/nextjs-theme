@@ -60,45 +60,49 @@ const UserDropdown = () => {
         setUsername(data.data.User)
         setStatus(data.data.stateRole)
       })
-    console.log('showstatus', status)
-  }, [user])
+  }, [])
+
+  console.log('xx', user)
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (user !== undefined && status !== undefined) {
-        if (status === 'อาจารย์') {
-          const response = await axios.post('http://localhost:3200/api/ReadTeacher', { username: user })
-          if (response.data.length > 0) {
-            const firstName = response.data[0].tea_name
-            setShowname(firstName)
+    if (user !== undefined && status !== undefined) {
+      if (status === 'นักศึกษา') {
+        axios.post('http://localhost:3200/api/ReadStudent', { username: user }).then(data => {
+          if (data.data.length > 0) {
+            const setFristName = data.data[0].stu_name
+            setShowname(setFristName)
             setShowstate(status)
           }
-        } else if (status === 'เจ้าหน้าที่') {
-          const response = await axios.post('http://localhost:3200/api/Readofficer', { username: user })
-          if (response.data.length > 0) {
-            const firstName = response.data[0].off_name
-            setShowname(firstName)
+        })
+      }
+      if (status === 'อาจารย์') {
+        axios.post('http://localhost:3200/api/ReadTeacher', { username: user }).then(data => {
+          if (data.data.length > 0) {
+            const setFristName = data.data[0].tea_name
+            setShowname(setFristName)
             setShowstate(status)
           }
-        } else if (status === 'สถานประกอบการ') {
-          const response = await axios.post('http://localhost:3200/api/Read_Company', { username: user })
-          if (response.data.length > 0) {
-            const firstName = response.data[0].com_name
-            setShowname(firstName)
+        })
+      }
+      if (status === 'เจ้าหน้าที่') {
+        axios.post('http://localhost:3200/api/Readofficer', { username: user }).then(data => {
+          if (data.data.length > 0) {
+            const setFristName = data.data[0].off_name
+            setShowname(setFristName)
             setShowstate(status)
           }
-        } else if (status === 'นักศึกษา') {
-          const response = await axios.post('http://localhost:3200/api/Rstudent', { username: user })
-          if (response.data.length > 0) {
-            const firstName = response.data[0].stu_name
-            setShowname(firstName)
+        })
+      }
+      if (status === 'สถานประกอบการ') {
+        axios.post('http://localhost:3200/api/Read_Company', { username: user }).then(data => {
+          if (data.data.length > 0) {
+            const setFristName = data.data[0].com_name
+            setShowname(setFristName)
             setShowstate(status)
           }
-        }
+        })
       }
     }
-
-    fetchData()
   }, [user, status])
 
   // ** States
