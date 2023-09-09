@@ -62,6 +62,8 @@ const UserDropdown = () => {
       })
   }, [])
 
+  console.log('xx', user)
+
   useEffect(() => {
     if (user !== undefined && status !== undefined) {
       if (status === 'นักศึกษา') {
@@ -70,7 +72,7 @@ const UserDropdown = () => {
             const setFristName = data.data[0].stu_name
             setShowname(setFristName)
             setShowstate(status)
-            console.log("studentname", user)
+            console.log('studentname', user)
           }
         })
       }
@@ -93,13 +95,18 @@ const UserDropdown = () => {
         })
       }
       if (status === 'สถานประกอบการ') {
-        axios.post('http://localhost:3200/api/Read_Company', { username: user }).then(data => {
-          if (data.data.length > 0) {
-            const setFristName = data.data[0].com_name
-            setShowname(setFristName)
-            setShowstate(status)
-          }
-        })
+        axios
+          .post('http://localhost:3200/api/Read_Company', { username: user })
+          .then(data => {
+            if (data.data.length > 0) {
+              const setFristName = data.data[0].com_name
+              setShowname(setFristName)
+              setShowstate(status)
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
       }
     }
   }, [user, status])
