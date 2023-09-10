@@ -42,7 +42,7 @@ const Navigation = () => {
 
   let menuItems = [
     {
-      title: 'Dashboard',
+      title: 'Home Page',
       icon: HomeOutline,
       path: '/Home'
     }
@@ -87,9 +87,24 @@ const Navigation = () => {
         path: '/report_weeklyTeacher'
       },
       {
+        title: 'Supervision Teacher',
+        icon: ChevronDoubleRight,
+        path: '/supervisionTeacher'
+      },
+      {
+        title: 'Supervision Student',
+        icon: ChevronDoubleRight,
+        path: '/supervisionStudent_list'
+      },
+      {
         title: 'แบบประเมิน(อาจารย์ประเมินบริษัท)',
         icon: AccessibilityNewIcon,
         path: '/cwie/assessmentcom'
+      },
+      {
+        title: 'แบบประเมิน(อาจารย์ประเมินนักศึกษา)',
+        icon: AccessibilityNewIcon,
+        path: '/cwie/assessment'
       }
     )
   } else if (status === 'สถานประกอบการ') {
@@ -112,6 +127,11 @@ const Navigation = () => {
         title: 'Supervision Establishment',
         icon: ChevronDoubleRight,
         path: '/supervisionEstablishment'
+      },
+      {
+        title: 'ประเมินนักศึกษา (สถานประกอบการประเมินนักศึกษา)',
+        icon: AccessibilityNewIcon,
+        path: '/cwie/assessmentstudent'
       }
     )
   } else if (status === 'เจ้าหน้าที่') {
