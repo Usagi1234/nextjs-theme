@@ -8,7 +8,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
-export default function form() {
+export default function Form() {
   const file_pdf1 = 'http://localhost:3000/form/coop_manual2-63.pdf'
   const file_pdf2 = 'http://localhost:3000/form/coop_form_01.pdf'
   const file_pdf3 = 'http://localhost:3000/form/coop_form_02TH.pdf'

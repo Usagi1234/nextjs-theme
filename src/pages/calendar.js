@@ -14,7 +14,7 @@ import {
 } from '@mui/material'
 import CardMedia from '@mui/material/CardMedia'
 
-export default function calendar() {
+export default function Calendar() {
   const pdfC1 = 'http://localhost:3000/calendar/calendar_coop_66.pdf'
   const pdfC2 = 'http://localhost:3000/calendar/calendar_coop_65.pdf'
   const pdfC3 = 'http://localhost:3000/calendar/calendar_coop_64_1.pdf'

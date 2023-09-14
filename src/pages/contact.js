@@ -14,7 +14,7 @@ import {
 } from '@mui/material'
 import CardMedia from '@mui/material/CardMedia'
 
-export default function contact() {
+export default function Contact() {
   const dummyData = [
     { nameInstructor: 'ผศ.สมหมาย สารมาท', contact: '098-5258488' },
     { nameInstructor: 'อาจารย์อรรถพล วิเวก', contact: '081-8839294' },

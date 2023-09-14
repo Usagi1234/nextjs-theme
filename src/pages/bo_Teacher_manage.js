@@ -19,7 +19,7 @@ import axios from 'axios'
 import { DataGrid } from '@mui/x-data-grid'
 import Modal from '@mui/material/Modal'
 
-export default function bo_Teacher_manage() {
+export default function Bo_Teacher_manage() {
   const intialTea = {
     tea_name: '',
     tea_lname: '',
@@ -58,6 +58,7 @@ export default function bo_Teacher_manage() {
 
   const [openTc, setOpenTc] = useState(false)
   const handleOpen = () => setOpenTc(true)
+
   const handleClose = () => {
     setOpenTc(false)
     setDataTeacher(intialTea)
@@ -66,6 +67,7 @@ export default function bo_Teacher_manage() {
 
   const [openEditTc, setOpenEditTc] = useState(false)
   const handleOpenEdit = () => setOpenEditTc(true)
+
   const handleCloseEdit = () => {
     setDataTeacher(intialTea)
     setOpenEditTc(false)
@@ -75,6 +77,7 @@ export default function bo_Teacher_manage() {
   const [getIdDelTc, setGetIdDelTc] = useState('')
   const [openDelTc, setOpenDelTc] = useState(false)
   const handleOpenDel = () => setOpenDelTc(true)
+
   const handleCloseDel = () => {
     setDataTeacher(intialTea)
     setOpenDelTc(false)
@@ -100,7 +103,6 @@ export default function bo_Teacher_manage() {
           onClick={() => {
             setDataTeacher(params.row)
             handleOpenEdit()
-            console.log(params.row)
           }}
         >
           Edit
@@ -119,7 +121,6 @@ export default function bo_Teacher_manage() {
           onClick={() => {
             setGetIdDelTc(params.id)
             handleOpenDel()
-            console.log(params.row)
           }}
         >
           Del
@@ -147,42 +148,42 @@ export default function bo_Teacher_manage() {
         //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColorChangeTc(pre => ({ ...pre, tea_name: false }))
       }
-      setDataTeacher(pre => ({ ...pre, tea_name: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+      setDataTeacher(pre => ({ ...pre, tea_name: newStr }))
     } else if (type === 'tea_lname') {
       const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
       if (dataTeacher.tea_lname !== '') {
         //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColorChangeTc(pre => ({ ...pre, tea_lname: false }))
       }
-      setDataTeacher(pre => ({ ...pre, tea_lname: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+      setDataTeacher(pre => ({ ...pre, tea_lname: newStr }))
     } else if (type === 'tea_status') {
       const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
       if (dataTeacher.tea_status !== '') {
         //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColorChangeTc(pre => ({ ...pre, tea_status: false }))
       }
-      setDataTeacher(pre => ({ ...pre, tea_status: newStr })) //เก็บค่าเก่าไว้ใน dataDog
+      setDataTeacher(pre => ({ ...pre, tea_status: newStr }))
     } else if (type === 'tea_tel') {
       const newStr = event.target.value.replace(/[^\d.-]+/g, '') // อีเว้นที่เกิด เป้าหมายคือค่า value
       if (dataTeacher.tea_tel !== '') {
         //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColorChangeTc(pre => ({ ...pre, tea_tel: false }))
       }
-      setDataTeacher(pre => ({ ...pre, tea_tel: newStr })) //เก็บค่าเก่าไว้ใน dataDo
+      setDataTeacher(pre => ({ ...pre, tea_tel: newStr }))
     } else if (type === 'curriculum_id') {
       const newStr = event.target.value // อีเว้นที่เกิด เป้าหมายคือค่า value
       if (dataTeacher.curriculum_id !== '') {
         //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColorChangeTc(pre => ({ ...pre, curriculum_id: false }))
       }
-      setDataTeacher(pre => ({ ...pre, curriculum_id: newStr })) //เก็บค่าเก่าไว้ใน dataDo
+      setDataTeacher(pre => ({ ...pre, curriculum_id: newStr }))
     } else if (type === 'studygroup_id') {
       const newStr = event.target.value // อีเว้นที่เกิด เป้าหมายคือค่า value
       if (dataTeacher.studygroup_id !== '') {
         //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColorChangeTc(pre => ({ ...pre, studygroup_id: false }))
       }
-      setDataTeacher(pre => ({ ...pre, studygroup_id: newStr })) //เก็บค่าเก่าไว้ใน dataDo
+      setDataTeacher(pre => ({ ...pre, studygroup_id: newStr }))
     }
   }
 
@@ -211,27 +212,19 @@ export default function bo_Teacher_manage() {
         })
     }
     if (dataTeacher.tea_name !== '') {
-      console.log('tea_name ไม่ว่าง')
     } else {
-      console.log('tea_name ว่าง')
       setColorChangeTc(pre => ({ ...pre, tea_name: true }))
     }
     if (dataTeacher.tea_lname !== '') {
-      console.log('tea_lname ไม่ว่าง')
     } else {
-      console.log('tea_lname ว่าง')
       setColorChangeTc(pre => ({ ...pre, tea_lname: true }))
     }
     if (dataTeacher.tea_status !== '') {
-      console.log('tea_status ไม่ว่าง')
     } else {
-      console.log('tea_status ว่าง')
       setColorChangeTc(pre => ({ ...pre, tea_status: true }))
     }
     if (dataTeacher.tea_tel !== '') {
-      console.log('tea_tel ไม่ว่าง')
     } else {
-      console.log('tea_tel ว่าง')
       setColorChangeTc(pre => ({ ...pre, tea_tel: true }))
     }
   }
@@ -261,34 +254,26 @@ export default function bo_Teacher_manage() {
         })
     }
     if (dataTeacher.tea_name !== '') {
-      console.log('tea_name ไม่ว่าง')
     } else {
-      console.log('tea_name ว่าง')
       setColorChangeTc(pre => ({ ...pre, tea_name: true }))
     }
     if (dataTeacher.tea_lname !== '') {
-      console.log('tea_lname ไม่ว่าง')
     } else {
-      console.log('tea_lname ว่าง')
       setColorChangeTc(pre => ({ ...pre, tea_lname: true }))
     }
     if (dataTeacher.tea_status !== '') {
-      console.log('tea_status ไม่ว่าง')
     } else {
-      console.log('tea_status ว่าง')
       setColorChangeTc(pre => ({ ...pre, tea_status: true }))
     }
     if (dataTeacher.tea_tel !== '') {
-      console.log('tea_tel ไม่ว่าง')
     } else {
-      console.log('tea_tel ว่าง')
       setColorChangeTc(pre => ({ ...pre, tea_tel: true }))
     }
   }
 
   const HandleDelTc = id => {
     const onDelTc = { tea_id: id }
-    console.log('sss', onDelTc)
+
     axios
       .delete('http://localhost:3200/api/v1/teacherdelete', { data: onDelTc })
       .then(res => {

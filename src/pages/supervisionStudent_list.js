@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { DataGrid } from '@mui/x-data-grid'
 
-export default function supervisionStudent_list() {
+export default function SupervisionStudent_list() {
   const column = [
     { field: 'stu_id', headerName: 'ID', width: 150 },
     { field: 'stu_name', headerName: 'Name', width: 150 },

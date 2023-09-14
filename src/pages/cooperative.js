@@ -26,10 +26,19 @@ const dummy = [
   },
   {
     img: 'https://comtel.co.za/wp-content/uploads/2022/07/The_comtel_logo.png'
+  },
+  {
+    img: ''
+  },
+  {
+    img: ''
+  },
+  {
+    img: ''
   }
 ]
 
-export default function cooperative() {
+export default function Cooperative() {
   const [dataComp, setDataComp] = useState('')
   const [dataRow, setDataRow] = useState('')
 

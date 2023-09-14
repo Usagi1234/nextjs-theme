@@ -7,7 +7,7 @@ import axios from 'axios'
 import { DataGrid } from '@mui/x-data-grid'
 import { Modal } from '@mui/base'
 
-export default function report_weeklyTeacher() {
+export default function Report_weeklyTeacher() {
   const [rowReportStd, setRowReportStd] = useState('')
   const [getRow, setGetRow] = useState('')
 

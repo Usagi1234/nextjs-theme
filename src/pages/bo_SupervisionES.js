@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { DataGrid } from '@mui/x-data-grid'
 
-export default function bo_SupervisionES() {
+export default function Bo_SupervisionES() {
   const [dataRowSuperES, setDataRowSuperES] = useState('')
 
   const column = [

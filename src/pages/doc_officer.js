@@ -7,7 +7,7 @@ import { useState } from 'react'
 import Icon from '@mdi/react'
 import { mdiFileDocumentCheckOutline } from '@mdi/js'
 
-export default function doc_officer() {
+export default function Doc_officer() {
   const [value, setValue] = useState('1')
 
   const handleChange = (event, newValue) => {
