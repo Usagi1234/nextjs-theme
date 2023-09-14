@@ -743,7 +743,7 @@ const Bo_Student_manage = () => {
                         top: '50%',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
-                        width: '60%',
+                        width: '30%',
                         bgcolor: 'background.paper',
                         border: '2px solid #000',
                         boxShadow: 24,
@@ -756,6 +756,7 @@ const Bo_Student_manage = () => {
                         <CardContent>
                           <form onSubmit={e => e.preventDefault()}>
                             <Grid container spacing={4}>
+                              <Typography variant='h6'>Confirm Delete Data</Typography>
                               <Grid item xs={12}>
                                 <Box
                                   sx={{
@@ -806,4 +807,4 @@ const Bo_Student_manage = () => {
   )
 }
 
-export default bo_Student_manage
+export default Bo_Student_manage

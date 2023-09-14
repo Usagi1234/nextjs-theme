@@ -20,7 +20,7 @@ const dummyImage = [
   }
 ]
 
-export default function news() {
+export default function News() {
   const [dataNews, setDataNews] = useState('')
   const [dataNewsRow, setDataNewsRow] = useState('')
 

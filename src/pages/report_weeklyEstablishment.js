@@ -51,7 +51,6 @@ export default function Report_weeklyEstablishment() {
           variant='text'
           onClick={() => {
             handleOpen()
-            console.log(params.row)
             setGetRow(params.row)
           }}
         >
@@ -61,8 +60,8 @@ export default function Report_weeklyEstablishment() {
     }
   ]
 
-  const jwtUsername = Cookies.get('._jwtUsername')
-  const jwtRole = Cookies.get('._jwtRole')
+  const jwtUsername = Cookies.get('jwtUsername')
+  const jwtRole = Cookies.get('jwtRole')
   const [username, setUsername] = useState('')
   const [status, setStatus] = useState('')
   const [companyData, setCompanyData] = useState('')

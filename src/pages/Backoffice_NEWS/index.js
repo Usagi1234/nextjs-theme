@@ -74,15 +74,11 @@ const BackOfficeNEWS = () => {
         })
     }
     if (dataNews.new_name !== '') {
-      console.log('new_name ไม่ว่าง')
     } else {
-      console.log('new_name ว่าง')
       setColoChange(pre => ({ ...pre, new_name: true }))
     }
     if (dataNews.new_details !== '') {
-      console.log('new_details ไม่ว่าง')
     } else {
-      console.log('new_details ว่าง')
       setColoChange(pre => ({ ...pre, new_details: true }))
     }
   }
@@ -117,8 +113,8 @@ const BackOfficeNEWS = () => {
   }
 
   const columnNews = [
-    { field: 'new_name', headerName: 'Name NEWS', width: 150 },
-    { field: 'new_details', headerName: 'Detail NEWS', width: 150 },
+    { field: 'new_name', headerName: 'Name NEWS', width: 400 },
+    { field: 'new_details', headerName: 'Detail NEWS', width: 400 },
     {
       field: 'Del',
       headerName: 'Del',
