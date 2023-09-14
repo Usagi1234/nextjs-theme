@@ -67,8 +67,8 @@
 //   const handleDropdownCloselogout = url => {
 //     if (url) {
 //       router.push(url);
-//       cookieCutter.set('._jwtUsername', '', { expires: new Date(0) }) //ใช้เพื่อกำหนดเวลาให้คุกกี้หมดเวลา
-//       cookieCutter.set('._jwtRole', '', { expires: new Date(0) })
+//       cookieCutter.set('jwtUsername', '', { expires: new Date(0) }) //ใช้เพื่อกำหนดเวลาให้คุกกี้หมดเวลา
+//       cookieCutter.set('jwtRole', '', { expires: new Date(0) })
 //     }
 //   }
 
@@ -112,8 +112,7 @@
 //       </div>
 //     </div>
 //   );
-  
-  
+
 // }
 // LoginPage.getLayout = page => <BlankLayout>{page}</BlankLayout>
 

@@ -29,8 +29,8 @@ const Report_weeklyStudent = () => {
     YearReport: YearReport
   }
 
-  const jwtUsername = Cookies.get('._jwtUsername')
-  const jwtRole = Cookies.get('._jwtRole')
+  const jwtUsername = Cookies.get('jwtUsername')
+  const jwtRole = Cookies.get('jwtRole')
   const [username, setUsername] = useState('')
   const [status, setStatus] = useState('')
   const [studentData, setStudentData] = useState('')
@@ -95,7 +95,7 @@ const Report_weeklyStudent = () => {
           variant='text'
           onClick={() => {
             handleOpenRow()
-            console.log(params.row)
+
             setGetRow(params.row)
           }}
         >
@@ -104,10 +104,6 @@ const Report_weeklyStudent = () => {
       )
     }
   ]
-
-  // useEffect(() => {
-  //   console.log('showname', studentData)
-  // }, [studentData])
 
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
@@ -190,7 +186,6 @@ const Report_weeklyStudent = () => {
       }))
     }
     axios.post('http://localhost:3200/api/v1/insertreport', reportData).then(res => {
-      console.log(res)
       window.location.reload()
       handleClose()
       setReportData(resetData)
@@ -207,10 +202,6 @@ const Report_weeklyStudent = () => {
     p: 4,
     borderRadius: 1
   }
-
-  useEffect(() => {
-    console.log('report data', filterStudent)
-  }, [filterStudent])
 
   return (
     <Box>

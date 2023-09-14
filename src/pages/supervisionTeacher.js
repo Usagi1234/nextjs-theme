@@ -29,8 +29,8 @@ export default function SupervisionTeacher() {
   }
 
   const [teacherData, setTeacherData] = useState('')
-  const jwtUsername = Cookies.get('._jwtUsername')
-  const jwtRole = Cookies.get('._jwtRole')
+  const jwtUsername = Cookies.get('jwtUsername')
+  const jwtRole = Cookies.get('jwtRole')
   const [username, setUsername] = useState('')
   const [status, setStatus] = useState('')
   const [resetData, setResetData] = useState({})

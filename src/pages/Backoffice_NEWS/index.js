@@ -26,6 +26,7 @@ const BackOfficeNEWS = () => {
 
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
+
   const handleClose = () => {
     setColoChange(ColorChangeNEWS)
     setOpen(false)
@@ -34,6 +35,7 @@ const BackOfficeNEWS = () => {
 
   const [openDel, setOpenDel] = useState(false)
   const handleOpenDel = () => setOpenDel(true)
+
   const handleCloseDel = () => {
     setOpenDel(false)
   }
@@ -91,7 +93,6 @@ const BackOfficeNEWS = () => {
       .then(res => {
         window.location.reload()
         handleCloseDel()
-        console.log(res)
       })
       .catch(err => {
         console.log(err)

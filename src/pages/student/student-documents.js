@@ -22,27 +22,21 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear, establishmen
   const [selectCompany, setSelectCompany] = useState('')
 
   useEffect(() => {
-    const jwtUsername = Cookies.get('._jwtUsername')
+    const jwtUsername = Cookies.get('jwtUsername')
     const dataJwt = { username: jwtUsername }
     axios
       .post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getDataStudent`, dataJwt)
       .then(res => {
         setDataStudent(res.data.data[0])
-        console.log('res: ', res)
       })
-      .catch(err => {
-        console.log('err1: ', err)
-      })
+      .catch(err => {})
   }, [])
 
   const getFilesStudent = async student_id => {
     axios
       .post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getFileStudent`, { student_id: student_id })
       .then(res => {
-        console.log('resA: ', res.data.data)
         const company = establishment.find(item => item.com_id === res.data.data[0].company_id)
-
-        console.log('company: ', company)
 
         setDataFile(dataFile =>
           dataFile.map(item => {
@@ -89,8 +83,6 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear, establishmen
       return // Stop execution if it's not a PDF
     }
 
-    console.log('file: ', file)
-
     // ? รอดึงข้อมูลนักศึกษา
     const uploadFile = {
       student_id: dataStudent.Id,
@@ -103,15 +95,12 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear, establishmen
       doc_version: 1
     }
 
-    console.log('uploadFile: ', uploadFile)
-
     // ** API Backend
     const resApiBackend = await axios.post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/uploadFile`, uploadFile, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     })
-    console.log('resApiBackend: ', resApiBackend)
 
     // ? ต้องรัน server.js ก่อน
     const formData = new FormData()
@@ -123,7 +112,6 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear, establishmen
       method: 'PUT',
       body: formData
     })
-    console.log('resApiFrontend: ', resApiFrontend)
 
     if (resApiFrontend.status === 200 && resApiBackend.status === 200) {
       Swal.fire({
@@ -149,8 +137,6 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear, establishmen
   const handleFileDownload = async typeID => {
     try {
       const fileName = `${dataStudent.stu_id}_Document_${typeID}`
-
-      console.log('fileName: ', fileName)
 
       // ** API Frontend
       // Send a GET request to the download URL
@@ -190,17 +176,17 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear, establishmen
     }
   }
 
-  useEffect(() => {
-    console.log('data: ', dataFile)
-  }, [dataFile])
+  // useEffect(() => {
+  //   console.log('data: ', dataFile)
+  // }, [dataFile])
 
-  useEffect(() => {
-    console.log('dataStudent: ', dataStudent)
-  }, [dataStudent])
+  // useEffect(() => {
+  //   console.log('dataStudent: ', dataStudent)
+  // }, [dataStudent])
 
-  useEffect(() => {
-    console.log('selectCompany: ', selectCompany)
-  }, [selectCompany])
+  // useEffect(() => {
+  //   console.log('selectCompany: ', selectCompany)
+  // }, [selectCompany])
 
   const handleStatusValueChangeToText = statusValue => {
     const status = documentStatus(statusValue)

@@ -36,8 +36,8 @@ const BadgeContentSpan = styled('span')(({ theme }) => ({
 
 const UserDropdown = () => {
   // -------------------- getCookie
-  const username = Cookies.get('._jwtUsername')
-  const role = Cookies.get('._jwtRole')
+  const username = Cookies.get('jwtUsername')
+  const role = Cookies.get('jwtRole')
 
   // ===============================
 
@@ -45,9 +45,6 @@ const UserDropdown = () => {
   const [status, setStatus] = useState('')
   const [showname, setShowname] = useState('')
   const [showstatus, setShowstate] = useState('')
-
-  // console.log(Cookies.get('._jwtUsername'))
-  // console.log(role)
 
   useEffect(() => {
     axios
@@ -60,8 +57,6 @@ const UserDropdown = () => {
         setStatus(data.data.stateRole)
       })
   }, [])
-
-  // console.log('xx', user)
 
   useEffect(() => {
     if (user !== undefined && status !== undefined) {
@@ -122,8 +117,8 @@ const UserDropdown = () => {
   }
 
   const handleDropdownCloselogout = url => {
-    Cookies.remove('._jwtUsername', { path: '/' })
-    Cookies.remove('._jwtRole', { path: '/' })
+    Cookies.remove('jwtUsername')
+    Cookies.remove('jwtRole')
     router.push(url)
   }
 

@@ -39,7 +39,7 @@ import 'toastify-js/src/toastify.css'
 import Swal from 'sweetalert2'
 
 // import Cookies from 'js-cookie'
-import cookieCutter from 'cookie-cutter'
+// import cookieCutter from 'cookie-cutter'
 import Cookies from 'js-cookie'
 
 const now = new Date()
@@ -97,8 +97,8 @@ const LoginPage = () => {
       .then(teaData => {
         if (teaData.data.statusCode !== 404) {
           // ถ้าไอดีตรงใน authenticationtea
-          Cookies.set('._jwtUsername', teaData.data.jwt, { path: '/' })
-          Cookies.set('._jwtRole', teaData.data.jwtRole, { path: '/' })
+          Cookies.set('jwtUsername', teaData.data.jwt, { path: '/' })
+          Cookies.set('jwtRole', teaData.data.jwtRole, { path: '/' })
           setSuccess(true)
         }
       })

@@ -37,8 +37,8 @@ import axios from 'axios'
 import Toastify from 'toastify-js'
 import 'toastify-js/src/toastify.css'
 import Swal from 'sweetalert2'
-// import Cookies from 'js-cookie'
-import cookieCutter from 'cookie-cutter'
+import Cookies from 'js-cookie'
+// import cookieCutter from 'cookie-cutter'
 const now = new Date()
 
 // ** Styled Components
@@ -65,8 +65,8 @@ const LoginPage = () => {
   const router = useRouter()
 
   useEffect(() => {
-    cookieCutter.set('._jwtUsername', '', { expires: new Date(0) }) //ใช้เพื่อกำหนดเวลาให้คุกกี้หมดเวลา
-    cookieCutter.set('._jwtRole', '', { expires: new Date(0) })
+    Cookies.set('jwtUsername', '', { expires: new Date(0) }) //ใช้เพื่อกำหนดเวลาให้คุกกี้หมดเวลา
+    Cookies.set('jwtRole', '', { expires: new Date(0) })
   }, [])
 
   const handleDropdownCloselogout = url => {

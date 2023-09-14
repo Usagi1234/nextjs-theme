@@ -94,8 +94,8 @@ const LoginPage = () => {
         if (data.data.statusCode === 404) {
           setSuccess(false)
         } else {
-          Cookies.set('._jwtUsername', data.data.jwt)
-          Cookies.set('._jwtRole', data.data.jwtRole)
+          Cookies.set('jwtUsername', data.data.jwt)
+          Cookies.set('jwtRole', data.data.jwtRole)
           setSuccess(true)
         }
       })

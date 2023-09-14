@@ -20,8 +20,8 @@ import axios from 'axios'
 
 const Navigation = () => {
   // -------------------- getCookie
-  const username = Cookies.get('._jwtUsername')
-  const role = Cookies.get('._jwtRole')
+  const username = Cookies.get('jwtUsername')
+  const role = Cookies.get('jwtRole')
 
   // ===============================
 

@@ -37,8 +37,9 @@ import axios from 'axios'
 import Toastify from 'toastify-js'
 import 'toastify-js/src/toastify.css'
 import Swal from 'sweetalert2'
-// import Cookies from 'js-cookie'
-import cookieCutter from 'cookie-cutter'
+
+import Cookies from 'js-cookie'
+// import cookieCutter from 'cookie-cutter'
 const now = new Date()
 
 // ** Styled Components
@@ -91,14 +92,8 @@ const LoginPage = () => {
       .then(teaData => {
         if (teaData.data.statusCode !== 404) {
           // ถ้าไอดีตรงใน authenticationtea
-          cookieCutter.set('._jwtUsername', teaData.data.jwt, {
-            expires: now,
-            secure: true
-          })
-          cookieCutter.set('._jwtRole', teaData.data.jwtRole, {
-            expires: now,
-            secure: true
-          })
+          Cookies.set('jwtUsername', teaData.data.jwt, { expires: 1 })
+          Cookies.set('jwtRole', teaData.data.jwtRole, { expires: 1 })
           setSuccess(true)
         } else {
           // ถ้าไอดีไม่ตรงใน authenticationtea
@@ -111,14 +106,8 @@ const LoginPage = () => {
             .then(officerData => {
               if (officerData.data.statusCode !== 404) {
                 // ถ้าไอดีตรงใน authenticationofficer
-                cookieCutter.set('._jwtUsername', officerData.data.jwt, {
-                  expires: now,
-                  secure: true
-                })
-                cookieCutter.set('._jwtRole', officerData.data.jwtRole, {
-                  expires: now,
-                  secure: true
-                })
+                Cookies.set('jwtUsername', officerData.data.jwt, { expires: 1 })
+                Cookies.set('jwtRole', officerData.data.jwtRole, { expires: 1 })
                 setSuccess(true)
               } else {
                 // ถ้าไอดีไม่ตรงใน authenticationofficer
@@ -131,14 +120,8 @@ const LoginPage = () => {
                   .then(scomData => {
                     if (scomData.data.statusCode !== 404) {
                       // ถ้าไอดีตรงใน authenticationscom
-                      cookieCutter.set('._jwtUsername', scomData.data.jwt, {
-                        expires: now,
-                        secure: true
-                      })
-                      cookieCutter.set('._jwtRole', scomData.data.jwtRole, {
-                        expires: now,
-                        secure: true
-                      })
+                      Cookies.set('jwtUsername', scomData.data.jwt, { expires: 1 })
+                      Cookies.set('jwtRole', scomData.data.jwtRole, { expires: 1 })
                       setSuccess(true)
                     } else {
                       // ถ้าไอดีไม่ตรงในทั้งสาม API
