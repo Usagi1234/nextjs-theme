@@ -105,6 +105,11 @@ const Navigation = () => {
         title: 'แบบประเมิน(อาจารย์ประเมินนักศึกษา)',
         icon: AccessibilityNewIcon,
         path: '/cwie/assessment'
+      },
+      {
+        title: 'แสดงแบบประเมิน(อาจารย์ประเมินบริษัท)',
+        icon: AccessibilityNewIcon,
+        path: '/cwie/showAssessmentCom'
       }
     )
   } else if (status === 'สถานประกอบการ') {

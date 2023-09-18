@@ -71,7 +71,7 @@ const SurveyForm = () => {
   const [dataStudent, setDataStudent] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:3200/api/v1/companys').then(res => {
+    axios.get('http://localhost:3200/api/v1/students').then(res => {
       setDataStudent(res.data.data)
     })
   }, [])
