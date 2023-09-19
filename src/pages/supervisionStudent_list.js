@@ -18,7 +18,7 @@ export default function SupervisionStudent_list() {
     { field: 'su_work', headerName: '  Nature of work ', width: 150 },
     { field: 'su_sugges', headerName: 'Suggestions', width: 300 }
   ]
-  const [dataRowSuperSt, setDataRowSuperSt] = useState('')
+  const [dataRowSuperSt, setDataRowSuperSt] = useState([])
 
   useEffect(() => {
     axios

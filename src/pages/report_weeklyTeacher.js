@@ -8,7 +8,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import { Modal } from '@mui/base'
 
 export default function Report_weeklyTeacher() {
-  const [rowReportStd, setRowReportStd] = useState('')
+  const [rowReportStd, setRowReportStd] = useState([])
   const [getRow, setGetRow] = useState('')
 
   const [openReStd, setOpenReStd] = useState(false)

@@ -239,7 +239,7 @@ const SurveyForm = () => {
                 <Box sx={{ ml: 6 }}>
                   <Grid item xs={12} sm={6}>
                     <FormControl variant='outlined' fullWidth sx={{ my: 6 }}>
-                      <InputLabel id='dataCompany-label'>Company</InputLabel>
+                      <InputLabel id='dataCompany-label'>Establishment</InputLabel>
                       <Select
                         required
                         labelId='dataCompany-label'
@@ -258,7 +258,7 @@ const SurveyForm = () => {
                     </FormControl>
                   </Grid>
                 </Box>
-                <Table sx={{ width: '100%' }} border='1'>
+                <Table sx={{ width: '100%' }}>
                   <TableHead>
                     <TableRow>
                       <TableCell>
@@ -1329,9 +1329,7 @@ const SurveyForm = () => {
                       </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell height='30'>
-                        &nbsp;<border> 6. สรุปคุณภาพโดยรวมของสถานประกอบการแห่งน </border>{' '}
-                      </TableCell>
+                      <TableCell height='30'>&nbsp;6. สรุปคุณภาพโดยรวมของสถานประกอบการแห่งน </TableCell>
                       <TableCell height='30' align='center'>
                         <Radio
                           name='es_id6'

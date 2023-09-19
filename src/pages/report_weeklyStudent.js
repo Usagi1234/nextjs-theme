@@ -35,7 +35,7 @@ const Report_weeklyStudent = () => {
   const [status, setStatus] = useState('')
   const [studentData, setStudentData] = useState('')
   const [resetData, setResetData] = useState({})
-  const [filterStudent, setFilterStudent] = useState({})
+  const [filterStudent, setFilterStudent] = useState([])
   const [getStudentRow, setGetStudentRow] = useState([])
 
   useEffect(() => {

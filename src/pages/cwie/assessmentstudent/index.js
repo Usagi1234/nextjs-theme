@@ -147,6 +147,10 @@ const SurveyForm = () => {
     }
   }, [username, status])
 
+  useEffect(() => {
+    console.log(getData)
+  }, [getData])
+
   return (
     <>
       <Container sx={{ bgcolor: '#2C3E50' }}>

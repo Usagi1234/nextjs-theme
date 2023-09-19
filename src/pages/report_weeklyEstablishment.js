@@ -64,7 +64,7 @@ export default function Report_weeklyEstablishment() {
   const jwtRole = Cookies.get('jwtRole')
   const [username, setUsername] = useState('')
   const [status, setStatus] = useState('')
-  const [companyData, setCompanyData] = useState('')
+  const [companyData, setCompanyData] = useState([])
   const [filterCompany, setFilterCompany] = useState('')
 
   useEffect(() => {

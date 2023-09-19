@@ -22,7 +22,11 @@ const ShowAssessmentCom = () => {
   const [getAssesmentCom, setGetAssesmentCom] = useState([])
 
   const [dataCompany, setDataCompany] = useState([])
-  const [filterCompany, setFilterCompany] = useState([])
+  const [filterCompany, setFilterCompany] = useState(getAssesmentCom)
+
+  const handleSelectID = event => {
+    setGetData(event.target.value)
+  }
 
   useEffect(() => {
     axios
@@ -37,7 +41,7 @@ const ShowAssessmentCom = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3200/api/v1/getevaluateall')
+      .get('http://localhost:3200/api/v1/getevaluate')
       .then(res => {
         setGetAssesmentCom(res.data.data)
       })
@@ -55,6 +59,11 @@ const ShowAssessmentCom = () => {
   const [getData, setGetData] = useState([])
 
   useEffect(() => {
+    const filter = getAssesmentCom?.filter(dataID => dataID.com_id === getData)
+    setFilterCompany(filter)
+  }, [getData])
+
+  useEffect(() => {
     console.log(getData)
   }, [getData])
 
@@ -68,7 +77,7 @@ const ShowAssessmentCom = () => {
   return (
     <Grid>
       <Grid container spacing={2}>
-        <Grid xs={12}>
+        <Grid item xs={12}>
           <Card>
             <CardContent>
               <Typography variant='h5' sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
@@ -88,7 +97,7 @@ const ShowAssessmentCom = () => {
                       id='dataCompany'
                       name='dataCompany'
                       label='dataCompany'
-                      onChange={event => setGetData(event.target.value)}
+                      onChange={handleSelectID}
                       value={getData || null}
                     >
                       {dataCompany?.map(row => (
@@ -100,7 +109,7 @@ const ShowAssessmentCom = () => {
                   </FormControl>
                 </Grid>
               </Box>
-              <DataGrid rows={getAssesmentCom} columns={columns} getRowId={row => row.anstea_id} />
+              <DataGrid rows={filterCompany} columns={columns} getRowId={row => row.anstea_id} />
             </CardContent>
           </Card>
         </Grid>
