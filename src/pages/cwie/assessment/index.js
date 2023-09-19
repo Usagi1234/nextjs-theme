@@ -1,52 +1,69 @@
-import React from 'react'
-import Head from 'next/head'
-import {
-  Container,
-  Grid,
-  Paper,
-  TextField,
-  Radio,
-  Button,
-  Table,
-  Box,
-  FormControl,
-  Select,
-  InputLabel,
-  MenuItem
-} from '@mui/material'
-import { useEffect, useState } from 'react'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import TableCell from '@mui/material/TableCell'
-import Typography from '@mui/material/Typography'
-import TableBody from '@mui/material/TableBody'
-import Cookies from 'js-cookie'
+import React, { useEffect, useState } from 'react'
+
+// ** Axios
 import axios from 'axios'
 
-const SurveyForm = () => {
-  const [sum3_7, setSum3_7] = useState(0)
-  const [sum3_7fi, setSum3_7fi] = useState(0)
-  const [sum_12, setSum_12] = useState(0)
+// ** Cookies
+import Cookies from 'js-cookie'
 
-  const [teacherData, setTeacherData] = useState('')
-  const jwtUsername = Cookies.get('jwtUsername')
-  const jwtRole = Cookies.get('jwtRole')
+// ** Mui
+import {
+  Box,
+  Button,
+  Card,
+  Checkbox,
+  Grid,
+  MenuItem,
+  Radio,
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography
+} from '@mui/material'
+
+const Assessment = () => {
+  const answerInit = []
+
+  for (let i = 1; i <= 18; i++) {
+    if (i === 1 || i === 13) {
+      continue // Skip the loop iteration if i is 1 or 6
+    }
+    answerInit.push({
+      estu_id: i,
+      anstu_value: null,
+      tea_id: null,
+      id: null
+    })
+  }
+
+  const [questions, setQuestions] = useState([])
   const [username, setUsername] = useState('')
   const [status, setStatus] = useState('')
-  const [resetData, setResetData] = useState({})
+  const [teacherData, setTeacherData] = useState({})
+  const [answerData, setAnswerData] = useState(answerInit)
 
-  const [getData, setGetData] = useState({})
+  // ** รายชื่อนักศึกษา
+  const [studentData, setStudentData] = useState([])
 
-  useEffect(() => {
-    const dataSetup = {
-      stu_id: '',
-      tea_id: teacherData.tea_id
-    }
-    setGetData(dataSetup)
-    setResetData(dataSetup)
-  }, [teacherData])
+  // ** id นักศึกษาที่เลือก
+  const [selectStudentId, setSelectStudentId] = useState(null)
 
   useEffect(() => {
+    const jwtUsername = Cookies.get('jwtUsername')
+    const jwtRole = Cookies.get('jwtRole')
+
+    axios
+      .get('http://localhost:3200/api/v1/getquestion_student')
+      .then(res => {
+        setQuestions(res.data.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
     axios
       .post('http://localhost:3200/api/verify_authen', {
         token: jwtUsername,
@@ -55,6 +72,18 @@ const SurveyForm = () => {
       .then(data => {
         setUsername(data.data.User)
         setStatus(data.data.stateRole)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+    axios
+      .get('http://localhost:3200/api/v1/students')
+      .then(res => {
+        setStudentData(res.data.data)
+      })
+      .catch(err => {
+        console.log(err)
       })
   }, [])
 
@@ -68,547 +97,155 @@ const SurveyForm = () => {
     }
   }, [username, status])
 
-  const [dataStudent, setDataStudent] = useState([])
-
   useEffect(() => {
-    axios.get('http://localhost:3200/api/v1/students').then(res => {
-      setDataStudent(res.data.data)
+    setAnswerData(prev => {
+      return prev.map((ans, index) => {
+        return {
+          ...ans,
+          tea_id: teacherData.tea_id,
+          id: selectStudentId
+        }
+      })
     })
-  }, [])
+  }, [selectStudentId, teacherData])
+
+  const handleRadioChange = (estu_id, value) => {
+    setAnswerData(prevState => {
+      return prevState.map(item => {
+        if (item.estu_id === estu_id) {
+          return {
+            ...item,
+            anstu_value: value
+          }
+        }
+
+        return item
+      })
+    })
+  }
+
+  const resetAnswerData = () => {
+    setAnswerData(prevState => {
+      return prevState.map(item => {
+        return {
+          ...item,
+          anstu_value: null
+        }
+      })
+    })
+  }
+
+  const handleSubmitClick = () => {
+    axios
+      .post('http://localhost:3200/api/v1/sendquestion_student', answerData)
+      .then(res => {
+        console.log('res: ', res)
+        console.log('answerData: ', answerData)
+        console.log('success')
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+    resetAnswerData()
+  }
 
   useEffect(() => {
-    console.log(teacherData)
-  }, [teacherData])
-
-  const HandleOnChangeSE = (event, type) => {
-    if (type === 'stu_id') {
-      const newStr = event.target.value
-      setGetData(pre => ({ ...pre, stu_id: newStr }))
-    }
-  }
-
-  const [costnSum1_2, setCostnSum1_2] = useState({
-    es_id1: '',
-    es_id1_2: '',
-    es_id1_3: '',
-    es_id1_4: '',
-    es_id1_5: '',
-    es_id1_6: '',
-    es_id1_7: '',
-    es_id2: ''
-  })
-
-  const [costnSum3_7, setCostnSum3_7] = useState({
-    es_id3: '',
-    es_id4: '',
-    es_id5: '',
-    es_id6: '',
-    es_id6_2: '',
-    es_id6_3: '',
-    es_id6_4: '',
-    es_id7: ''
-  })
-
-  const handleRadioChange = event => {
-    const { name, value } = event.target
-    setCostnSum1_2(prevState => ({ ...prevState, [name]: value }))
-  }
-
-  const handleRadioChange3_7 = event => {
-    const { name, value } = event.target
-    setCostnSum3_7(prevState => ({ ...prevState, [name]: value }))
-  }
-
-  const handleSubmit = event => {
-    event.preventDefault()
-
-    // Handle form submission, and you can access the selected values as costnSum1_2.es_id1 and costnSum1_2.es_id2
-  }
-
-  // useEffect(() => {
-  //   console.log(costnSum1_2)
-  //   console.log(sum_12);
-  // }, [handleSubmit])
-
-  // console.log(costnSum3_7)
+    console.log('teacherData: ', answerData)
+  }, [answerData])
 
   useEffect(() => {
-    // Perform the addition and store the result in sum_12
-    const es_id1Value = parseInt(costnSum1_2.es_id1) || 0
-    const es_id1_2Value = parseInt(costnSum1_2.es_id1_2) || 0
-    const es_id1_3Value = parseInt(costnSum1_2.es_id1_3) || 0
-    const es_id1_4Value = parseInt(costnSum1_2.es_id1_4) || 0
-    const es_id1_5Value = parseInt(costnSum1_2.es_id1_5) || 0
-    const es_id1_6Value = parseInt(costnSum1_2.es_id1_6) || 0
-    const es_id1_7Value = parseInt(costnSum1_2.es_id1_7) || 0
-    const es_id2Value = parseInt(costnSum1_2.es_id2) || 0
-    setSum_12(
-      es_id1Value +
-        es_id2Value +
-        es_id1_2Value +
-        es_id1_3Value +
-        es_id1_4Value +
-        es_id1_5Value +
-        es_id1_6Value +
-        es_id1_7Value
-    )
-  }, [costnSum1_2])
-
-  useEffect(() => {
-    // Perform the addition and store the result in sum_12
-    const es_id3Value = parseInt(costnSum3_7.es_id3) || 0
-    const es_id4Value = parseInt(costnSum3_7.es_id4) || 0
-    const es_id5Value = parseInt(costnSum3_7.es_id5) || 0
-    const es_id6Value = parseInt(costnSum3_7.es_id6) || 0
-    const es_id6_2Value = parseInt(costnSum3_7.es_id6_2) || 0
-    const es_id6_3Value = parseInt(costnSum3_7.es_id6_3) || 0
-    const es_id6_4_7Value = parseInt(costnSum3_7.es_id6_4) || 0
-    const es_id7Value = parseInt(costnSum3_7.es_id7) || 0
-    setSum3_7(
-      es_id3Value +
-        es_id4Value +
-        es_id5Value +
-        es_id6Value +
-        es_id6_2Value +
-        es_id6_3Value +
-        es_id6_4_7Value +
-        es_id7Value
-    )
-  }, [costnSum3_7])
-
-  // useEffect(() => {
-  //   // Perform the division by 2 if sum_12 is not 0, otherwise, keep it as 0
-  //   if (sum3_7 !== 0) {
-  //     setSum3_7fi(sum3_7 / 4);
-  //   }
-  // }, [sum3_7]);
-
-  // useEffect(() => {
-  //   console.log(sum3_7fi)
-  // }, [handleSubmit])
-
-  const handleSubmitClik = event => {
-    setSum3_7fi(sum3_7 + sum_12)
-
-    // Handle form submission, and you can access the selected values as costnSum1_2.es_id1 and costnSum1_2.es_id2
-  }
+    console.log('quest: ', questions)
+  }, [questions])
 
   return (
-    <>
-      <Container sx={{ bgcolor: '#2C3E50' }}>
-        <Grid container>
-          <Grid item xs={12} md={1}></Grid>
-          <Grid item xs={12} md={11}>
-            {/* <?php // include('menu.php'); ?> */}
-          </Grid>
+    <Box>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', mb: 8 }}>
+            <Typography variant='h4'>แบบประเมิน</Typography>
+          </Box>
         </Grid>
-      </Container>
 
-      <Container>
-        <Grid container>
-          <Grid item xs={12} md={3}>
-            {/* <?php // include('menu_l.php'); ?> */}
-          </Grid>
-          <Grid item xs={12} md={10}>
-            <Typography sx={{ display: 'flex', width: '100%', justifyContent: 'center', mb: 10 }} variant='h6'>
-              ประเมินนักศึกษา (ระหว่างนิเทศ)
-            </Typography>
+        <Grid item xs={12}>
+          <Box fullWidth sx={{ ml: 4, mb: 4, minWidth: 200, maxWidth: 300 }}>
+            <Typography>เลือกนักศึกษาที่ต้องการประเมิน</Typography>
+            <Select fullWidth value={selectStudentId} onChange={event => setSelectStudentId(event.target.value)}>
+              {studentData.map((item, index) => (
+                <MenuItem value={item.Id} key={item.Id}>
+                  {item.stu_name} {item.stu_lname}
+                </MenuItem>
+              ))}
+            </Select>
+          </Box>
+        </Grid>
 
-            <form id='formqsys' name='formqsys' method='post'>
-              <Paper sx={{ width: '100%', margin: 'auto', display: 'flex', justifyContent: 'center' }}>
-                <Table width='100%' border='1' cellSpacing='0'>
+        {selectStudentId && (
+          <>
+            <Grid item xs={12} sx={{ minWidth: 600 }}>
+              <Card sx={{ display: 'flex', justifyContent: 'center', m: 4 }}>
+                <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell width='75%' rowspan='2' align='center'>
-                        หัวข้อการประเมิน
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell width='5%' align='center'>
-                        5
-                      </TableCell>
-                      <TableCell width='5%' align='center'>
-                        4
-                      </TableCell>
-                      <TableCell width='5%' align='center'>
-                        3
-                      </TableCell>
-                      <TableCell width='5%' align='center'>
-                        2
-                      </TableCell>
-                      <TableCell width='5%' align='center'>
-                        1
-                      </TableCell>
+                      <TableCell>Questions</TableCell>
+                      <TableCell align='center'>1</TableCell>
+                      <TableCell align='center'>2</TableCell>
+                      <TableCell align='center'>3</TableCell>
+                      <TableCell align='center'>4</TableCell>
+                      <TableCell align='center'>5</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    <TableRow>
-                      <TableCell height='30'>&nbsp; 1. การพัฒนาตนเอง</TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1' value='5' onChange={handleRadioChange} required />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1' value='4' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1' value='3' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1' value='2' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1' value='1' onChange={handleRadioChange} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell height='30'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1 บุคลิกภาพ</TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1' value='5' onChange={handleRadioChange} required />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1' value='4' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1' value='3' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1' value='2' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1' value='1' onChange={handleRadioChange} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell height='30'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.2 การพัฒนาตนเอง</TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_2' value='5' onChange={handleRadioChange} required />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_2' value='4' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_2' value='3' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_2' value='2' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_2' value='1' onChange={handleRadioChange} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell height='30'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.3 วุฒิภาวะ</TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_3' value='5' onChange={handleRadioChange} required />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_3' value='4' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_3' value='3' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_3' value='2' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_3' value='1' onChange={handleRadioChange} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell height='30'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.4 การปรับตัว</TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_4' value='5' onChange={handleRadioChange} required />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_4' value='4' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_4' value='3' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_4' value='2' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_4' value='1' onChange={handleRadioChange} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell height='30'>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.5 การแสดงความคิดเห็น การแสดงออก
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_5' value='5' onChange={handleRadioChange} required />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_5' value='4' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_5' value='3' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_5' value='2' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_5' value='1' onChange={handleRadioChange} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell height='30'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.6 มนุษยสัมพันธ์</TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_6' value='5' onChange={handleRadioChange} required />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_6' value='4' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_6' value='3' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_6' value='2' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_6' value='1' onChange={handleRadioChange} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell height='30'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.7 ทัศนคติ</TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_7' value='5' onChange={handleRadioChange} required />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_7' value='4' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_7' value='3' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_7' value='2' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id1_7' value='1' onChange={handleRadioChange} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell height='30'>&nbsp; 2. การแสดงความมีส่วนร่วมกับองค์กร</TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id2' value='5' onChange={handleRadioChange} required />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id2' value='4' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id2' value='3' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id2' value='2' onChange={handleRadioChange} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id2' value='1' onChange={handleRadioChange} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell height='30'>
-                        &nbsp; 3. ความประพฤติ คุณธรรม จริยธรรม และปฏิบัติ <br />
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ตามกฏระเบียบวินัยขององค์การ เช่น การขาดงาน การลา มาสาย{' '}
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id3' value='5' onChange={handleRadioChange3_7} required />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id3' value='4' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id3' value='3' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id3' value='2' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id3' value='1' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell height='30'>
-                        &nbsp; 4. ความรู้ความสามารถพื้นฐานที่จำเป็นต่อการปฏิบัติงานที่ได้รับมอบหมาย
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id4' value='5' onChange={handleRadioChange3_7} required />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id4' value='4' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id4' value='3' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id4' value='2' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id4' value='1' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell height='30'>&nbsp; 5. ความก้าวหน้าของการจัดทำรายงาน </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id5' value='5' onChange={handleRadioChange3_7} required />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id5' value='4' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id5' value='3' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id5' value='2' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id5' value='1' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell height='30'>6.ความพึงพอใจของนักศึกษา</TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6' value='5' onChange={handleRadioChange3_7} required />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6' value='4' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6' value='3' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6' value='2' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6' value='1' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell height='30'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6.1 การพัฒนาตนเอง</TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6' value='5' onChange={handleRadioChange3_7} required />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6' value='4' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6' value='3' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6' value='2' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6' value='1' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell height='30'>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6.2 ต่องานที่ได้รับปฏิบัติและสถานประกอบการ{' '}
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6_2' value='5' onChange={handleRadioChange3_7} required />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6_2' value='4' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6_2' value='3' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6_2' value='2' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6_2' value='1' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell height='30'>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6.3 ต่อความเหมาะสมความปลอดภัย ของที่พัก
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6_3' value='5' onChange={handleRadioChange3_7} required />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6_3' value='4' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6_3' value='3' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6_3' value='2' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6_3' value='1' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell height='30'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6.4 ต่อความเหมาะสมของค่าตอบแทน</TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6_4' value='5' onChange={handleRadioChange3_7} required />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6_4' value='4' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6_4' value='3' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6_4' value='2' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id6_4' value='1' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell height='30'>
-                        {' '}
-                        &nbsp; <border>7. สรุปโดยรวมของนักศึกษา </border>
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id7' value='5' onChange={handleRadioChange3_7} required />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id7' value='4' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id7' value='3' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id7' value='2' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                      <TableCell height='30' align='center'>
-                        <Radio name='es_id7' value='1' onChange={handleRadioChange3_7} />
-                      </TableCell>
-                    </TableRow>
+                    {questions.map((question, index) => (
+                      <TableRow key={index}>
+                        {question.estu_order === 1 || question.estu_order === 6 ? (
+                          <TableCell align='left' colSpan={6}>
+                            <Typography variant='h6'>
+                              {question.estu_order} {question.estu_title}
+                            </Typography>
+                          </TableCell>
+                        ) : (
+                          <>
+                            <TableCell component='th' scope='row'>
+                              <Typography variant='body1'>
+                                {question.estu_order} {question.estu_title}
+                              </Typography>
+                            </TableCell>
+                            {[1, 2, 3, 4, 5].map(score => (
+                              <TableCell align='center' key={score}>
+                                <Radio
+                                  checked={
+                                    (answerData.find(item => item.estu_id === question.estu_id) || {}).anstu_value ===
+                                    score
+                                  }
+                                  onChange={() => handleRadioChange(question.estu_id, score)}
+                                  value={score}
+                                />
+                              </TableCell>
+                            ))}
+                          </>
+                        )}
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
-              </Paper>
-              <Grid container justifyContent='center' mt={3}>
-                <Grid item xs={12} md={6}>
-                  {/* <TextField name='es_complain' label='ข้อเสนอแนะเพิ่มเติม' multiline rows={3} fullWidth /> */}
-                  <Button type='submit' variant='contained' onClick={handleSubmitClik}>
-                    ส่งแบบประเมิน
-                  </Button>
-                  {sum3_7fi !== 0 && <p>ผลรวมคะแนน: {sum3_7fi}</p>}
-                </Grid>
-              </Grid>
-            </form>
-          </Grid>
-        </Grid>
-      </Container>
-    </>
+              </Card>
+            </Grid>
+            <Grid item xs={12}>
+              <Box sx={{ display: 'flex', justifyContent: 'center', mb: 8 }}>
+                <Button variant='contained' color='primary' sx={{ mr: 2 }} onClick={handleSubmitClick}>
+                  บันทึก
+                </Button>
+                <Button variant='contained' color='error' onClick={resetAnswerData}>
+                  ล้างข้อมูล
+                </Button>
+              </Box>
+            </Grid>
+          </>
+        )}
+      </Grid>
+    </Box>
   )
 }
 
-const SurveyPage = () => {
-  return (
-    <>
-      <Head>
-        <title>Survey Form</title>
-      </Head>
-      <SurveyForm />
-    </>
-  )
-}
-
-export default SurveyPage
+export default Assessment
