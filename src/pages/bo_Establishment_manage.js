@@ -14,7 +14,7 @@ export default function Bo_Establishment_manage() {
     com_province: '',
     com_contact: ''
   }
-  const [rowDataComp, setRowDataComp] = useState('')
+  const [rowDataComp, setRowDataComp] = useState([])
   const [dataCompany, setDataCompany] = useState(intialComp)
 
   const [coloChangeComp, setColoChangeComp] = useState({

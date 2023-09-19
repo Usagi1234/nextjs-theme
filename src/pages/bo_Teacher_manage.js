@@ -42,7 +42,7 @@ export default function Bo_Teacher_manage() {
     borderRadius: 2
   }
 
-  const [rowDataTeacher, setRowDataTeacher] = useState('')
+  const [rowDataTeacher, setRowDataTeacher] = useState([])
   const [dataTeacher, setDataTeacher] = useState(intialTea)
   const [studyGroup, setStudyGroup] = useState([])
   const [curriculum, setCurriculum] = useState([])

@@ -14,7 +14,7 @@ const BackOfficeNEWS = () => {
   }
 
   const [dataNews, setDataNews] = useState(intialNEWS)
-  const [rowDataNEWS, setRowDataNEWS] = useState('')
+  const [rowDataNEWS, setRowDataNEWS] = useState([])
 
   const ColorChangeNEWS = {
     new_name: false,
@@ -187,7 +187,6 @@ const BackOfficeNEWS = () => {
                   <TextField
                     fullWidth
                     label='Detail'
-                    fullWidth
                     multiline
                     minRows={8}
                     onChange={event => HandleOnChangeNEWS(event, 'new_details')}

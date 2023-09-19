@@ -7,7 +7,7 @@ import axios from 'axios'
 import { DataGrid } from '@mui/x-data-grid'
 
 export default function Bo_SupervisionTC() {
-  const [dataRowSuperES, setDataRowSuperES] = useState('')
+  const [dataRowSuperES, setDataRowSuperES] = useState([])
 
   const column = [
     { field: 'tea_name', headerName: 'Teacher Name', width: 150 },

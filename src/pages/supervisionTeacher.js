@@ -183,7 +183,6 @@ export default function SupervisionTeacher() {
         .post('http://localhost:3200/api/v1/supervisionteainsert', dataSupervisionTc)
         .then(res => {
           window.location.reload()
-          // setdataSupervisionTc(intialSt)
         })
         .catch(err => {
           console.log(err)

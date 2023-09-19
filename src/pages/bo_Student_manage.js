@@ -31,7 +31,7 @@ const Bo_Student_manage = () => {
     stu_sex: '',
     stu_status: ''
   }
-  const [rowDataSt, setRowDataSt] = useState('')
+  const [rowDataSt, setRowDataSt] = useState([])
   const [dataSt, setDataSt] = useState(intial)
   const [curriculumSt, setCurriculumSt] = useState([])
   const [studyGroupSt, setStudyGroupSt] = useState([])
