@@ -11,7 +11,9 @@ import {
   TableHead,
   TableBody,
   TableRow,
-  TableCell
+  TableCell,
+  Typography,
+  Box
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -168,7 +170,9 @@ const SurveyForm = () => {
             {/* <?php // include('menu_l.php'); ?> */}
           </Grid>
           <Grid item xs={12} md={10}>
-            <h3 align='center'>ประเมินนักศึกษา (สถานประกอบการประเมินนักศึกษา)</h3>
+            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', mb: 10 }}>
+              \<Typography variant='h6'>ประเมินนักศึกษา (สถานประกอบการประเมินนักศึกษา)</Typography>
+            </Box>
             <form id='formqsys' name='formqsys' method='post'>
               <Paper sx={{ width: '100%', margin: 'auto' }}>
                 {/** หัวข้อที่ 1 */}
@@ -626,7 +630,6 @@ const SurveyForm = () => {
                   <Button type='submit' variant='contained' onClick={handleSubmitClik}>
                     ส่งแบบประเมิน
                   </Button>
-                  {sumfi !== 0 && <p>ผลรวมคะแนน: {sumfi}</p>}
                 </Grid>
               </Grid>
             </form>
