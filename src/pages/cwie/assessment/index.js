@@ -216,28 +216,6 @@ const SurveyForm = () => {
 
             <form id='formqsys' name='formqsys' method='post'>
               <Paper sx={{ width: '100%', margin: 'auto', display: 'flex', justifyContent: 'center' }}>
-                {/* <Box sx={{ ml: 6 }}>
-                  <Grid item xs={12} sm={6}>
-                    <FormControl variant='outlined' fullWidth sx={{ my: 6 }}>
-                      <InputLabel id='dataCompany-label'>Company</InputLabel>
-                      <Select
-                        required
-                        labelId='dataCompany-label'
-                        id='dataCompany'
-                        name='dataCompany'
-                        label='dataCompany'
-                        onChange={event => HandleOnChangeSE(event, 'com_id')}
-                        value={dataCompany.com_name}
-                      >
-                        {dataCompany?.map(row => (
-                          <MenuItem key={row.com_id} value={row.com_id}>
-                            {row.com_name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                </Box> */}
                 <Table width='100%' border='1' cellSpacing='0'>
                   <TableHead>
                     <TableRow>
@@ -265,9 +243,25 @@ const SurveyForm = () => {
                   </TableHead>
                   <TableBody>
                     <TableRow>
-                      <TableCell height='30'>
-                        &nbsp; 1. การพัฒนาตนเอง <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1 บุคลิกภาพ
+                      <TableCell height='30'>&nbsp; 1. การพัฒนาตนเอง</TableCell>
+                      <TableCell height='30' align='center'>
+                        <Radio name='es_id1' value='5' onChange={handleRadioChange} required />
                       </TableCell>
+                      <TableCell height='30' align='center'>
+                        <Radio name='es_id1' value='4' onChange={handleRadioChange} />
+                      </TableCell>
+                      <TableCell height='30' align='center'>
+                        <Radio name='es_id1' value='3' onChange={handleRadioChange} />
+                      </TableCell>
+                      <TableCell height='30' align='center'>
+                        <Radio name='es_id1' value='2' onChange={handleRadioChange} />
+                      </TableCell>
+                      <TableCell height='30' align='center'>
+                        <Radio name='es_id1' value='1' onChange={handleRadioChange} />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell height='30'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1 บุคลิกภาพ</TableCell>
                       <TableCell height='30' align='center'>
                         <Radio name='es_id1' value='5' onChange={handleRadioChange} required />
                       </TableCell>
@@ -472,10 +466,25 @@ const SurveyForm = () => {
                       </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell height='30'>
-                        &nbsp;<border> 6. ความพึงพอใจของนักศึกษา </border>
-                        <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6.1 การพัฒนาตนเอง{' '}
+                      <TableCell height='30'>6.ความพึงพอใจของนักศึกษา</TableCell>
+                      <TableCell height='30' align='center'>
+                        <Radio name='es_id6' value='5' onChange={handleRadioChange3_7} required />
                       </TableCell>
+                      <TableCell height='30' align='center'>
+                        <Radio name='es_id6' value='4' onChange={handleRadioChange3_7} />
+                      </TableCell>
+                      <TableCell height='30' align='center'>
+                        <Radio name='es_id6' value='3' onChange={handleRadioChange3_7} />
+                      </TableCell>
+                      <TableCell height='30' align='center'>
+                        <Radio name='es_id6' value='2' onChange={handleRadioChange3_7} />
+                      </TableCell>
+                      <TableCell height='30' align='center'>
+                        <Radio name='es_id6' value='1' onChange={handleRadioChange3_7} />
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell height='30'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6.1 การพัฒนาตนเอง</TableCell>
                       <TableCell height='30' align='center'>
                         <Radio name='es_id6' value='5' onChange={handleRadioChange3_7} required />
                       </TableCell>
