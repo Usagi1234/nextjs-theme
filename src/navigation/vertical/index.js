@@ -68,6 +68,11 @@ const Navigation = () => {
         title: 'Supervision Student',
         icon: ChevronDoubleRight,
         path: '/supervisionStudent'
+      },
+      {
+        title: 'ประเมินนักศึกษา (สถานประกอบการประเมินนักศึกษา)',
+        icon: AccessibilityNewIcon,
+        path: '/cwie/showAssessmentStudent'
       }
     )
   } else if (status === 'อาจารย์') {
