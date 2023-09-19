@@ -121,6 +121,7 @@ const SurveyForm = () => {
 
   const handleSubmit = event => {
     event.preventDefault()
+
     // Handle form submission, and you can access the selected values as costnSum1_2.es_id1 and costnSum1_2.es_id2
   }
 
@@ -188,6 +189,7 @@ const SurveyForm = () => {
 
   const handleSubmitClik = event => {
     setSum3_7fi(sum3_7 + sum_12)
+
     // Handle form submission, and you can access the selected values as costnSum1_2.es_id1 and costnSum1_2.es_id2
   }
 
