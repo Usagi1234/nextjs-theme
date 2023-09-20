@@ -39,25 +39,20 @@ const SurveyForm = () => {
   // ** id นักศึกษาที่เลือก
   const [selectStudentId, setSelectStudentId] = useState(null)
 
-  // ** ข้อมูลคำตอบเริ่มต้น
-  const answerInit = []
-
   // ** ข้อมูลคำตอบ
-  const [answerData, setAnswerData] = useState(answerInit)
-
-  for (let i = 1; i <= 18; i++) {
-    answerInit.push({
-      ecomstu_id: i,
+  const [answerData, setAnswerData] = useState(
+    Array.from({ length: 18 }, (_, i) => ({
+      ecomstu_id: i + 1,
       anscom_value: 0,
       com_id: null,
       Id: null
-    })
-  }
+    }))
+  )
 
   useEffect(() => {
     // ใช้เงื่อนไขที่ต้องการเช็คกับ comId และ Id
 
-    const newAnswerInit = answerInit.map(item => {
+    const newAnswerInit = answerData.map(item => {
       return {
         ...item,
         com_id: companyData.com_id,
@@ -66,48 +61,48 @@ const SurveyForm = () => {
     })
 
     setAnswerData(newAnswerInit)
-  }, [companyData, selectStudentId])
+  }, [companyData, selectStudentId, answerData])
 
   useEffect(() => {
     console.log('test: ', answerData)
   }, [answerData])
 
-  const [sum4, setSum4] = useState({
-    text15: '',
-    text16: '',
-    text17: '',
-    text18: ''
-  })
+  // const [sum4, setSum4] = useState({
+  //   text15: '',
+  //   text16: '',
+  //   text17: '',
+  //   text18: ''
+  // })
 
-  const [sum3, setSum3] = useState({
-    text11: '',
-    text12: '',
-    text13: '',
-    text14: ''
-  })
+  // const [sum3, setSum3] = useState({
+  //   text11: '',
+  //   text12: '',
+  //   text13: '',
+  //   text14: ''
+  // })
 
-  const [sum2, setSum2] = useState({
-    text3: '',
-    text4: '',
-    text5: '',
-    text6: '',
-    text7: '',
-    text8: '',
-    text9: '',
-    text10: '',
-    totalScore: 0
-  })
-  const [sumfi, setSumfi] = useState(0)
+  // const [sum2, setSum2] = useState({
+  //   text3: '',
+  //   text4: '',
+  //   text5: '',
+  //   text6: '',
+  //   text7: '',
+  //   text8: '',
+  //   text9: '',
+  //   text10: '',
+  //   totalScore: 0
+  // })
+  // const [sumfi, setSumfi] = useState(0)
 
-  const [values, setValues] = useState({
-    text1: '',
-    text2: ''
-  })
+  // const [values, setValues] = useState({
+  //   text1: '',
+  //   text2: ''
+  // })
 
-  const handleChange2 = event => {
-    const { name, value } = event.target
-    setSum2(prevValues => ({ ...prevValues, [name]: value }))
-  }
+  // const handleChange2 = event => {
+  //   const { name, value } = event.target
+  //   setSum2(prevValues => ({ ...prevValues, [name]: value }))
+  // }
 
   const handleChange = (ecom_id, event) => {
     let value = parseInt(event.target.value, 10) // แปลง string ให้เป็น integer
@@ -135,44 +130,44 @@ const SurveyForm = () => {
     })
   }
 
-  const handleChange3 = event => {
-    const { name, value } = event.target
-    setSum3(prevValues => ({ ...prevValues, [name]: value }))
-  }
+  // const handleChange3 = event => {
+  //   const { name, value } = event.target
+  //   setSum3(prevValues => ({ ...prevValues, [name]: value }))
+  // }
 
-  const handleChange4 = event => {
-    const { name, value } = event.target
-    setSum4(prevValues => ({ ...prevValues, [name]: value }))
-  }
+  // const handleChange4 = event => {
+  //   const { name, value } = event.target
+  //   setSum4(prevValues => ({ ...prevValues, [name]: value }))
+  // }
 
-  useEffect(() => {
-    const es_id1Value = parseInt(sum2.text3) || 0
-    const es_id1_2Value = parseInt(sum2.text4) || 0
-    const es_id1_3Value = parseInt(sum2.text5) || 0
-    const es_id1_4Value = parseInt(sum2.text6) || 0
-    const es_id1_5Value = parseInt(sum2.text7) || 0
-    const es_id1_6Value = parseInt(sum2.text8) || 0
-    const es_id1_7Value = parseInt(sum2.text9) || 0
-    const es_id2Value = parseInt(sum2.text10) || 0
+  // useEffect(() => {
+  //   const es_id1Value = parseInt(sum2.text3) || 0
+  //   const es_id1_2Value = parseInt(sum2.text4) || 0
+  //   const es_id1_3Value = parseInt(sum2.text5) || 0
+  //   const es_id1_4Value = parseInt(sum2.text6) || 0
+  //   const es_id1_5Value = parseInt(sum2.text7) || 0
+  //   const es_id1_6Value = parseInt(sum2.text8) || 0
+  //   const es_id1_7Value = parseInt(sum2.text9) || 0
+  //   const es_id2Value = parseInt(sum2.text10) || 0
 
-    const totalScore =
-      es_id1Value +
-      es_id1_2Value +
-      es_id1_3Value +
-      es_id1_4Value +
-      es_id1_5Value +
-      es_id1_6Value +
-      es_id1_7Value +
-      es_id2Value
+  //   const totalScore =
+  //     es_id1Value +
+  //     es_id1_2Value +
+  //     es_id1_3Value +
+  //     es_id1_4Value +
+  //     es_id1_5Value +
+  //     es_id1_6Value +
+  //     es_id1_7Value +
+  //     es_id2Value
 
-    setSum2(prevState => ({ ...prevState, totalScore }))
-  }, [setSum2])
+  //   setSum2(prevState => ({ ...prevState, totalScore }))
+  // }, [])
 
-  useEffect(() => {
-    if (sum2.totalScore !== undefined && sum2.totalScore !== 0) {
-      setSum2(prevState => ({ ...prevState, totalScore: prevState.totalScore / 4 }))
-    }
-  }, [sum2.totalScore])
+  // useEffect(() => {
+  //   if (sum2.totalScore !== undefined && sum2.totalScore !== 0) {
+  //     setSum2(prevState => ({ ...prevState, totalScore: prevState.totalScore / 4 }))
+  //   }
+  // }, [sum2.totalScore])
 
   const handleSubmitClick = () => {
     axios
@@ -208,7 +203,7 @@ const SurveyForm = () => {
       .catch(err => {
         console.log(err)
       })
-  }, [])
+  }, [jwtUsername, jwtRole])
 
   useEffect(() => {
     if (status === 'สถานประกอบการ') {
@@ -228,7 +223,7 @@ const SurveyForm = () => {
     console.log('studentData: ', studentData)
   }, [studentData])
 
-  if (answerInit.length === 0) {
+  if (answerData.length === 0) {
     return <div>Loading...</div>
   }
 

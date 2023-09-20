@@ -19,7 +19,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-import { DailyReport, MonthlyReport, YearReport } from './DummyDay/dailyReport'
+import { DailyReport, MonthlyReport, YearReport } from '../@core/components/DummyDay/dailyReport'
 import { DataGrid } from '@mui/x-data-grid'
 
 const Report_weeklyStudent = () => {

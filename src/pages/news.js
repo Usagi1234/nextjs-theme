@@ -72,7 +72,7 @@ export default function News() {
       </Grid>
       <Grid container spacing={6}>
         {Object.values(dataNews)?.map((datanews, index) => (
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={4} key={index}>
             <Card>
               <CardMedia sx={{ height: '14.5625rem' }} image={dummyImage[index].img} />
               <CardContent sx={{ display: 'flex', textAlign: 'center', alignItems: 'center', flexDirection: 'column' }}>

@@ -18,7 +18,7 @@ export default function about() {
         </Box>
         <Box sx={{ ml: 30 }}>
           <Card>
-            <Image src={'/images/dean.png'} width={300} height={300} />
+            <Image src={'/images/dean.png'} alt='dean' width={300} height={300} />
           </Card>
         </Box>
       </Box>

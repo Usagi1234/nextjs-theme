@@ -1,5 +1,5 @@
 // ** React Imports
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 // ** axios
 import axios from 'axios'
@@ -21,26 +21,17 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear, establishmen
   const [dataFile, setDataFile] = useState(documentStudent)
   const [selectCompany, setSelectCompany] = useState('')
 
-  useEffect(() => {
-    const jwtUsername = Cookies.get('jwtUsername')
-    const dataJwt = { username: jwtUsername }
-    axios
-      .post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getDataStudent`, dataJwt)
-      .then(res => {
-        setDataStudent(res.data.data[0])
-      })
-      .catch(err => {})
-  }, [])
-
-  const getFilesStudent = async student_id => {
-    axios
-      .post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getFileStudent`, { student_id: student_id })
-      .then(res => {
-        const company = establishment.find(item => item.com_id === res.data.data[0].company_id)
+  const getFilesStudent = useCallback(
+    async student_id => {
+      try {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getFileStudent`, {
+          student_id: student_id
+        })
+        const company = establishment.find(item => item.com_id === response.data.data[0].company_id)
 
         setDataFile(dataFile =>
           dataFile.map(item => {
-            const matchingDoc = res.data.data.find(doc => doc.doc_type === item.id)
+            const matchingDoc = response.data.data.find(doc => doc.doc_type === item.id)
 
             return matchingDoc
               ? {
@@ -52,15 +43,24 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear, establishmen
               : item
           })
         )
-      })
-      .catch(err => {
+      } catch (err) {
         console.log('err: ', err)
-      })
-  }
+      }
+    },
+    [establishment]
+  )
 
   useEffect(() => {
-    getFilesStudent(dataStudent.Id)
-  }, [dataStudent])
+    const jwtUsername = Cookies.get('jwtUsername')
+    const dataJwt = { username: jwtUsername }
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/getDataStudent`, dataJwt)
+      .then(res => {
+        setDataStudent(res.data.data[0])
+        getFilesStudent(res.data.data[0].student_id)
+      })
+      .catch(err => {})
+  }, [getFilesStudent])
 
   //  ** อัพโหลดไฟล์ PDF
   const handleFileUpload = async (e, typeID) => {
@@ -175,18 +175,6 @@ const StudentDocumentPage = ({ documentStudent, lastedSemesterYear, establishmen
       console.error('Error:', error)
     }
   }
-
-  // useEffect(() => {
-  //   console.log('data: ', dataFile)
-  // }, [dataFile])
-
-  // useEffect(() => {
-  //   console.log('dataStudent: ', dataStudent)
-  // }, [dataStudent])
-
-  // useEffect(() => {
-  //   console.log('selectCompany: ', selectCompany)
-  // }, [selectCompany])
 
   const handleStatusValueChangeToText = statusValue => {
     const status = documentStatus(statusValue)
