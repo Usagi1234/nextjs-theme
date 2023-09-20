@@ -80,7 +80,7 @@ export default function Report_weeklyEstablishment() {
     axios.get('http://localhost:3200/api/v1/getreport').then(res => {
       setRowReportStd(res.data.data)
     })
-  }, [])
+  }, [jwtUsername, jwtRole])
 
   useEffect(() => {
     if (status === 'สถานประกอบการ') {

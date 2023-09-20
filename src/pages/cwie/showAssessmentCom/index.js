@@ -61,7 +61,7 @@ const ShowAssessmentCom = () => {
   useEffect(() => {
     const filter = getAssesmentCom?.filter(dataID => dataID.com_id === getData)
     setFilterCompany(filter)
-  }, [getData])
+  }, [getData, getAssesmentCom])
 
   useEffect(() => {
     console.log(getData)
@@ -81,7 +81,7 @@ const ShowAssessmentCom = () => {
           <Card>
             <CardContent>
               <Typography variant='h5' sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-                แสดงประเมินสถานประกอบการ (อาจารย์ประเมินสถานประกอบการ)
+                แสดงอาจารย์ประเมินสถานประกอบการ (อาจารย์ประเมินสถานประกอบการ)
               </Typography>
 
               <Box>

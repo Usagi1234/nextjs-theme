@@ -39,7 +39,7 @@ import 'toastify-js/src/toastify.css'
 import Swal from 'sweetalert2'
 
 import Cookies from 'js-cookie'
-// import cookieCutter from 'cookie-cutter'
+
 const now = new Date()
 
 // ** Styled Components
@@ -161,7 +161,7 @@ const LoginPage = () => {
         window.location.href = '/Home'
       }, 1000)
     }
-  }, [success])
+  }, [success, Toast])
 
   // ** Hook
   const theme = useTheme()

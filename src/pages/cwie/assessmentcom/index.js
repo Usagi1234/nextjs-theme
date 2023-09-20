@@ -48,7 +48,7 @@ const SurveyForm = () => {
         setUsername(data.data.User)
         setStatus(data.data.stateRole)
       })
-  }, [])
+  }, [jwtUsername, jwtRole])
 
   useEffect(() => {
     if (status === 'อาจารย์') {

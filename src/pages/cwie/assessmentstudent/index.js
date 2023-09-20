@@ -255,7 +255,7 @@ const SurveyForm = () => {
               <Table sx={{ width: '100%' }} cellPadding='0' cellSpacing='0'>
                 <TableHead>
                   <TableRow>
-                    <TableCell width='75%' rowspan='2' align='center'>
+                    <TableCell width='75%' rowSpan='2' align='center'>
                       หัวข้อการประเมิน (ผลสําเร็จของงาน/Work Achievement )
                     </TableCell>
                   </TableRow>
@@ -267,7 +267,7 @@ const SurveyForm = () => {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell height='100' class='left-align'>
+                    <TableCell height='100' className='left-align'>
                       &nbsp; 1. ปริมาณงาน (Quality of work) <br />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ปริมาณงานที่ปฏิบัติสำเร็จตามหน้าที่หรือตามที่ได้รับมอบหมายภายในระยะเวลาที่
                       <br />
@@ -287,7 +287,7 @@ const SurveyForm = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell height='100' class='left-align'>
+                    <TableCell height='100' className='left-align'>
                       &nbsp; 2. คุณภาพงาน(Quality of work) <br />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ทํางานได้ถ้กต้องครบถ้วนมีความประณีตเรียบร้อย มีความรอบคอบ
                       <br />
@@ -313,7 +313,7 @@ const SurveyForm = () => {
               <Table sx={{ width: '100%' }} cellPadding='0' cellSpacing='0'>
                 <TableHead>
                   <TableRow>
-                    <TableCell width='75%' rowspan='2' align='center'>
+                    <TableCell width='75%' rowSpan='2' align='center'>
                       หัวข้อการประเมิน (ความรู้ความสามารถ/Knowledge and Ability)
                     </TableCell>
                   </TableRow>
@@ -325,7 +325,7 @@ const SurveyForm = () => {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell height='80' class='left-align'>
+                    <TableCell height='80' className='left-align'>
                       &nbsp; 3. ความรู้ความสามารถทางวิชาการ (Academic ability) <br />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;นักศึกษามีความรู้ทางวิชาการเพียงพอ
                       ที่จะทํางานตามที่ได้รับมอบหมาย
@@ -345,7 +345,7 @@ const SurveyForm = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell height='80' class='left-align'>
+                    <TableCell height='80' className='left-align'>
                       &nbsp; 4. ความสามารถในการเรียนรู้และประยุกตว์ ิชาการ (Ability to learn and apply
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Knowledge) <br />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ความรวดเร็วในการเรียนรู้เข้าใจข้อมูล ข่าวสาร และวิธีการทํางาน
@@ -366,7 +366,7 @@ const SurveyForm = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell height='80' class='left-align'>
+                    <TableCell height='80' className='left-align'>
                       &nbsp; 5. ความรุ้ความชำนาญด้านปฏิบัติการ (Practical ability) <br />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;เช่น การปฏิบัติงานในภาคสนาม ในห้องปฏิบัติการ
                       <br />
@@ -384,7 +384,7 @@ const SurveyForm = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell height='80' class='left-align'>
+                    <TableCell height='80' className='left-align'>
                       &nbsp; 6. วิจารณญาณและการตัดสินใจ (Judgments and decision making) <br />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ตัดสินใจให้ได้ดี ถูกต้อง รวดเร็ว
                       มีการวิเคราะห์ข้อมูลและปัญหาต่างๆอย่างรอบคอบ
@@ -402,7 +402,7 @@ const SurveyForm = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell height='80' class='left-align'>
+                    <TableCell height='80' className='left-align'>
                       &nbsp; 7. การจัดการและวางแผน (Organization and Planning) <br />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;มีการวางแผนและขั้นตอนการจัดการอย่างเป็นระบบ
                       ไม่ก่อให้เกิดความสูญเสียแก่งาน
@@ -421,7 +421,7 @@ const SurveyForm = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell height='100' class='left-align'>
+                    <TableCell height='100' className='left-align'>
                       &nbsp; 8. ทักษะการสื่อสาร (Communication skills) <br />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ความสามารถในการติดต่อสื่อสาร การพูด การเขียน
                       และการนําเสนอ(Presentation)
@@ -444,7 +444,7 @@ const SurveyForm = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell height='100' class='left-align'>
+                    <TableCell height='100' className='left-align'>
                       &nbsp; 9. การพัฒนาด้านภาษาและวัฒนธรรมตางประเทศ ่ (Foreign language and cultural <br></br>{' '}
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;development) <br />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;เช่น ภาษาอังกฤษ การทำงานกับชาวต่างชาติ
@@ -463,7 +463,7 @@ const SurveyForm = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell height='100' class='left-align'>
+                    <TableCell height='100' className='left-align'>
                       &nbsp; 10. ความเหมาะสมต่อตำแหน่งที่ได้รับมอบหมาย (Suitability For job position) <br />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;สามารถพัฒนาตนเองให้ปฏิบัติงานตาม job description
                       ที่มอบหมายได้อย่างเหมาะ
@@ -489,7 +489,7 @@ const SurveyForm = () => {
               <Table sx={{ width: '100%' }} cellPadding='0' cellSpacing='0'>
                 <TableHead>
                   <TableRow>
-                    <TableCell width='75%' rowspan='2' align='center'>
+                    <TableCell width='75%' rowSpan='2' align='center'>
                       หัวข้อการประเมิน (ความรับผิดชอบต่อหน้าที่/Responsibility)
                     </TableCell>
                   </TableRow>
@@ -501,7 +501,7 @@ const SurveyForm = () => {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell height='80' class='left-align'>
+                    <TableCell height='80' className='left-align'>
                       &nbsp; 11. ความรับผิดชอบและเป็นผทู้ ี่ไว้วางใจได้(Responsibility and dependability) <br />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ดําเนินงานให้สําเร็จลุล่วงโดยคํานึงถึงเป้าหมาย
                       และความสําเร็จของงานเป็นหลัก
@@ -529,7 +529,7 @@ const SurveyForm = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell height='80' class='left-align'>
+                    <TableCell height='80' className='left-align'>
                       &nbsp; 12. ความสนใจ อุตสาหะในการทํางาน (Interested in work ) <br></br>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ความสนใจและความกระตือรือร้นในการทํางาน
                       มีความอุตสาหะ ความพยายาม <br />
@@ -551,7 +551,7 @@ const SurveyForm = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell height='80' class='left-align'>
+                    <TableCell height='80' className='left-align'>
                       &nbsp; 13. ความสามารถเริ่มต้นทำงานได้ด้วยตนเอง (Initiative or self starter) <br></br>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;เมื่อได้รับคําชี้แนะ สามารถเริ่มทํางานได้ด้วยตนเอง
                       โดยไม่ต้องรอคําสั่ง <br />
@@ -573,7 +573,7 @@ const SurveyForm = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell height='80' class='left-align'>
+                    <TableCell height='80' className='left-align'>
                       &nbsp; 14. การตอบสนองต่อการสั่งการ (Response to supervision ) <br></br>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ยินดีรับคําสั่ง คําแนะนํา
                       คําวิจารณ์ไม่แสดงความอึดอัดใจ เมื่อได้รับคําติเตือน <br />
@@ -601,7 +601,7 @@ const SurveyForm = () => {
               <Table sx={{ width: '100%' }} cellPadding='0' cellSpacing='0'>
                 <TableHead>
                   <TableRow>
-                    <TableCell width='75%' rowspan='2' align='center'>
+                    <TableCell width='75%' rowSpan='2' align='center'>
                       หัวข้อการประเมิน (ลักษณะส่วนบคคล ุ /Personality)
                     </TableCell>
                   </TableRow>
@@ -613,7 +613,7 @@ const SurveyForm = () => {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell height='80' class='left-align'>
+                    <TableCell height='80' className='left-align'>
                       &nbsp; 15. บุคลิกภาพและการวางตัว(Personality) <br />
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;มีบุคลิกภาพและวางตัวได้เหมาะสม เช่น ทัศนคติวุฒิภาวะ
                       ความอ่อนน้อมถ่อมตน
@@ -633,7 +633,7 @@ const SurveyForm = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell height='80' class='left-align'>
+                    <TableCell height='80' className='left-align'>
                       &nbsp; 16. มนุษยสัมพันธ์ (Interpersonal skills) <br></br>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;สามารถร่วมงานกับผู้อื่น การทํางานเป็นทีม
                       สร้างมนุษยสัมพันธ์ได้ดีเป็นที่รักใคร <br />
@@ -654,7 +654,7 @@ const SurveyForm = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell height='80' class='left-align'>
+                    <TableCell height='80' className='left-align'>
                       &nbsp; 17. ความมีระเบียบวนิัย ปฏบิัติตามวัฒนธรรมขององค์กร <br></br>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Discipline and adaptability to formal
                       organization) <br />
@@ -680,7 +680,7 @@ const SurveyForm = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell height='80' class='left-align'>
+                    <TableCell height='80' className='left-align'>
                       &nbsp; 18. คุณธรรมและจริยธรรม (Ethics and morality) <br></br>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;มีความซอสื่ ัตย์สุจริต มจีิตใจสะอาด รจู้ักเสียสละ
                       ไมเห่ ็นแก่ตัว เอื้อเฟื้อช่วยเหลือผู้อื่น <br />

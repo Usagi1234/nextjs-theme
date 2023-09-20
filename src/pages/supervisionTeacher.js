@@ -79,7 +79,7 @@ export default function SupervisionTeacher() {
         setUsername(data.data.User)
         setStatus(data.data.stateRole)
       })
-  }, [])
+  }, [jwtUsername, jwtRole])
 
   const [dataCompany, setDataCompany] = useState([])
 

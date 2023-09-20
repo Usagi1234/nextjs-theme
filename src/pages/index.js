@@ -38,6 +38,7 @@ import Toastify from 'toastify-js'
 import 'toastify-js/src/toastify.css'
 import Swal from 'sweetalert2'
 import Cookies from 'js-cookie'
+
 // import cookieCutter from 'cookie-cutter'
 const now = new Date()
 

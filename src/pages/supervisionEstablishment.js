@@ -54,7 +54,7 @@ export default function SupervisionEstabishment() {
         setUsername(data.data.User)
         setStatus(data.data.stateRole)
       })
-  }, [])
+  }, [jwtUsername, jwtRole])
 
   useEffect(() => {
     if (status === 'สถานประกอบการ') {

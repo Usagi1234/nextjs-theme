@@ -125,7 +125,7 @@ const LoginPage = () => {
         window.location.href = '/Home'
       }, 1000)
     }
-  }, [success])
+  }, [success, Toast])
 
   // ** Hook
   const theme = useTheme()

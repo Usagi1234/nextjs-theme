@@ -51,7 +51,7 @@ const Report_weeklyStudent = () => {
     axios.get('http://localhost:3200/api/v1/getreport').then(res => {
       setGetStudentRow(res.data.data)
     })
-  }, [])
+  }, [jwtUsername, jwtRole])
 
   useEffect(() => {
     if (username !== undefined && status !== undefined) {

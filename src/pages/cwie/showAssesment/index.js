@@ -19,7 +19,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 
-const ShowAssessmentStudent = () => {
+const ShowAssessment = () => {
   const jwtUsername = Cookies.get('jwtUsername')
   const jwtRole = Cookies.get('jwtRole')
   const [username, setUsername] = useState('')
@@ -40,7 +40,8 @@ const ShowAssessmentStudent = () => {
         setUsername(data.data.User)
         setStatus(data.data.stateRole)
       })
-    axios.get('http://localhost:3200/api/v1/getevaluatecompany_student').then(res => {
+    axios.get('http://localhost:3200/api/v1/getevaluatestudent').then(res => {
+      console.log('go')
       setGetRowAssessments(res.data.data)
     })
   }, [jwtUsername, jwtRole])
@@ -61,14 +62,10 @@ const ShowAssessmentStudent = () => {
   }, [username, status, getRowAssessments])
 
   const columns = [
-    { field: 'ecomstu_order', headerName: 'No', width: 50 },
-    { field: 'ecomstu_title', headerName: 'Estimate Title', width: 1350 },
-    { field: 'anscom_value', headerName: 'Estimate value', width: 150 }
+    { field: 'estu_order', headerName: 'No', width: 100 },
+    { field: 'estu_title', headerName: 'Estimate Title', width: 800 },
+    { field: 'anstu_value', headerName: 'Estimate value', width: 150 }
   ]
-
-  useEffect(() => {
-    console.log(filterStudent)
-  }, [filterStudent])
 
   return (
     <Grid>
@@ -88,4 +85,4 @@ const ShowAssessmentStudent = () => {
   )
 }
 
-export default ShowAssessmentStudent
+export default ShowAssessment

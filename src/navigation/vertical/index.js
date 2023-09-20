@@ -73,6 +73,11 @@ const Navigation = () => {
         title: 'ประเมินนักศึกษา (สถานประกอบการประเมินนักศึกษา)',
         icon: AccessibilityNewIcon,
         path: '/cwie/showAssessmentStudent'
+      },
+      {
+        title: 'ประเมินนักศึกษา (อาจารย์ประเมินนักศึกษา)',
+        icon: AccessibilityNewIcon,
+        path: '/cwie/showAssesment'
       }
     )
   } else if (status === 'อาจารย์') {
