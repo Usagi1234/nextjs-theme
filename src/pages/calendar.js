@@ -54,7 +54,7 @@ export default function Calendar() {
                           <TableCell>ปฏิทินกำหนดการโครงการพัฒนาทักษะวิชาชีพนักศึกษา ประจำปีการศึกษา 2566</TableCell>
                           <TableCell>
                             <Button variant='contained' onClick={() => DownloadFileAtURL(pdfC1)}>
-                              PDF
+                              <Typography sx={{ color: 'white' }}>PDF</Typography>
                             </Button>
                           </TableCell>
                         </TableRow>
@@ -62,7 +62,7 @@ export default function Calendar() {
                           <TableCell>ปฏิทินกำหนดการโครงการพัฒนาทักษะวิชาชีพนักศึกษา ประจำปีการศึกษา 2565</TableCell>
                           <TableCell>
                             <Button variant='contained' onClick={() => DownloadFileAtURL(pdfC2)}>
-                              PDF
+                              <Typography sx={{ color: 'white' }}>PDF</Typography>
                             </Button>
                           </TableCell>
                         </TableRow>
@@ -70,7 +70,7 @@ export default function Calendar() {
                           <TableCell>ปฏิทินกำหนดการโครงการพัฒนาทักษะวิชาชีพนักศึกษา ประจำปีการศึกษา 2564</TableCell>
                           <TableCell>
                             <Button variant='contained' onClick={() => DownloadFileAtURL(pdfC3)}>
-                              PDF
+                              <Typography sx={{ color: 'white' }}>PDF</Typography>
                             </Button>
                           </TableCell>
                         </TableRow>
@@ -80,7 +80,7 @@ export default function Calendar() {
                           </TableCell>
                           <TableCell>
                             <Button variant='contained' onClick={() => DownloadFileAtURL(pdfC4)}>
-                              PDF
+                              <Typography sx={{ color: 'white' }}>PDF</Typography>
                             </Button>
                           </TableCell>
                         </TableRow>

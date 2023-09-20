@@ -65,7 +65,7 @@ export default function Form() {
                         </TableCell>
                         <TableCell>
                           <Button variant='contained' onClick={() => DownloadFileAtURL(file_pdf1)}>
-                            PDF
+                            <Typography sx={{ color: 'white' }}>PDF</Typography>
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -75,10 +75,10 @@ export default function Form() {
                         </TableCell>
                         <TableCell>
                           <Button variant='contained' sx={{ mr: 6 }} onClick={() => DownloadFileAtURL(file_word2)}>
-                            WORD
+                            <Typography sx={{ color: 'white' }}>WORD</Typography>
                           </Button>
                           <Button variant='contained' onClick={() => DownloadFileAtURL(file_pdf2)}>
-                            PDF
+                            <Typography sx={{ color: 'white' }}>PDF</Typography>
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -88,10 +88,10 @@ export default function Form() {
                         </TableCell>
                         <TableCell>
                           <Button variant='contained' sx={{ mr: 6 }} onClick={() => DownloadFileAtURL(file_word3)}>
-                            WORD
+                            <Typography sx={{ color: 'white' }}>WORD</Typography>
                           </Button>
                           <Button variant='contained' onClick={() => DownloadFileAtURL(file_pdf3)}>
-                            PDF
+                            <Typography sx={{ color: 'white' }}>PDF</Typography>
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -101,10 +101,10 @@ export default function Form() {
                         </TableCell>
                         <TableCell>
                           <Button variant='contained' sx={{ mr: 6 }} onClick={() => DownloadFileAtURL(file_word4)}>
-                            WORD
+                            <Typography sx={{ color: 'white' }}>WORD</Typography>
                           </Button>
                           <Button variant='contained' onClick={() => DownloadFileAtURL(file_pdf4)}>
-                            PDF
+                            <Typography sx={{ color: 'white' }}>PDF</Typography>
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -114,10 +114,10 @@ export default function Form() {
                         </TableCell>
                         <TableCell>
                           <Button variant='contained' sx={{ mr: 6 }} onClick={() => DownloadFileAtURL(file_word5)}>
-                            WORD
+                            <Typography sx={{ color: 'white' }}>WORD</Typography>
                           </Button>
                           <Button variant='contained' onClick={() => DownloadFileAtURL(file_pdf5)}>
-                            PDF
+                            <Typography sx={{ color: 'white' }}>PDF</Typography>
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -127,10 +127,10 @@ export default function Form() {
                         </TableCell>
                         <TableCell>
                           <Button variant='contained' sx={{ mr: 6 }} onClick={() => DownloadFileAtURL(file_word6)}>
-                            WORD
+                            <Typography sx={{ color: 'white' }}>WORD</Typography>
                           </Button>
                           <Button variant='contained' onClick={() => DownloadFileAtURL(file_pdf6)}>
-                            PDF
+                            <Typography sx={{ color: 'white' }}>PDF</Typography>
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -140,10 +140,10 @@ export default function Form() {
                         </TableCell>
                         <TableCell>
                           <Button variant='contained' sx={{ mr: 6 }} onClick={() => DownloadFileAtURL(file_word7)}>
-                            WORD
+                            <Typography sx={{ color: 'white' }}>WORD</Typography>
                           </Button>
                           <Button variant='contained' onClick={() => DownloadFileAtURL(file_pdf7)}>
-                            PDF
+                            <Typography sx={{ color: 'white' }}>PDF</Typography>
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -153,10 +153,10 @@ export default function Form() {
                         </TableCell>
                         <TableCell>
                           <Button variant='contained' sx={{ mr: 6 }} onClick={() => DownloadFileAtURL(file_word8)}>
-                            WORD
+                            <Typography sx={{ color: 'white' }}>WORD</Typography>
                           </Button>
                           <Button variant='contained' onClick={() => DownloadFileAtURL(file_pdf8)}>
-                            PDF
+                            <Typography sx={{ color: 'white' }}>PDF</Typography>
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -166,10 +166,10 @@ export default function Form() {
                         </TableCell>
                         <TableCell>
                           <Button variant='contained' sx={{ mr: 6 }} onClick={() => DownloadFileAtURL(file_word9)}>
-                            WORD
+                            <Typography sx={{ color: 'white' }}>WORD</Typography>
                           </Button>
                           <Button variant='contained' onClick={() => DownloadFileAtURL(file_pdf9)}>
-                            PDF
+                            <Typography sx={{ color: 'white' }}>PDF</Typography>
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -179,10 +179,10 @@ export default function Form() {
                         </TableCell>
                         <TableCell>
                           <Button variant='contained' sx={{ mr: 6 }} onClick={() => DownloadFileAtURL(file_word10)}>
-                            WORD
+                            <Typography sx={{ color: 'white' }}>WORD</Typography>
                           </Button>
                           <Button variant='contained' onClick={() => DownloadFileAtURL(file_pdf10)}>
-                            PDF
+                            <Typography sx={{ color: 'white' }}>PDF</Typography>
                           </Button>
                         </TableCell>
                       </TableRow>
