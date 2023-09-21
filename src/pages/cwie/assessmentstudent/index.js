@@ -644,7 +644,7 @@ const SurveyForm = () => {
             <Grid container justifyContent='center' mt={3}>
               <Grid item xs={12} md={6}>
                 {/* <TextField name='es_complain' label='ข้อเสนอแนะเพิ่มเติม' multiline rows={3} fullWidth /> */}
-                <Button variant='contained' onClick={() => handleSubmitClick()}>
+                <Button type='submit' variant='contained' onClick={() => handleSubmitClick()}>
                   ส่งแบบประเมิน
                 </Button>
               </Grid>
