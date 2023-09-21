@@ -74,7 +74,7 @@ const ShowAssessment = () => {
           <Card>
             <CardContent>
               <Typography variant='h5' sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
-                แสดงประเมินนักศึกษา (สถานประกอบการประเมินนักศึกษา)
+                แสดงประเมินนักศึกษา (อาจารย์ประเมินนักศึกษา)
               </Typography>
               <DataGrid rows={filterStudent} columns={columns} getRowId={row => row.anstu_id} />
             </CardContent>
