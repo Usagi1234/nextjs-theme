@@ -188,11 +188,11 @@ const Assessment = () => {
                   <TableHead>
                     <TableRow>
                       <TableCell>Questions</TableCell>
-                      <TableCell align='center'>1</TableCell>
-                      <TableCell align='center'>2</TableCell>
-                      <TableCell align='center'>3</TableCell>
-                      <TableCell align='center'>4</TableCell>
                       <TableCell align='center'>5</TableCell>
+                      <TableCell align='center'>4</TableCell>
+                      <TableCell align='center'>3</TableCell>
+                      <TableCell align='center'>2</TableCell>
+                      <TableCell align='center'>1</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
