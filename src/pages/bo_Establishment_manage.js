@@ -12,7 +12,9 @@ export default function Bo_Establishment_manage() {
     com_type: '',
     com_add: '',
     com_province: '',
-    com_contact: ''
+    com_contact: '',
+    user: '',
+    pass: ''
   }
   const [rowDataComp, setRowDataComp] = useState([])
   const [dataCompany, setDataCompany] = useState(intialComp)
@@ -22,7 +24,9 @@ export default function Bo_Establishment_manage() {
     com_type: false,
     com_add: false,
     com_province: false,
-    com_contact: false
+    com_contact: false,
+    user: false,
+    pass: false
   })
 
   const [open, setOpen] = useState(false)
@@ -123,7 +127,7 @@ export default function Bo_Establishment_manage() {
   const HandleChangeComp = (event, type) => {
     if (type === 'com_name') {
       //เช็ค type ที่ส่งมาใช้ dog_name ?
-      const newStr = event.target.value.replace(/[^ก-๙เ\s]/g, '') // อีเว้นที่เกิด เป้าหมายคือค่า value
+      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
       if (dataCompany.com_name !== '') {
         //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColoChangeComp(pre => ({ ...pre, com_name: false }))
@@ -155,12 +159,28 @@ export default function Bo_Establishment_manage() {
       setDataCompany(pre => ({ ...pre, com_province: newStr }))
     } else if (type === 'com_contact') {
       //เช็ค type ที่ส่งมาใช้ dog_name ?
-      const newStr = event.target.value.replace(/[^ก-๙เ\s]/g, '') // อีเว้นที่เกิด เป้าหมายคือค่า value
+      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
       if (dataCompany.com_contact !== '') {
         //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
         setColoChangeComp(pre => ({ ...pre, com_contact: false }))
       }
       setDataCompany(pre => ({ ...pre, com_contact: newStr }))
+    } else if (type === 'user') {
+      //เช็ค type ที่ส่งมาใช้ dog_name ?
+      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
+      if (dataCompany.user !== '') {
+        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
+        setColoChangeComp(pre => ({ ...pre, user: false }))
+      }
+      setDataCompany(pre => ({ ...pre, user: newStr }))
+    } else if (type === 'pass') {
+      //เช็ค type ที่ส่งมาใช้ dog_name ?
+      const newStr = event.target.value.replace('', '') // อีเว้นที่เกิด เป้าหมายคือค่า value
+      if (dataCompany.pass !== '') {
+        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
+        setColoChangeComp(pre => ({ ...pre, pass: false }))
+      }
+      setDataCompany(pre => ({ ...pre, pass: newStr }))
     }
   }
 
@@ -170,7 +190,9 @@ export default function Bo_Establishment_manage() {
       dataCompany.com_type !== '' &&
       dataCompany.com_add !== '' &&
       dataCompany.com_province !== '' &&
-      dataCompany.com_contact !== ''
+      dataCompany.com_contact !== '' &&
+      dataCompany.user !== '' &&
+      dataCompany.pass !== ''
     ) {
       setDataCompany(pre => ({
         ...pre, // เก็บค่าเก่า
@@ -207,6 +229,14 @@ export default function Bo_Establishment_manage() {
     } else {
       setColoChangeComp(pre => ({ ...pre, com_contact: true }))
     }
+    if (dataCompany.user !== '') {
+    } else {
+      setColoChangeComp(pre => ({ ...pre, user: true }))
+    }
+    if (dataCompany.pass !== '') {
+    } else {
+      setColoChangeComp(pre => ({ ...pre, pass: true }))
+    }
   }
 
   useEffect(() => {
@@ -221,7 +251,9 @@ export default function Bo_Establishment_manage() {
       dataCompany.com_type !== '' &&
       dataCompany.com_add !== '' &&
       dataCompany.com_province !== '' &&
-      dataCompany.com_contact !== ''
+      dataCompany.com_contact !== '' &&
+      dataCompany.user !== '' &&
+      dataCompany.pass !== ''
     ) {
       setDataCompany(pre => ({
         ...pre, // เก็บค่าเก่า
@@ -257,6 +289,14 @@ export default function Bo_Establishment_manage() {
     if (dataCompany.com_contact !== '') {
     } else {
       setColoChangeComp(pre => ({ ...pre, com_contact: true }))
+    }
+    if (dataCompany.user !== '') {
+    } else {
+      setColoChangeComp(pre => ({ ...pre, user: true }))
+    }
+    if (dataCompany.pass !== '') {
+    } else {
+      setColoChangeComp(pre => ({ ...pre, pass: true }))
     }
   }
 
@@ -375,6 +415,42 @@ export default function Bo_Establishment_manage() {
                                     onChange={event => HandleChangeComp(event, 'com_contact')}
                                     error={coloChangeComp.com_contact}
                                     value={dataCompany.com_contact}
+                                  />
+                                </Grid>
+                              </Grid>
+                            </Box>
+                          </Box>
+                          <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', mb: 6 }}>
+                            <Box sx={{ p: 4, width: '22%' }}>
+                              <Typography>Establishment user</Typography>
+                            </Box>
+                            <Box sx={{ width: '50%' }}>
+                              <Grid container spacing={5}>
+                                <Grid item xs={12}>
+                                  <TextField
+                                    fullWidth
+                                    label='Establishment user'
+                                    onChange={event => HandleChangeComp(event, 'user')}
+                                    error={coloChangeComp.user}
+                                    value={dataCompany.user}
+                                  />
+                                </Grid>
+                              </Grid>
+                            </Box>
+                          </Box>
+                          <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', mb: 6 }}>
+                            <Box sx={{ p: 4, width: '22%' }}>
+                              <Typography>Establishment Pass</Typography>
+                            </Box>
+                            <Box sx={{ width: '50%' }}>
+                              <Grid container spacing={5}>
+                                <Grid item xs={12}>
+                                  <TextField
+                                    fullWidth
+                                    label='Establishment pass'
+                                    onChange={event => HandleChangeComp(event, 'pass')}
+                                    error={coloChangeComp.pass}
+                                    value={dataCompany.pass}
                                   />
                                 </Grid>
                               </Grid>
@@ -499,6 +575,42 @@ export default function Bo_Establishment_manage() {
                                     onChange={event => HandleChangeComp(event, 'com_contact')}
                                     error={coloChangeComp.com_contact}
                                     value={dataCompany.com_contact}
+                                  />
+                                </Grid>
+                              </Grid>
+                            </Box>
+                          </Box>
+                          <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', mb: 6 }}>
+                            <Box sx={{ p: 4, width: '22%' }}>
+                              <Typography>Establishment user</Typography>
+                            </Box>
+                            <Box sx={{ width: '50%' }}>
+                              <Grid container spacing={5}>
+                                <Grid item xs={12}>
+                                  <TextField
+                                    fullWidth
+                                    label='Establishment Contact'
+                                    onChange={event => HandleChangeComp(event, 'user')}
+                                    error={coloChangeComp.user}
+                                    value={dataCompany.user}
+                                  />
+                                </Grid>
+                              </Grid>
+                            </Box>
+                          </Box>
+                          <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', mb: 6 }}>
+                            <Box sx={{ p: 4, width: '22%' }}>
+                              <Typography>Establishment user</Typography>
+                            </Box>
+                            <Box sx={{ width: '50%' }}>
+                              <Grid container spacing={5}>
+                                <Grid item xs={12}>
+                                  <TextField
+                                    fullWidth
+                                    label='Establishment Contact'
+                                    onChange={event => HandleChangeComp(event, 'pass')}
+                                    error={coloChangeComp.pass}
+                                    value={dataCompany.pass}
                                   />
                                 </Grid>
                               </Grid>

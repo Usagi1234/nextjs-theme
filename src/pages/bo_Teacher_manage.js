@@ -26,7 +26,9 @@ export default function Bo_Teacher_manage() {
     tea_status: '',
     tea_tel: '',
     curriculum_id: '',
-    studygroup_id: ''
+    studygroup_id: '',
+    user: '',
+    pass: ''
   }
 
   const style = {
@@ -53,7 +55,9 @@ export default function Bo_Teacher_manage() {
     tea_status: false,
     tea_tel: false,
     curriculum_id: false,
-    studygroup_id: false
+    studygroup_id: false,
+    user: false,
+    pass: false
   })
 
   const [openTc, setOpenTc] = useState(false)
@@ -184,6 +188,20 @@ export default function Bo_Teacher_manage() {
         setColorChangeTc(pre => ({ ...pre, studygroup_id: false }))
       }
       setDataTeacher(pre => ({ ...pre, studygroup_id: newStr }))
+    } else if (type === 'user') {
+      const newStr = event.target.value // อีเว้นที่เกิด เป้าหมายคือค่า value
+      if (dataTeacher.user !== '') {
+        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
+        setColorChangeTc(pre => ({ ...pre, user: false }))
+      }
+      setDataTeacher(pre => ({ ...pre, user: newStr }))
+    } else if (type === 'pass') {
+      const newStr = event.target.value // อีเว้นที่เกิด เป้าหมายคือค่า value
+      if (dataTeacher.pass !== '') {
+        //ถ้าค่าไม่ว่างให้เซ็ตสีปกติ
+        setColorChangeTc(pre => ({ ...pre, pass: false }))
+      }
+      setDataTeacher(pre => ({ ...pre, pass: newStr }))
     }
   }
 
@@ -194,7 +212,9 @@ export default function Bo_Teacher_manage() {
       dataTeacher.tea_status !== '' &&
       dataTeacher.studygroup_id !== '' &&
       dataTeacher.curriculum_id !== '' &&
-      dataTeacher.tea_tel !== ''
+      dataTeacher.tea_tel !== '' &&
+      dataTeacher.user !== '' &&
+      dataTeacher.pass !== ''
     ) {
       setDataTeacher(pre => ({
         ...pre, // เก็บค่าเก่า
@@ -227,6 +247,14 @@ export default function Bo_Teacher_manage() {
     } else {
       setColorChangeTc(pre => ({ ...pre, tea_tel: true }))
     }
+    if (dataTeacher.user !== '') {
+    } else {
+      setColorChangeTc(pre => ({ ...pre, user: true }))
+    }
+    if (dataTeacher.pass !== '') {
+    } else {
+      setColorChangeTc(pre => ({ ...pre, pass: true }))
+    }
   }
 
   const HandleOnEditTc = () => {
@@ -236,7 +264,9 @@ export default function Bo_Teacher_manage() {
       dataTeacher.tea_status !== '' &&
       dataTeacher.studygroup_id !== '' &&
       dataTeacher.curriculum_id !== '' &&
-      dataTeacher.tea_tel !== ''
+      dataTeacher.tea_tel !== '' &&
+      dataTeacher.user !== '' &&
+      dataTeacher.pass !== ''
     ) {
       setDataTeacher(pre => ({
         ...pre, // เก็บค่าเก่า
@@ -268,6 +298,14 @@ export default function Bo_Teacher_manage() {
     if (dataTeacher.tea_tel !== '') {
     } else {
       setColorChangeTc(pre => ({ ...pre, tea_tel: true }))
+    }
+    if (dataTeacher.user !== '') {
+    } else {
+      setColorChangeTc(pre => ({ ...pre, user: true }))
+    }
+    if (dataTeacher.pass !== '') {
+    } else {
+      setColorChangeTc(pre => ({ ...pre, pass: true }))
     }
   }
 
@@ -441,6 +479,40 @@ export default function Bo_Teacher_manage() {
                               </Grid>
                             </Box>
                           </Box>
+                          <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', mb: 6 }}>
+                            <Box sx={{ p: 4 }}>
+                              <Typography>Teacher user :</Typography>
+                            </Box>
+                            <Box sx={{ width: '30%' }}>
+                              <Grid container spacing={5}>
+                                <Grid item xs={12}>
+                                  <TextField
+                                    fullWidth
+                                    label='Teacher user'
+                                    onChange={event => HandleChange(event, 'user')}
+                                    error={colorChangeTc.user}
+                                    value={dataTeacher.user}
+                                  />
+                                </Grid>
+                              </Grid>
+                            </Box>
+                            <Box sx={{ p: 4, ml: 6 }}>
+                              <Typography>Teacher Password:</Typography>
+                            </Box>
+                            <Box sx={{ width: '30%' }}>
+                              <Grid container spacing={5}>
+                                <Grid item xs={12}>
+                                  <TextField
+                                    fullWidth
+                                    label='Teacher password'
+                                    onChange={event => HandleChange(event, 'pass')}
+                                    error={colorChangeTc.pass}
+                                    value={dataTeacher.pass}
+                                  />
+                                </Grid>
+                              </Grid>
+                            </Box>
+                          </Box>
                           <Box>
                             <Button type='submit' variant='contained' size='large' onClick={() => HandleOnInsTc()}>
                               submit
@@ -585,6 +657,40 @@ export default function Bo_Teacher_manage() {
                                     ))}
                                   </Select>
                                 </FormControl>
+                              </Grid>
+                            </Box>
+                          </Box>
+                          <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', mb: 6 }}>
+                            <Box sx={{ p: 4 }}>
+                              <Typography>Teacher user :</Typography>
+                            </Box>
+                            <Box sx={{ width: '30%' }}>
+                              <Grid container spacing={5}>
+                                <Grid item xs={12}>
+                                  <TextField
+                                    fullWidth
+                                    label='Teacher user'
+                                    onChange={event => HandleChange(event, 'user')}
+                                    error={colorChangeTc.user}
+                                    value={dataTeacher.user}
+                                  />
+                                </Grid>
+                              </Grid>
+                            </Box>
+                            <Box sx={{ p: 4, ml: 6 }}>
+                              <Typography>Teacher Password :</Typography>
+                            </Box>
+                            <Box sx={{ width: '30%' }}>
+                              <Grid container spacing={5}>
+                                <Grid item xs={12}>
+                                  <TextField
+                                    fullWidth
+                                    label='Teacher password'
+                                    onChange={event => HandleChange(event, 'pass')}
+                                    error={colorChangeTc.pass}
+                                    value={dataTeacher.pass}
+                                  />
+                                </Grid>
                               </Grid>
                             </Box>
                           </Box>
