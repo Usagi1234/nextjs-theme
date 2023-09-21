@@ -49,60 +49,29 @@ const SurveyForm = () => {
     }))
   )
 
-  useEffect(() => {
-    // ใช้เงื่อนไขที่ต้องการเช็คกับ comId และ Id
+  const [isInitialized, setIsInitialized] = useState(false)
+  const [prevStudentId, setPrevStudentId] = useState(null)
 
-    const newAnswerInit = answerData.map(item => {
-      return {
-        ...item,
+  useEffect(() => {
+    // ตรวจสอบว่ามีข้อมูล companyData และ selectStudentId ที่พร้อมใช้งาน
+    if (companyData && selectStudentId && (selectStudentId !== prevStudentId || !isInitialized)) {
+      // ทำการกำหนดค่าเริ่มต้นใหม่ให้ answerData
+      const newAnswerInit = Array.from({ length: 18 }, (_, i) => ({
+        ecomstu_id: i + 1,
+        anscom_value: 0,
         com_id: companyData.com_id,
         Id: selectStudentId
-      }
-    })
+      }))
 
-    setAnswerData(newAnswerInit)
-  }, [companyData, selectStudentId, answerData])
+      setAnswerData(newAnswerInit)
+      setIsInitialized(true)
+      setPrevStudentId(selectStudentId)
+    }
+  }, [companyData, selectStudentId, isInitialized, prevStudentId])
 
   useEffect(() => {
     console.log('test: ', answerData)
   }, [answerData])
-
-  // const [sum4, setSum4] = useState({
-  //   text15: '',
-  //   text16: '',
-  //   text17: '',
-  //   text18: ''
-  // })
-
-  // const [sum3, setSum3] = useState({
-  //   text11: '',
-  //   text12: '',
-  //   text13: '',
-  //   text14: ''
-  // })
-
-  // const [sum2, setSum2] = useState({
-  //   text3: '',
-  //   text4: '',
-  //   text5: '',
-  //   text6: '',
-  //   text7: '',
-  //   text8: '',
-  //   text9: '',
-  //   text10: '',
-  //   totalScore: 0
-  // })
-  // const [sumfi, setSumfi] = useState(0)
-
-  // const [values, setValues] = useState({
-  //   text1: '',
-  //   text2: ''
-  // })
-
-  // const handleChange2 = event => {
-  //   const { name, value } = event.target
-  //   setSum2(prevValues => ({ ...prevValues, [name]: value }))
-  // }
 
   const handleChange = (ecom_id, event) => {
     let value = parseInt(event.target.value, 10) // แปลง string ให้เป็น integer
@@ -130,53 +99,26 @@ const SurveyForm = () => {
     })
   }
 
-  // const handleChange3 = event => {
-  //   const { name, value } = event.target
-  //   setSum3(prevValues => ({ ...prevValues, [name]: value }))
-  // }
-
-  // const handleChange4 = event => {
-  //   const { name, value } = event.target
-  //   setSum4(prevValues => ({ ...prevValues, [name]: value }))
-  // }
-
-  // useEffect(() => {
-  //   const es_id1Value = parseInt(sum2.text3) || 0
-  //   const es_id1_2Value = parseInt(sum2.text4) || 0
-  //   const es_id1_3Value = parseInt(sum2.text5) || 0
-  //   const es_id1_4Value = parseInt(sum2.text6) || 0
-  //   const es_id1_5Value = parseInt(sum2.text7) || 0
-  //   const es_id1_6Value = parseInt(sum2.text8) || 0
-  //   const es_id1_7Value = parseInt(sum2.text9) || 0
-  //   const es_id2Value = parseInt(sum2.text10) || 0
-
-  //   const totalScore =
-  //     es_id1Value +
-  //     es_id1_2Value +
-  //     es_id1_3Value +
-  //     es_id1_4Value +
-  //     es_id1_5Value +
-  //     es_id1_6Value +
-  //     es_id1_7Value +
-  //     es_id2Value
-
-  //   setSum2(prevState => ({ ...prevState, totalScore }))
-  // }, [])
-
-  // useEffect(() => {
-  //   if (sum2.totalScore !== undefined && sum2.totalScore !== 0) {
-  //     setSum2(prevState => ({ ...prevState, totalScore: prevState.totalScore / 4 }))
-  //   }
-  // }, [sum2.totalScore])
-
   const handleSubmitClick = () => {
+    console.log('1', answerData)
+
     axios
-      .post('http://localhost:3200/api/v1/answer_company_student', answerData)
+      .post('http://localhost:3200/api/v2/answer_company_student', answerData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
       .then(res => {
-        console.log(res)
+        // ตรวจสอบสถานะการส่งคำขอ HTTP 200 เป็นสถานะสำเร็จ
+        if (res.status === 200) {
+          console.log('สำเร็จ: ', res.data) // คืนค่าข้อมูลที่ได้จากเซิร์ฟเวอร์
+        } else {
+          console.log('การส่งคำขอไม่สำเร็จ')
+        }
       })
       .catch(err => {
-        console.log(err)
+        // การจัดการข้อผิดพลาดจากคำขอ
+        console.log('เกิดข้อผิดพลาด: ', err)
       })
   }
 
@@ -698,7 +640,7 @@ const SurveyForm = () => {
             <Grid container justifyContent='center' mt={3}>
               <Grid item xs={12} md={6}>
                 {/* <TextField name='es_complain' label='ข้อเสนอแนะเพิ่มเติม' multiline rows={3} fullWidth /> */}
-                <Button type='submit' variant='contained' onClick={() => handleSubmitClick()}>
+                <Button variant='contained' onClick={() => handleSubmitClick()}>
                   ส่งแบบประเมิน
                 </Button>
               </Grid>
