@@ -103,7 +103,7 @@ const Assessment = () => {
         return {
           ...ans,
           tea_id: teacherData.tea_id,
-          id: selectStudentId
+          Id: selectStudentId
         }
       })
     })
@@ -137,7 +137,7 @@ const Assessment = () => {
 
   const handleSubmitClick = () => {
     axios
-      .post('http://localhost:3200/api/v1/sendquestion_student', answerData)
+      .post('http://localhost:3200/api/v1/sendquestion_student', { answerData: answerData })
       .then(res => {
         console.log('res: ', res)
         console.log('answerData: ', answerData)
