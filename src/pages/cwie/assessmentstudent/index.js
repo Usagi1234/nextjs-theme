@@ -103,11 +103,15 @@ const SurveyForm = () => {
     console.log('1', answerData)
 
     axios
-      .post('http://localhost:3200/api/v2/answer_company_student', answerData, {
-        headers: {
-          'Content-Type': 'application/json'
+      .post(
+        'http://localhost:3200/api/v2/answer_company_student',
+        { answerData: answerData },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
         }
-      })
+      )
       .then(res => {
         // ตรวจสอบสถานะการส่งคำขอ HTTP 200 เป็นสถานะสำเร็จ
         if (res.status === 200) {
