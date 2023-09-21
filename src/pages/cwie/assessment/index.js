@@ -211,7 +211,7 @@ const Assessment = () => {
                                 {question.estu_order} {question.estu_title}
                               </Typography>
                             </TableCell>
-                            {[1, 2, 3, 4, 5].map(score => (
+                            {[5, 4, 3, 2, 1].map(score => (
                               <TableCell align='center' key={score}>
                                 <Radio
                                   checked={
