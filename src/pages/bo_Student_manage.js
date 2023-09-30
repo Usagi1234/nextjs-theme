@@ -1,7 +1,14 @@
-import { Box } from '@mui/system'
 import { useEffect, useState } from 'react'
+
+// ** Axios import
 import axios from 'axios'
+
+// ** Next import
+import { useRouter } from 'next/router'
+
+// ** Mui import
 import {
+  Box,
   Button,
   Card,
   CardHeader,
@@ -12,13 +19,17 @@ import {
   Modal,
   Select,
   TextField,
-  Typography
+  Typography,
+  CardContent
 } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
+
+// ** Icon import
 import Icon from '@mdi/react'
 import { mdiChartBar } from '@mdi/js'
-import CardContent from '@mui/material/CardContent'
-import { useRouter } from 'next/router'
+
+// SweetAlert2
+import Swal from 'sweetalert2'
 
 const Bo_Student_manage = () => {
   const intial = {
@@ -36,6 +47,7 @@ const Bo_Student_manage = () => {
   const [curriculumSt, setCurriculumSt] = useState([])
   const [studyGroupSt, setStudyGroupSt] = useState([])
   const [getDelSt, setGetDelSt] = useState('')
+  const [selectedFile, setSelectedFile] = useState(null)
 
   const [coloChange, setColoChange] = useState({
     stu_id: false,
@@ -50,6 +62,91 @@ const Bo_Student_manage = () => {
 
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
+
+  const handleFileChange = event => {
+    const fileInput = event.target
+    const file = fileInput.files[0]
+
+    if (file && file.type === 'text/csv') {
+      setSelectedFile(file)
+
+      Swal.fire({
+        icon: 'success',
+        title: 'ไฟล์ถูกต้อง!',
+        text: 'คุณต้องการอัพโหลดไฟล์นี้ใช่หรือไม่?',
+        showCancelButton: true,
+        confirmButtonText: 'ใช่, อัพโหลด!',
+        cancelButtonText: 'ยกเลิก'
+      }).then(result => {
+        if (result.isConfirmed) {
+          // สร้าง FormData object
+          const formData = new FormData()
+
+          // เพิ่มไฟล์ CSV ลงใน FormData
+          formData.append('file', file)
+
+          // ส่ง POST request ด้วย Axios
+          axios
+            .post('http://localhost:3200/api/v1/uploadStudentCSV', formData)
+            .then(response => {
+              const apiResponse = response.data
+
+              if (apiResponse && apiResponse.statusCode === 200) {
+                Swal.fire({
+                  icon: 'success',
+                  title: apiResponse.message || 'สำเร็จ!',
+                  text:
+                    apiResponse.data && apiResponse.data.message
+                      ? apiResponse.data.message
+                      : 'ข้อมูล CSV ได้รับการประมวลผลเรียบร้อยแล้ว'
+                })
+              } else {
+                Swal.fire({
+                  icon: 'info',
+                  title: apiResponse.message || 'ข้อมูลถูกส่งไปยังเซิร์ฟเวอร์',
+                  text: 'กรุณาตรวจสอบข้อมูลและลองอีกครั้ง'
+                })
+              }
+            })
+            .catch(error => {
+              const apiError = error.response && error.response.data
+              if (apiError && apiError.statusCode === 400) {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'เกิดข้อผิดพลาด!',
+                  text: apiError.message
+                })
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'เกิดข้อผิดพลาด!',
+                  text: error.toString()
+                })
+              }
+            })
+        } else {
+          // ผู้ใช้กด "ยกเลิก"
+          Swal.fire({
+            icon: 'info',
+            title: 'ยกเลิกการอัพโหลด',
+            text: 'คุณได้ยกเลิกการอัพโหลดไฟล์'
+          })
+
+          // รีเซ็ต input ของไฟล์
+          fileInput.value = ''
+        }
+      })
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'ผิดพลาด!',
+        text: 'กรุณาเลือกไฟล์ CSV เท่านั้น'
+      }).then(() => {
+        // รีเซ็ต input ของไฟล์หลังจากแสดง alert
+        fileInput.value = ''
+      })
+    }
+  }
 
   const handleClose = () => {
     setOpen(false)
@@ -351,7 +448,23 @@ const Bo_Student_manage = () => {
                   </Box>
                 </Box>
                 <Box>
-                  <Button onClick={handleOpen}>Insert Student</Button>
+                  <Button variant='contained' sx={{ marginBlock: 2, mr: 2 }} onClick={handleOpen}>
+                    เพิ่มข้อมูลนักศึกษารายคน
+                  </Button>
+
+                  <input
+                    type='file'
+                    id='csv-upload'
+                    style={{ display: 'none' }}
+                    accept='.csv'
+                    onChange={handleFileChange}
+                  />
+                  <label htmlFor='csv-upload'>
+                    <Button variant='contained' sx={{ marginBlock: 2 }} component='span'>
+                      เพิ่มข้อมูลนักศึกษาด้วย CSV
+                    </Button>
+                  </label>
+
                   <Modal
                     open={open}
                     onClose={handleClose}
@@ -541,6 +654,7 @@ const Bo_Student_manage = () => {
                       </Card>
                     </Box>
                   </Modal>
+
                   {/* EditModal */}
                   <Modal
                     open={openEditSt}
@@ -731,6 +845,7 @@ const Bo_Student_manage = () => {
                       </Card>
                     </Box>
                   </Modal>
+
                   <Modal
                     open={openDelSt}
                     onClose={handleClosDelSt}
