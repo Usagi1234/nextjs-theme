@@ -60,6 +60,12 @@ const Bo_Student_manage = () => {
     stu_status: false
   })
 
+  const GetStudentData = () => {
+    axios.get('http://localhost:3200/api/v1/students').then(res => {
+      setRowDataSt(res.data.data)
+    })
+  }
+
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
 
@@ -92,6 +98,7 @@ const Bo_Student_manage = () => {
               const apiResponse = response.data
 
               if (apiResponse && apiResponse.statusCode === 200) {
+                GetStudentData()
                 Swal.fire({
                   icon: 'success',
                   title: apiResponse.message || 'สำเร็จ!',
