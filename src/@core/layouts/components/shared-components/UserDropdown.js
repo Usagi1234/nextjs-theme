@@ -48,7 +48,7 @@ const UserDropdown = () => {
 
   useEffect(() => {
     axios
-      .post('http://localhost:3200/api/verify_authen', {
+      .post('http://localhost:3200/api/verify_authen', { //เอาของอั๋นมาแปะ
         token: username,
         tokenRole: role
       })
